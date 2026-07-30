@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Concept 1: Play-to-Lines transformation (app-tile icon) -->
+  <g id="icon">
+    <rect x="56" y="56" width="400" height="400" rx="96" fill="#4F46E5"/>
+    <!-- play triangle -->
+    <path d="M156 176 L156 336 L262 256 Z" fill="#FFFFFF"/>
+    <!-- transcript lines of decreasing width -->
+    <g id="lines" fill="#FFFFFF">
+      <rect x="292" y="200" width="124" height="26" rx="13"/>
+      <rect x="292" y="243" width="100" height="26" rx="13" fill="#C7D2FE"/>
+      <rect x="292" y="286" width="76"  height="26" rx="13" fill="#C7D2FE"/>
+    </g>
+  </g>
+</svg>

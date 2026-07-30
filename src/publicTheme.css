@@ -1,0 +1,432 @@
+/*
+ * Public theme finishing layer.
+ * Imported after the legacy stylesheet so the shared navigation and light
+ * wallpaper cannot be overwritten by older page-specific passes.
+ */
+
+.app > .topbar,
+.business-shell > .topbar,
+.docs-shell > .topbar {
+  width: fit-content !important;
+  max-width: calc(100% - 32px);
+  justify-content: center !important;
+  gap: 18px !important;
+  padding: 0 14px !important;
+  overflow: visible !important;
+}
+
+.app > .topbar .topbar-nav,
+.business-shell > .topbar .topbar-nav,
+.docs-shell > .topbar .topbar-nav {
+  position: static !important;
+  left: auto !important;
+  width: auto !important;
+  margin: 0 !important;
+  justify-content: center !important;
+  transform: none !important;
+}
+
+.app > .topbar .topbar-controls,
+.business-shell > .topbar .topbar-controls,
+.docs-shell > .topbar .topbar-controls {
+  position: relative;
+  z-index: 4;
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+  border-left: 0 !important;
+}
+
+:root[data-theme='light'] .theme-backdrop {
+  background: #a9b1b3 !important;
+}
+
+:root[data-theme='light'] .theme-backdrop-home .theme-backdrop-image,
+:root[data-theme='light'] .theme-backdrop-page .theme-backdrop-image {
+  opacity: .72 !important;
+  filter: grayscale(.62) saturate(.34) contrast(.9) brightness(.92) !important;
+}
+
+:root[data-theme='light'] .theme-backdrop-home .theme-backdrop-shade,
+:root[data-theme='light'] .theme-backdrop-page .theme-backdrop-shade {
+  background: rgba(157, 167, 170, .28) !important;
+}
+
+:root[data-theme='light'] .theme-backdrop-home .theme-backdrop-vignette,
+:root[data-theme='light'] .theme-backdrop-page .theme-backdrop-vignette {
+  background:
+    radial-gradient(circle at 50% 30%, rgba(218, 223, 224, .03), rgba(141, 151, 154, .12) 68%, rgba(91, 102, 106, .34)),
+    linear-gradient(180deg, rgba(221, 226, 227, .05), transparent 42%, rgba(96, 107, 111, .2)) !important;
+}
+
+:root[data-theme='light'] .app-wallpaper {
+  background: transparent !important;
+}
+
+:root[data-theme='light'] .app > .topbar,
+:root[data-theme='light'] .app.app-wallpaper > .topbar,
+:root[data-theme='light'] .business-shell > .topbar,
+:root[data-theme='light'] .docs-shell > .topbar {
+  border-color: transparent !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+:root[data-theme='light'] .app.app-wallpaper > .topbar .topbar-nav .nav-link,
+:root[data-theme='light'] .business-shell > .topbar .topbar-nav .nav-link,
+:root[data-theme='light'] .docs-shell > .topbar .topbar-nav .nav-link,
+:root[data-theme='light'] .app.app-wallpaper > .topbar .language-trigger,
+:root[data-theme='light'] .app.app-wallpaper > .topbar .theme-btn {
+  color: rgba(17, 27, 32, .68) !important;
+}
+
+:root[data-theme='light'] .app.app-wallpaper > .topbar .topbar-nav .nav-link:hover,
+:root[data-theme='light'] .app.app-wallpaper > .topbar .topbar-nav .nav-link:focus-visible,
+:root[data-theme='light'] .app.app-wallpaper > .topbar .topbar-nav .nav-link.active,
+:root[data-theme='light'] .business-shell > .topbar .topbar-nav .nav-link:hover,
+:root[data-theme='light'] .business-shell > .topbar .topbar-nav .nav-link:focus-visible,
+:root[data-theme='light'] .business-shell > .topbar .topbar-nav .nav-link.active,
+:root[data-theme='light'] .docs-shell > .topbar .topbar-nav .nav-link:hover,
+:root[data-theme='light'] .docs-shell > .topbar .topbar-nav .nav-link:focus-visible,
+:root[data-theme='light'] .docs-shell > .topbar .topbar-nav .nav-link.active {
+  color: #11191d !important;
+}
+
+:root[data-theme='light'] .app.app-wallpaper > .topbar .topbar-nav .nav-link.active {
+  text-shadow: 0 0 11px rgba(34, 188, 233, .44);
+}
+
+:root[data-theme='light'] .app-wallpaper .hero-h1.hero-h1-single > span:not(.hero-title-arrow) {
+  color: #11191d !important;
+  -webkit-text-fill-color: #11191d !important;
+  text-shadow: 0 2px 18px rgba(219, 226, 228, .58) !important;
+}
+
+/*
+ * Light public pages use warm, opaque glass instead of inheriting the dark
+ * cards. The mountain remains visible around each surface, while the content
+ * itself keeps enough contrast to read without a white wash.
+ */
+:root[data-theme='light'] {
+  --public-light-panel: rgba(239, 237, 230, .88);
+  --public-light-panel-strong: rgba(246, 244, 238, .94);
+  --public-light-panel-soft: rgba(230, 230, 224, .82);
+  --public-light-border: rgba(42, 51, 55, .18);
+  --public-light-divider: rgba(42, 51, 55, .13);
+  --public-light-ink: #182126;
+  --public-light-muted: rgba(31, 43, 48, .66);
+  --public-light-shadow: 0 24px 60px -42px rgba(24, 31, 35, .48);
+}
+
+:root[data-theme='light'] .topbar,
+:root[data-theme='light'] .topbar.is-scrolled,
+:root[data-theme='light'] .app > .topbar,
+:root[data-theme='light'] .app.app-wallpaper > .topbar,
+:root[data-theme='light'] .business-shell > .topbar,
+:root[data-theme='light'] .docs-shell > .topbar {
+  border-color: transparent !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+:root[data-theme='light'] .topbar::before,
+:root[data-theme='light'] .topbar.is-scrolled::before,
+:root[data-theme='light'] .app > .topbar::before,
+:root[data-theme='light'] .business-shell > .topbar::before,
+:root[data-theme='light'] .docs-shell > .topbar::before {
+  display: none !important;
+  opacity: 0 !important;
+  content: none !important;
+}
+
+:root[data-theme='light'] .docs-shell,
+:root[data-theme='light'] .docs-shell .docs-page,
+:root[data-theme='light'] .docs-shell .docs-content,
+:root[data-theme='light'] .business-shell,
+:root[data-theme='light'] .business-shell .business {
+  color: var(--public-light-ink);
+}
+
+:root[data-theme='light'] .docs-shell h1,
+:root[data-theme='light'] .docs-shell h2,
+:root[data-theme='light'] .docs-shell h3,
+:root[data-theme='light'] .docs-shell strong,
+:root[data-theme='light'] .business-shell h1,
+:root[data-theme='light'] .business-shell h2,
+:root[data-theme='light'] .business-shell h3,
+:root[data-theme='light'] .business-shell strong {
+  color: var(--public-light-ink);
+}
+
+:root[data-theme='light'] .docs-shell .docs-hero-copy,
+:root[data-theme='light'] .docs-shell .docs-github-link,
+:root[data-theme='light'] .docs-shell .docs-portfolio-link,
+:root[data-theme='light'] .docs-shell .docs-feedback-trigger,
+:root[data-theme='light'] .docs-shell .docs-quick-menu a,
+:root[data-theme='light'] .docs-shell .quickstart-layout,
+:root[data-theme='light'] .docs-shell .endpoint-bar,
+:root[data-theme='light'] .docs-shell .reference-grid,
+:root[data-theme='light'] .docs-shell .capability-grid article,
+:root[data-theme='light'] .docs-shell .docs-policy-grid article,
+:root[data-theme='light'] .docs-shell .docs-plan-rules,
+:root[data-theme='light'] .docs-shell .docs-question,
+:root[data-theme='light'] .docs-shell .docs-policy-copy,
+:root[data-theme='light'] .docs-shell .docs-footer a {
+  border-color: var(--public-light-border) !important;
+  color: var(--public-light-ink) !important;
+  background: var(--public-light-panel) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .56),
+    var(--public-light-shadow) !important;
+  backdrop-filter: blur(18px) saturate(92%) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(92%) !important;
+}
+
+:root[data-theme='light'] .docs-shell .docs-hero-copy,
+:root[data-theme='light'] .docs-shell .quickstart-layout,
+:root[data-theme='light'] .docs-shell .endpoint-bar,
+:root[data-theme='light'] .docs-shell .reference-grid {
+  background: var(--public-light-panel-strong) !important;
+}
+
+:root[data-theme='light'] .docs-shell .quickstart-steps,
+:root[data-theme='light'] .docs-shell .quickstart-code,
+:root[data-theme='light'] .docs-shell .docs-tabs,
+:root[data-theme='light'] .docs-shell .docs-code,
+:root[data-theme='light'] .docs-shell .docs-code pre,
+:root[data-theme='light'] .docs-shell .reference-copy,
+:root[data-theme='light'] .docs-shell .field-list,
+:root[data-theme='light'] .docs-shell .field-list p,
+:root[data-theme='light'] .docs-shell .error-block,
+:root[data-theme='light'] .docs-shell .error-table,
+:root[data-theme='light'] .docs-shell .error-table p {
+  border-color: var(--public-light-divider) !important;
+  color: var(--public-light-ink) !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+:root[data-theme='light'] .docs-shell .quickstart-code,
+:root[data-theme='light'] .docs-shell .docs-code,
+:root[data-theme='light'] .docs-shell .docs-code pre {
+  background: rgba(216, 219, 216, .72) !important;
+}
+
+:root[data-theme='light'] .docs-shell .docs-tabs {
+  background: rgba(225, 225, 219, .9) !important;
+}
+
+:root[data-theme='light'] .docs-shell .docs-tabs button,
+:root[data-theme='light'] .docs-shell .quickstart-steps li,
+:root[data-theme='light'] .docs-shell .docs-question button,
+:root[data-theme='light'] .docs-shell .docs-errors-toggle,
+:root[data-theme='light'] .docs-shell .error-table p,
+:root[data-theme='light'] .docs-shell .field-list p {
+  color: var(--public-light-ink) !important;
+}
+
+:root[data-theme='light'] .docs-shell .docs-tabs button:not(.active),
+:root[data-theme='light'] .docs-shell .quickstart-steps li span,
+:root[data-theme='light'] .docs-shell .docs-section-intro,
+:root[data-theme='light'] .docs-shell .docs-policy-copy p,
+:root[data-theme='light'] .docs-shell .docs-policy-grid p,
+:root[data-theme='light'] .docs-shell .docs-policy-grid li,
+:root[data-theme='light'] .docs-shell .docs-question-answer,
+:root[data-theme='light'] .docs-shell .docs-plan-rules span,
+:root[data-theme='light'] .docs-shell .docs-hero-copy > p {
+  color: var(--public-light-muted) !important;
+}
+
+:root[data-theme='light'] .docs-shell .docs-code code,
+:root[data-theme='light'] .docs-shell .docs-code pre,
+:root[data-theme='light'] .docs-shell .field-list code,
+:root[data-theme='light'] .docs-shell .endpoint-bar code {
+  color: #24333a !important;
+}
+
+:root[data-theme='light'] .docs-shell .docs-code button,
+:root[data-theme='light'] .docs-shell .language-modal-head button,
+:root[data-theme='light'] .docs-shell .capability-meta button {
+  border-color: rgba(37, 70, 83, .2) !important;
+  color: #26414c !important;
+  background: rgba(199, 209, 210, .58) !important;
+}
+
+:root[data-theme='light'] .docs-shell .language-modal {
+  border-color: var(--public-light-border);
+  color: var(--public-light-ink);
+  background: rgba(242, 240, 233, .97);
+  box-shadow: 0 30px 90px rgba(25, 33, 37, .28);
+}
+
+:root[data-theme='light'] .docs-shell .language-modal-head,
+:root[data-theme='light'] .docs-shell .language-modal li {
+  border-color: var(--public-light-divider);
+}
+
+:root[data-theme='light'] .business-shell .biz-h1,
+:root[data-theme='light'] .business-shell .biz-sub,
+:root[data-theme='light'] .business-shell .biz-refund,
+:root[data-theme='light'] .business-shell .faq-trigger,
+:root[data-theme='light'] .business-shell .pricing-question-answer,
+:root[data-theme='light'] .business-shell .after-checkout-head p,
+:root[data-theme='light'] .business-shell .after-checkout-steps p {
+  color: var(--public-light-ink) !important;
+}
+
+:root[data-theme='light'] .business-shell .biz-sub,
+:root[data-theme='light'] .business-shell .biz-refund,
+:root[data-theme='light'] .business-shell .pricing-question-answer,
+:root[data-theme='light'] .business-shell .after-checkout-head p,
+:root[data-theme='light'] .business-shell .after-checkout-steps p {
+  color: var(--public-light-muted) !important;
+}
+
+:root[data-theme='light'] .business-shell .billing-status,
+:root[data-theme='light'] .business-shell .after-checkout,
+:root[data-theme='light'] .business-shell .pricing-question,
+:root[data-theme='light'] .business-shell .business-back a {
+  border-color: var(--public-light-border) !important;
+  color: var(--public-light-ink) !important;
+  background: var(--public-light-panel) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .56),
+    var(--public-light-shadow) !important;
+  backdrop-filter: blur(18px) saturate(92%) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(92%) !important;
+}
+
+:root[data-theme='light'] .business-shell .billing-status button {
+  color: rgba(31, 43, 48, .62) !important;
+  background: transparent !important;
+}
+
+:root[data-theme='light'] .business-shell .billing-status button.active {
+  color: #f7f8f7 !important;
+  background: #293137 !important;
+  box-shadow: 0 8px 22px -16px rgba(22, 31, 36, .8) !important;
+}
+
+:root[data-theme='light'] .business-shell .pricing-grid .card,
+:root[data-theme='light'] .business-shell .pricing-grid .card:hover,
+:root[data-theme='light'] .business-shell .pricing-grid .card:first-child,
+:root[data-theme='light'] .business-shell .pricing-grid .card:nth-child(odd),
+:root[data-theme='light'] .business-shell .pricing-grid .card:nth-child(n + 3),
+:root[data-theme='light'] .business-shell .pricing-grid .card.featured,
+:root[data-theme='light'] .business-shell .pricing-grid .card-business {
+  border-color: rgba(var(--plan-light), .42) !important;
+  color: var(--public-light-ink) !important;
+  background:
+    radial-gradient(circle at 104% -4%, rgba(var(--plan-light), .2), transparent 38%),
+    radial-gradient(circle at -8% 106%, rgba(var(--plan-light), .12), transparent 42%),
+    linear-gradient(152deg, rgba(247, 245, 239, .96), rgba(226, 226, 220, .9)) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .74),
+    0 28px 68px -48px rgba(var(--plan-light), .52),
+    0 20px 54px -46px rgba(25, 32, 36, .52) !important;
+  backdrop-filter: blur(20px) saturate(92%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(92%) !important;
+}
+
+:root[data-theme='light'] .business-shell .pricing-grid .card h3,
+:root[data-theme='light'] .business-shell .pricing-grid .card .amount,
+:root[data-theme='light'] .business-shell .pricing-grid .card .custom,
+:root[data-theme='light'] .business-shell .pricing-grid .card .features li {
+  color: var(--public-light-ink) !important;
+}
+
+:root[data-theme='light'] .business-shell .pricing-grid .tier-desc,
+:root[data-theme='light'] .business-shell .pricing-grid .card .period,
+:root[data-theme='light'] .business-shell .pricing-grid .plan-limit {
+  color: var(--public-light-muted) !important;
+}
+
+:root[data-theme='light'] .business-shell .pricing-grid .plan-rule,
+:root[data-theme='light'] .business-shell .pricing-grid .feat-divider,
+:root[data-theme='light'] .business-shell .after-checkout-steps article,
+:root[data-theme='light'] .business-shell .pricing-question {
+  border-color: var(--public-light-divider) !important;
+}
+
+:root[data-theme='light'] .business-shell .pricing-grid .tier-cta {
+  border-color: rgba(24, 33, 38, .72) !important;
+  color: #f5f7f7 !important;
+  background: #242d32 !important;
+  box-shadow: 0 12px 30px -20px rgba(20, 28, 32, .72) !important;
+}
+
+@media (max-width: 760px) {
+  .app > .topbar,
+  .business-shell > .topbar,
+  .docs-shell > .topbar {
+    width: calc(100% - 16px) !important;
+    min-height: 104px;
+    height: 104px;
+    padding: 0 12px !important;
+    align-items: flex-start;
+  }
+
+  .app > .topbar .logo,
+  .business-shell > .topbar .logo,
+  .docs-shell > .topbar .logo,
+  .app > .topbar .topbar-controls,
+  .business-shell > .topbar .topbar-controls,
+  .docs-shell > .topbar .topbar-controls {
+    margin-top: 12px !important;
+  }
+
+  .app > .topbar .topbar-nav,
+  .business-shell > .topbar .topbar-nav,
+  .docs-shell > .topbar .topbar-nav {
+    top: 58px;
+    left: 12px !important;
+    right: 12px;
+    width: calc(100% - 24px) !important;
+    justify-content: space-evenly !important;
+    transform: none !important;
+  }
+
+  .app > .topbar .topbar-nav .nav-link,
+  .business-shell > .topbar .topbar-nav .nav-link,
+  .docs-shell > .topbar .topbar-nav .nav-link {
+    padding-inline: 5px !important;
+    font-size: 11px !important;
+  }
+}
+
+/* Dark-only release navigation: compact at rest, one shared glass bar on scroll. */
+.app > .topbar::before,
+.business-shell > .topbar::before,
+.docs-shell > .topbar::before {
+  display: block !important;
+  content: '' !important;
+  opacity: var(--topbar-banner-progress) !important;
+}
+
+.app > .topbar .topbar-controls,
+.business-shell > .topbar .topbar-controls,
+.docs-shell > .topbar .topbar-controls {
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+  border-left: 0 !important;
+}
+
+@media (max-width: 760px) {
+  .app > .topbar,
+  .business-shell > .topbar,
+  .docs-shell > .topbar {
+    width: calc(100% - 16px) !important;
+    max-width: none;
+    justify-content: space-between !important;
+  }
+
+  .app > .topbar .topbar-nav,
+  .business-shell > .topbar .topbar-nav,
+  .docs-shell > .topbar .topbar-nav {
+    flex: 1 1 auto;
+    justify-content: center !important;
+  }
+}

@@ -1,0 +1,81 @@
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=Geist+Mono:wght@400;500;600&display=swap');
+
+:root {
+  --bg: #070914;
+  --bg-2: #0d1020;
+  --surface: #111522;
+  --surface-2: #171b2a;
+  --surface-3: #202538;
+  --border: rgba(255,255,255,0.07);
+  --border-2: rgba(255,255,255,0.12);
+  --border-strong: rgba(255,255,255,0.18);
+  --fg: #f4f5f7;
+  --fg-2: #c8cad0;
+  --fg-mute: #8b8e96;
+  --fg-dim: #5a5d63;
+  --accent: #ec3b6e;
+  --accent-2: #ff5f9c;
+  --accent-soft: rgba(236,59,110,0.12);
+  --accent-glow: rgba(236,59,110,0.35);
+  --brand-gradient: linear-gradient(110deg, #a855f7 0%, #ec3b6e 50%, #ff4d6d 100%);
+  --brand-gradient-shift: linear-gradient(100deg, #f4f5f7 0%, #d9e1ff 22%, #bd5bff 46%, #ff3f7b 68%, #f4f5f7 100%);
+  --green: #ccff3d;
+  --green-soft: rgba(204,255,61,0.16);
+  --smoke-a: rgba(25, 66, 255, 0.32);
+  --smoke-b: rgba(236, 59, 110, 0.26);
+  --smoke-c: rgba(255, 92, 43, 0.18);
+  --shadow: 0 1px 0 rgba(255,255,255,0.04) inset,
+    0 30px 60px -20px rgba(0,0,0,0.6);
+  --sans: 'Geist', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --mono: 'Geist Mono', ui-monospace, monospace;
+  font-family: var(--sans);
+  font-feature-settings: 'ss01', 'cv02', 'cv03', 'cv04';
+  color: var(--fg);
+  background: var(--bg);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+:root[data-theme='light'] {
+  --bg: #cfd5d7;
+  --bg-2: #dce1e2;
+  --surface: rgba(221, 226, 227, 0.78);
+  --surface-2: rgba(207, 214, 216, 0.88);
+  --surface-3: rgba(188, 198, 201, 0.9);
+  --border: rgba(25, 36, 41, 0.12);
+  --border-2: rgba(25, 36, 41, 0.2);
+  --border-strong: rgba(25, 36, 41, 0.31);
+  --fg: #10171a;
+  --fg-2: #263238;
+  --fg-mute: #536168;
+  --fg-dim: #7a868c;
+  --accent: #5fd5ff;
+  --accent-2: #22bce9;
+  --accent-soft: rgba(34, 188, 233, 0.14);
+  --accent-glow: rgba(34, 188, 233, 0.34);
+  --brand-gradient: linear-gradient(110deg, #20292e 0%, #607078 42%, #22bce9 100%);
+  --brand-gradient-shift: linear-gradient(100deg, #10171a 0%, #45545b 27%, #22bce9 54%, #d8f6ff 74%, #10171a 100%);
+  --green: #6bcf26;
+  --green-soft: rgba(107, 207, 38, 0.16);
+  --smoke-a: rgba(34, 188, 233, 0.18);
+  --smoke-b: rgba(77, 93, 102, 0.14);
+  --smoke-c: rgba(228, 239, 242, 0.18);
+  --shadow: 0 1px 0 rgba(255,255,255,0.62) inset,
+    0 28px 58px -34px rgba(20, 30, 35, 0.42);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+}
+
+button,
+input {
+  letter-spacing: 0;
+}

@@ -1,0 +1,194 @@
+import { useEffect, useState } from 'react'
+import type { SiteLocale } from '../hooks/useLocale'
+
+type TranslationMap = Record<string, string>
+const emptyTranslations: TranslationMap = {}
+const reverseTranslationCache = new Map<Exclude<SiteLocale, 'en'>, Map<string, string>>()
+
+const translationLoaders: Record<Exclude<SiteLocale, 'en'>, () => Promise<TranslationMap>> = {
+  zh: () => import('../i18n/publicTranslations.zh.generated').then((module) => module.default),
+  tr: () => import('../i18n/publicTranslations.tr.generated').then((module) => module.default),
+  es: () => import('../i18n/publicTranslations.es.generated').then((module) => module.default),
+}
+
+const originalText = new WeakMap<Text, string>()
+const appliedText = new WeakMap<Text, string>()
+const originalAttributes = new WeakMap<Element, Map<string, string>>()
+const appliedAttributes = new WeakMap<Element, Map<string, string>>()
+const translatedAttributes = ['aria-label', 'placeholder', 'title']
+const ignoredElements = new Set(['CODE', 'PRE', 'SCRIPT', 'STYLE', 'SVG'])
+
+const patternTranslations: Record<Exclude<SiteLocale, 'en'>, Array<{
+  pattern: RegExp
+  replace: (...groups: string[]) => string
+}>> = {
+  zh: [
+    { pattern: /^\/ month$/, replace: () => '/ 月' },
+    { pattern: /^\$(.+) \/ mo$/, replace: (price) => `$${price} / 月` },
+    { pattern: /^Secure (.+) checkout$/, replace: (provider) => `由 ${provider} 提供安全结账` },
+    { pattern: /^Card details are entered on (.+) after you continue\.$/, replace: (provider) => `继续后，您将在 ${provider} 输入银行卡信息。` },
+    { pattern: /^Hosted payment via (.+)\.$/, replace: (provider) => `由 ${provider} 托管付款。` },
+    { pattern: /^(\d+) failed$/, replace: (count) => `${count} 个失败` },
+    { pattern: /^(\d+)\/(\d+) processed$/, replace: (done, total) => `已处理 ${done}/${total}` },
+  ],
+  tr: [
+    { pattern: /^\/ month$/, replace: () => '/ ay' },
+    { pattern: /^\$(.+) \/ mo$/, replace: (price) => `$${price} / ay` },
+    { pattern: /^Secure (.+) checkout$/, replace: (provider) => `${provider} ile güvenli ödeme` },
+    { pattern: /^Card details are entered on (.+) after you continue\.$/, replace: (provider) => `Devam ettikten sonra kart bilgileri ${provider} üzerinde girilir.` },
+    { pattern: /^Hosted payment via (.+)\.$/, replace: (provider) => `${provider} üzerinden güvenli ödeme.` },
+    { pattern: /^(\d+) failed$/, replace: (count) => `${count} başarısız` },
+    { pattern: /^(\d+)\/(\d+) processed$/, replace: (done, total) => `${done}/${total} işlendi` },
+  ],
+  es: [
+    { pattern: /^\/ month$/, replace: () => '/ mes' },
+    { pattern: /^\$(.+) \/ mo$/, replace: (price) => `$${price} / mes` },
+    { pattern: /^Secure (.+) checkout$/, replace: (provider) => `Pago seguro con ${provider}` },
+    { pattern: /^Card details are entered on (.+) after you continue\.$/, replace: (provider) => `Los datos de la tarjeta se introducen en ${provider} después de continuar.` },
+    { pattern: /^Hosted payment via (.+)\.$/, replace: (provider) => `Pago alojado por ${provider}.` },
+    { pattern: /^(\d+) failed$/, replace: (count) => `${count} ${count === '1' ? 'fallido' : 'fallidos'}` },
+    { pattern: /^(\d+)\/(\d+) processed$/, replace: (done, total) => `${done}/${total} procesados` },
+  ],
+}
+
+const rememberTranslations = (locale: Exclude<SiteLocale, 'en'>, translations: TranslationMap) => {
+  if (reverseTranslationCache.has(locale)) return
+  const reverse = new Map<string, string>()
+  Object.entries(translations).forEach(([source, translated]) => {
+    if (!reverse.has(translated)) reverse.set(translated, source)
+  })
+  reverseTranslationCache.set(locale, reverse)
+}
+
+const recoverSourcePhrase = (value: string) => {
+  for (const reverse of reverseTranslationCache.values()) {
+    const recovered = reverse.get(value)
+    if (recovered) return recovered
+  }
+  return value
+}
+
+const translatePhrase = (source: string, locale: SiteLocale, translations: TranslationMap) => {
+  const normalized = source.replace(/\s+/g, ' ')
+  const canonicalSource = recoverSourcePhrase(normalized)
+  if (locale === 'en') return canonicalSource
+  const exact = translations[canonicalSource] ?? translations[normalized]
+  if (exact) return exact
+
+  for (const translation of patternTranslations[locale]) {
+    const match = canonicalSource.match(translation.pattern)
+    if (match) return translation.replace(...match.slice(1))
+  }
+  return canonicalSource
+}
+
+const shouldSkip = (node: Node) => {
+  const parent = node instanceof Element ? node : node.parentElement
+  return Boolean(parent?.closest('code, pre, script, style, svg, [data-no-translate]'))
+}
+
+const translateTextNode = (node: Text, locale: SiteLocale, translations: TranslationMap) => {
+  if (shouldSkip(node)) return
+  const current = node.nodeValue ?? ''
+  const lastApplied = appliedText.get(node)
+  if (!originalText.has(node) || (lastApplied !== undefined && current !== lastApplied)) {
+    originalText.set(node, current)
+  }
+  const source = originalText.get(node) ?? current
+  const trimmed = source.trim()
+  if (!trimmed) return
+
+  const translated = translatePhrase(trimmed, locale, translations)
+  const leading = source.match(/^\s*/)?.[0] ?? ''
+  const trailing = source.match(/\s*$/)?.[0] ?? ''
+  const next = `${leading}${translated}${trailing}`
+  appliedText.set(node, next)
+  if (node.nodeValue !== next) node.nodeValue = next
+}
+
+const translateAttributes = (element: Element, locale: SiteLocale, translations: TranslationMap) => {
+  if (ignoredElements.has(element.tagName) || element.closest('[data-no-translate]')) return
+  let originals = originalAttributes.get(element)
+  if (!originals) {
+    originals = new Map()
+    originalAttributes.set(element, originals)
+  }
+  let applied = appliedAttributes.get(element)
+  if (!applied) {
+    applied = new Map()
+    appliedAttributes.set(element, applied)
+  }
+
+  translatedAttributes.forEach((attribute) => {
+    const current = element.getAttribute(attribute)
+    if (!current) return
+    const lastApplied = applied.get(attribute)
+    if (!originals.has(attribute) || (lastApplied !== undefined && current !== lastApplied)) {
+      originals.set(attribute, current)
+    }
+    const source = originals.get(attribute) ?? current
+    const translated = translatePhrase(source, locale, translations)
+    applied.set(attribute, translated)
+    if (current !== translated) element.setAttribute(attribute, translated)
+  })
+}
+
+const translateSubtree = (root: Node, locale: SiteLocale, translations: TranslationMap) => {
+  if (root instanceof Text) {
+    translateTextNode(root, locale, translations)
+    return
+  }
+  if (!(root instanceof Element) || shouldSkip(root)) return
+
+  translateAttributes(root, locale, translations)
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_TEXT)
+  let current = walker.nextNode()
+  while (current) {
+    if (current instanceof Text) translateTextNode(current, locale, translations)
+    else if (current instanceof Element) translateAttributes(current, locale, translations)
+    current = walker.nextNode()
+  }
+}
+
+export function PublicLocaleBridge({ locale }: { locale: SiteLocale }) {
+  const [loadedTranslations, setLoadedTranslations] = useState<{
+    locale: SiteLocale
+    translations: TranslationMap
+  }>({ locale: 'en', translations: emptyTranslations })
+  const translations = locale !== 'en' && loadedTranslations.locale === locale
+    ? loadedTranslations.translations
+    : emptyTranslations
+
+  useEffect(() => {
+    if (locale === 'en') return
+    let cancelled = false
+
+    translationLoaders[locale]().then((nextTranslations) => {
+      rememberTranslations(locale, nextTranslations)
+      if (!cancelled) setLoadedTranslations({ locale, translations: nextTranslations })
+    })
+    return () => { cancelled = true }
+  }, [locale])
+
+  useEffect(() => {
+    const root = document.getElementById('root')
+    if (!root) return
+
+    translateSubtree(root, locale, translations)
+    const observer = new MutationObserver((mutations) => {
+      observer.disconnect()
+      mutations.forEach((mutation) => {
+        if (mutation.type === 'characterData') translateSubtree(mutation.target, locale, translations)
+        if (mutation.type === 'attributes' && mutation.target instanceof Element) {
+          translateAttributes(mutation.target, locale, translations)
+        }
+        mutation.addedNodes.forEach((node) => translateSubtree(node, locale, translations))
+      })
+      observer.observe(root, { childList: true, subtree: true, characterData: true, attributes: true, attributeFilter: translatedAttributes })
+    })
+    observer.observe(root, { childList: true, subtree: true, characterData: true, attributes: true, attributeFilter: translatedAttributes })
+    return () => observer.disconnect()
+  }, [locale, translations])
+
+  return null
+}
