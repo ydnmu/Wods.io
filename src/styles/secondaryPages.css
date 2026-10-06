@@ -107,14 +107,14 @@ html body .app.secondary-page[data-page-context='pricing'] > .site-topbar.is-scr
 .secondary-page .pricing-maintenance-copy h1 > span { display: block; }
 .secondary-page .pricing-maintenance-copy > p { max-width: 580px; margin: 0 auto 28px; color: var(--page-muted); font-size: 19px; line-height: 1.6; }
 .secondary-page .pricing-maintenance-copy .editorial-accent { white-space: nowrap; }
-.secondary-page .pricing-minimal { display:block; min-height:calc(100svh - 80px); padding:calc(clamp(72px,10svh,112px) + 64px) 0 90px; }
+.secondary-page .pricing-minimal { display:block; min-height:calc(100svh - 80px); padding:calc(clamp(72px,10svh,112px) + 130px) 0 90px; }
 .secondary-page .pricing-minimal .pricing-maintenance-copy { width:100%; max-width:880px; }
 .secondary-page .pricing-minimal h1 { margin:0 0 20px; font-size:clamp(32px,4.2vw,56px); line-height:1.12; letter-spacing:-.045em; text-wrap:balance; }
 .secondary-page .pricing-planned-features { display:flex; flex-wrap:wrap; justify-content:center; gap:14px 28px; max-width:880px; margin:16px auto 0; padding:0; list-style:none; color:var(--page-text); font-size:16px; font-weight:500; line-height:1.65; text-align:left; }
 .secondary-page .pricing-planned-features li { position:relative; max-width:100%; padding-left:18px; }
 .secondary-page .pricing-planned-features li::before { content:'-'; position:absolute; left:0; color:var(--page-muted); }
 .secondary-page .pricing-planned-features li:nth-child(-n + 2) { font-weight:650; }
-.pricing-minimal .email-waitlist { max-width:560px; margin:0 auto; }
+.pricing-minimal .email-waitlist { max-width:740px; margin:0 auto; }
 .secondary-page .pricing-back-link { display: inline-flex; align-items: center; gap: 10px; margin-top: 24px; color: var(--page-muted); font-size: 13px; text-decoration: none; }
 .secondary-page .pricing-back-link:hover { color: var(--page-text); }
 /* Live pricing remains gated; its existing plan data and actions are untouched. */
@@ -147,7 +147,7 @@ html body .app.secondary-page[data-page-context='pricing'] > .site-topbar.is-scr
   .secondary-page .page-container { width: calc(100% - 40px); }
   .secondary-page .pricing-maintenance-view { padding: 54px 0 56px; }
   .secondary-page .pricing-maintenance-copy > p { font-size: 17px; }
-  .secondary-page .pricing-minimal { min-height:calc(100svh - 114px); padding:72px 0 64px; }
+  .secondary-page .pricing-minimal { min-height:calc(100svh - 114px); padding:48px 0 64px; }
   .secondary-page .pricing-minimal h1 { margin-bottom:20px; }
   .secondary-page .pricing-planned-features { gap:12px 20px; font-size:15px; }
 }
