@@ -175,5 +175,10 @@ export default function App() {
     window.addEventListener('popstate', sync)
     return () => window.removeEventListener('popstate', sync)
   }, [])
-  return <>{isHomeRoute(path) && <ProductBackdrop theme={themeState.productTheme} />}<AppContent themeState={themeState} /></>
+  return <>
+    {isHomeRoute(path) && <ProductBackdrop theme={themeState.productTheme} />}
+    <div key={path} className="route-transition">
+      <AppContent themeState={themeState} />
+    </div>
+  </>
 }
