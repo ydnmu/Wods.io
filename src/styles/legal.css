@@ -1,0 +1,51 @@
+/* Legal page UI. */
+
+
+
+.legal-shell {
+  min-height: 100vh;
+  overflow: visible;
+}
+
+.legal-page {
+  position: relative;
+  z-index: 1;
+  width: min(760px, calc(100% - 48px));
+  margin: 72px auto 96px;
+  line-height: 1.7;
+}
+
+.legal-page h1 {
+  margin: 8px 0 18px;
+  font-size: clamp(38px, 6vw, 62px);
+  line-height: 1.02;
+  letter-spacing: -0.045em;
+}
+
+.legal-page h2 {
+  margin: 38px 0 10px;
+  font-size: 20px;
+  letter-spacing: -0.02em;
+}
+
+.legal-page p {
+  margin: 0 0 14px;
+  color: var(--fg-soft);
+}
+
+.legal-page a {
+  color: var(--fg);
+}
+
+.legal-kicker {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.legal-page .legal-lead {
+  margin-bottom: 36px;
+  font-size: 18px;
+  color: var(--fg);
+}
