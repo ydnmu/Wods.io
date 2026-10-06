@@ -199,8 +199,8 @@ body:has(.react-home) { background: inherit; }
 html body .app.react-home[data-visual-theme] .transcribe-cta {
   position: relative;
   overflow: hidden;
-  width: 56px;
-  min-width: 56px;
+  width: 68px;
+  min-width: 68px;
   padding-inline: 0;
   justify-content: center;
   flex-shrink: 0;
