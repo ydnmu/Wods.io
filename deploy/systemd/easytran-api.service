@@ -1,0 +1,29 @@
+[Unit]
+Description=EasyTran API
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+User=easytran
+Group=easytran
+WorkingDirectory=/opt/easytran/app
+Environment=NODE_ENV=production
+Environment=PORT=3001
+EnvironmentFile=/etc/easytran/easytran-api.env
+ExecStartPre=/usr/bin/test -f /opt/easytran/app/dist/index.html
+ExecStart=/usr/bin/npm run start
+Restart=always
+RestartSec=5
+StartLimitIntervalSec=0
+TimeoutStopSec=20
+KillSignal=SIGTERM
+SyslogIdentifier=easytran-api
+UMask=0027
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectHome=true
+ProtectSystem=full
+
+[Install]
+WantedBy=multi-user.target

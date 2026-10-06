@@ -1,0 +1,55 @@
+http:
+  routers:
+    easytran-site-http:
+      entryPoints:
+        - http
+      rule: Host(`easytran.app`) || Host(`www.easytran.app`)
+      middlewares:
+        - easytran-https-redirect
+      service: easytran-app
+
+    easytran-site-https:
+      entryPoints:
+        - https
+      rule: Host(`easytran.app`) || Host(`www.easytran.app`)
+      middlewares:
+        - easytran-compress
+      service: easytran-app
+      tls:
+        certResolver: letsencrypt
+
+    easytran-api-http:
+      entryPoints:
+        - http
+      rule: Host(`api.easytran.app`)
+      middlewares:
+        - easytran-https-redirect
+      service: easytran-app
+
+    easytran-api-https:
+      entryPoints:
+        - https
+      rule: Host(`api.easytran.app`)
+      middlewares:
+        - easytran-compress
+      service: easytran-app
+      tls:
+        certResolver: letsencrypt
+
+  middlewares:
+    easytran-https-redirect:
+      redirectScheme:
+        scheme: https
+        permanent: true
+    easytran-compress:
+      compress: {}
+
+  services:
+    easytran-app:
+      loadBalancer:
+        healthCheck:
+          path: /api/health
+          interval: 10s
+          timeout: 3s
+        servers:
+          - url: http://host.docker.internal:3001
