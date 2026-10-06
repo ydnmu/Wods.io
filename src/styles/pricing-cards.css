@@ -1,0 +1,30 @@
+/* Tier-specific actions load after the legacy pricing surface rules. */
+
+.business .pricing-grid .card-free .tier-cta {
+  border-color: rgba(224, 235, 238, .22);
+  color: rgba(239, 246, 247, .84);
+  background: rgba(255, 255, 255, .055);
+  box-shadow: none;
+}
+
+.business .pricing-grid .card-developer .tier-cta {
+  border-color: rgba(122, 167, 255, .4);
+  color: #dce8ff;
+  background: rgba(75, 119, 205, .18);
+  box-shadow: 0 14px 32px -24px rgba(92, 143, 255, .9);
+}
+
+.business .pricing-grid .card-business .tier-cta,
+.business .pricing-grid .card.featured .tier-cta {
+  border-color: rgba(184, 240, 255, .68);
+  color: #071116;
+  background: linear-gradient(180deg, #a7edff, #76d9f8);
+  box-shadow: 0 16px 38px -23px rgba(104, 221, 255, 1);
+}
+
+.business .pricing-grid .card-custom .tier-cta {
+  border-color: rgba(191, 180, 255, .38);
+  color: #e5e0ff;
+  background: rgba(133, 115, 220, .15);
+  box-shadow: 0 14px 32px -25px rgba(180, 170, 255, .9);
+}
