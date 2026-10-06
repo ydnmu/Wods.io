@@ -124,7 +124,7 @@ test('an explicitly unreadable env fails even when credentials already exist in 
 
 test('feedback repair preserves the original table contract and explicitly restricts grants', () => {
   const oldSql = fs.readFileSync(path.join(root, 'server/migrations/2026-07-26_feedback.sql'), 'utf8')
-  const newSql = fs.readFileSync(path.join(root, 'server/migrations/2026-10-05_repair_feedback_messages.sql'), 'utf8')
+  const newSql = fs.readFileSync(path.join(root, 'server/migrations/2026-10-05_repair_feedback_messages.sql'), 'utf8').replaceAll('\r\n', '\n')
   assert.equal(newSql.match(/CREATE TABLE[\s\S]*?\n\);/)[0], oldSql.replaceAll('\r\n', '\n').match(/CREATE TABLE[\s\S]*?\n\);/)[0])
   assert.match(newSql, /ALTER TABLE feedback_messages ENABLE ROW LEVEL SECURITY;/)
   assert.match(newSql, /REVOKE ALL ON TABLE feedback_messages FROM PUBLIC, anon, authenticated;/)
