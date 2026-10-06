@@ -1,0 +1,57 @@
+.rubber-segment-nav,
+.site-topbar .rubber-segment-nav,
+html body .app > .topbar.site-topbar .rubber-segment-nav,
+html body .business-shell > .topbar.site-topbar .rubber-segment-nav,
+html body .docs-shell > .topbar.site-topbar .rubber-segment-nav,
+html body .app > .topbar.site-topbar .rubber-segment-nav.topbar-nav.topbar-nav,
+html body .business-shell > .topbar.site-topbar .rubber-segment-nav.topbar-nav.topbar-nav,
+html body .docs-shell > .topbar.site-topbar .rubber-segment-nav.topbar-nav.topbar-nav {
+  position: relative !important;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--rubber-nav-gap, 10px) !important;
+}
+
+.rubber-segment-thumb {
+  position: absolute;
+  z-index: 0;
+  top: 8px;
+  bottom: 8px;
+  min-width: 0;
+  border-radius: 2px;
+  background: #59e7f2;
+  pointer-events: none;
+  will-change: left, width;
+}
+
+.rubber-segment-link {
+  position: relative;
+  z-index: 1;
+  color: var(--topbar-text-muted) !important;
+  transition: color 120ms ease;
+}
+
+.rubber-segment-link[data-highlighted='true'],
+html body .topbar.site-topbar .topbar-nav .rubber-segment-link[data-highlighted='true'],
+html body .app > .topbar.site-topbar .topbar-nav .rubber-segment-link[data-highlighted='true']:hover,
+html body .app > .topbar.site-topbar .topbar-nav .rubber-segment-link[data-highlighted='true']:focus-visible,
+html body .business-shell > .topbar.site-topbar .topbar-nav .rubber-segment-link[data-highlighted='true']:hover,
+html body .business-shell > .topbar.site-topbar .topbar-nav .rubber-segment-link[data-highlighted='true']:focus-visible,
+html body .docs-shell > .topbar.site-topbar .topbar-nav .rubber-segment-link[data-highlighted='true']:hover,
+html body .docs-shell > .topbar.site-topbar .topbar-nav .rubber-segment-link[data-highlighted='true']:focus-visible {
+  color: #061015 !important;
+}
+
+.rubber-segment-link:focus-visible {
+  outline: 2px solid rgba(231, 247, 255, .8);
+  outline-offset: 3px;
+}
+
+@media (max-width: 760px) {
+  .site-topbar { --rubber-nav-gap: 6px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rubber-segment-link { transition: none; }
+}
