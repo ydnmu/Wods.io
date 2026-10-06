@@ -1,3 +1,5 @@
+import { UndertoneBackdrop } from './UndertoneBackdrop'
+
 type WallpaperTheme = 'dark' | 'light'
 
 type Wallpaper = {
@@ -49,22 +51,28 @@ export function ThemeBackdrop({
 
   return (
     <div className={`theme-backdrop theme-backdrop-${activeTheme} theme-backdrop-${variant}`}>
-      <img
-        key={`${activeTheme}-${wallpaper.id || wallpaper.imageUrl}`}
-        className="theme-backdrop-image"
-        src={wallpaper.imageUrl}
-        alt=""
-        decoding="async"
-        style={{ objectPosition: wallpaper.objectPosition }}
-      />
+      {theme === 'dark' ? (
+        <UndertoneBackdrop className="theme-backdrop-undertone" />
+      ) : (
+        <img
+          key={`${activeTheme}-${wallpaper.id || wallpaper.imageUrl}`}
+          className="theme-backdrop-image"
+          src={wallpaper.imageUrl}
+          alt=""
+          decoding="async"
+          style={{ objectPosition: wallpaper.objectPosition }}
+        />
+      )}
       <div className="theme-backdrop-shade" />
       <div className="theme-backdrop-vignette" />
-      <div className="theme-backdrop-credit">
-        <span>Photo:</span>
-        <a href={wallpaper.photographerUrl} target="_blank" rel="noreferrer" data-no-translate>{wallpaper.photographer}</a>
-        <span>/</span>
-        <a href={wallpaper.sourceUrl} target="_blank" rel="noreferrer" data-no-translate>{wallpaper.sourceName}</a>
-      </div>
+      {theme === 'light' && (
+        <div className="theme-backdrop-credit">
+          <span>Photo:</span>
+          <a href={wallpaper.photographerUrl} target="_blank" rel="noreferrer" data-no-translate>{wallpaper.photographer}</a>
+          <span>/</span>
+          <a href={wallpaper.sourceUrl} target="_blank" rel="noreferrer" data-no-translate>{wallpaper.sourceName}</a>
+        </div>
+      )}
     </div>
   )
 }

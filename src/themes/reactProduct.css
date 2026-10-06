@@ -1,0 +1,382 @@
+/* Shared React interaction tokens; Ancient Rome retains its existing UI. */
+:root {
+  --et-select-surface-dark: #0b1422;
+  --et-select-highlight-dark: #263242;
+  --et-select-text-dark: #edf3fb;
+  --et-select-surface-light: #f8fafc;
+  --et-select-highlight-light: #e1e7ef;
+  --et-select-text-light: #243347;
+  --et-select-accent: #72b7e3;
+}
+.product-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background: var(--rt-base);
+}
+.light-pillar-container {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 76% 20%, #79d8ff18, transparent 48%),
+    linear-gradient(118deg, transparent 24%, #e9f9ff12 44%, transparent 67%);
+  mix-blend-mode: var(--rt-pillar-blend);
+  opacity: var(--rt-pillar-opacity);
+}
+.light-pillar-canvas { display: block; width: 100%; height: 100%; }
+.light-pillar-container[data-mode='fallback'] .light-pillar-canvas { visibility: hidden; }
+.product-backdrop-shade {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 47% 39% at 50% 48%, var(--rt-center) 0%, transparent 100%),
+    linear-gradient(180deg, var(--rt-edge), transparent 28%, transparent 76%, var(--rt-edge));
+}
+:root[data-visual-theme='react-dark']:has(.react-home) { background: #000; }
+:root[data-visual-theme='react-light']:has(.react-home) { background: #f4f7fb; }
+body:has(.react-home) { background: inherit; }
+.app.react-home { background: transparent !important; }
+.app.react-home > .dot-grid { display: none; }
+
+/* Neutral navigation typography, scoped to the React product themes. */
+.react-home > .site-topbar {
+  font-family: 'Geist', ui-sans-serif, system-ui, -apple-system, sans-serif;
+}
+.react-home > .site-topbar .nav-link,
+.react-home > .site-topbar .glide-select__trigger {
+  font-family: inherit;
+  font-weight: 500;
+}
+
+/* A neutral direction cue, with the headline's existing footprint. */
+.app.react-home .hero-h1.hero-h1-single .hero-title-arrow {
+  flex-shrink: 0;
+  color: #d7dee8 !important;
+  -webkit-text-fill-color: currentColor !important;
+  filter: none;
+  transition: color 160ms ease;
+}
+.app.react-home .hero-h1.hero-h1-single {
+  max-width: 100%;
+  font-size: 62px;
+  letter-spacing: 0;
+}
+.react-home .hero-title-arrow::before,
+.react-home .hero-title-arrow::after { display: none; }
+.react-home .hero-title-arrow svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  transition: transform 160ms ease;
+}
+.app.react-home .hero-h1:hover .hero-title-arrow { color: #f4f7fb !important; }
+.react-home .hero-h1:hover .hero-title-arrow svg { transform: translateX(3px); }
+.app.react-home[data-visual-theme='react-light'] .hero-h1 .hero-title-arrow { color: #5a6778 !important; }
+.app.react-home[data-visual-theme='react-light'] .hero-h1:hover .hero-title-arrow { color: #142030 !important; }
+@media (prefers-reduced-motion: reduce) {
+  .react-home .hero-title-arrow,
+  .react-home .hero-title-arrow svg { transition: none; }
+  .react-home .hero-h1:hover .hero-title-arrow svg { transform: none; }
+}
+
+/* Preserve the existing bar's alignment when the background is mounted separately. */
+.app.react-home .url-input-wrap { width: 100%; align-items: center; }
+@media (min-width: 761px) and (max-width: 860px) {
+  .app.react-home .url-shell { flex-direction: row; }
+  .app.react-home .cta { width: auto; flex-shrink: 0; }
+}
+
+/* Retain the integrated request indicator and cold-load result layout. */
+.transcription-status {
+  display: flex;
+  justify-content: center;
+  min-height: 24px;
+  margin: 0 0 8px;
+  --rt-loader: var(--fg-2);
+  --rt-success: var(--fg-2);
+  --rt-error: #e89487;
+}
+.result-transcription-status { justify-content: flex-end; margin: 0; }
+.ai-fallback-card .transcription-status { justify-content: flex-start; margin: 20px 0 0; }
+.app.react-home .search, .app.react-home .line, .app.react-home .pill { display: flex; align-items: center; }
+.app.react-home .line { align-items: flex-start; }
+.app.react-home .search input { width: 100%; }
+.app.react-home .line-text {
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+.app.react-home .url-clear {
+  width: 40px;
+  height: 40px;
+  flex: 0 0 40px;
+}
+.app.react-home :is(.url-clear, .transcribe-cta):focus-visible {
+  outline: 2px solid var(--fg);
+  outline-offset: 3px;
+}
+
+/* Balance the beam itself over a black base, without a paragraph-sized dark plate. */
+.product-backdrop[data-visual-theme='react-dark'] .light-pillar-container {
+  background: radial-gradient(ellipse at 76% 20%, #4a9dff12, transparent 56%),
+    linear-gradient(118deg, transparent 24%, #a6deff10 44%, transparent 67%);
+  -webkit-mask-image: radial-gradient(ellipse 68% 64% at 50% 58%, #000000c7 0%, #000000e6 40%, #000 100%);
+  mask-image: radial-gradient(ellipse 68% 64% at 50% 58%, #000000c7 0%, #000000e6 40%, #000 100%);
+}
+.product-backdrop[data-visual-theme='react-dark'] .product-backdrop-shade {
+  background: linear-gradient(180deg, var(--rt-edge), transparent 24%, transparent 78%, var(--rt-edge));
+}
+
+/* One continuous reading area spans the title, input and final metric, fading outward. */
+.react-home[data-visual-theme='react-dark'] .hero-h1,
+.react-home[data-visual-theme='react-dark'] .product-information {
+  position: relative;
+  isolation: isolate;
+}
+.react-home[data-visual-theme='react-dark'] .hero::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  left: 50%;
+  top: 50%;
+  width: min(1320px, calc(100vw + 240px));
+  height: calc(100% + 160px);
+  transform: translate(-50%, -50%);
+  background: radial-gradient(ellipse 50% 50% at center,
+    #000000b8 0%, #000000a3 32%, #0000006b 58%, #0000002e 80%, transparent 100%);
+  pointer-events: none;
+}
+.react-home[data-visual-theme='react-dark'] > .site-topbar::after {
+  content: '';
+  position: absolute;
+  z-index: -2;
+  inset: -28px -36px;
+  background: radial-gradient(ellipse 50% 50% at center, #000000a3 0%, #0000007a 45%, transparent 100%);
+  pointer-events: none;
+}
+
+/* Keep the existing bar width and composition, with local edge feedback. */
+.react-home .transcript-border {
+  width: 100%;
+  max-width: 100%;
+  margin: 38px auto 18px;
+  border: 2px solid #686868;
+  outline: 0;
+  background: linear-gradient(180deg, #101c2c, #0a111d);
+  box-shadow: 0 20px 44px -24px #000b;
+  transition: border-color 160ms ease;
+}
+.react-home[data-visual-theme] .transcript-border:is(:hover, :focus-within) { border-color: #fff; }
+.react-home .transcript-border::before,
+.react-home .transcript-border::after,
+.react-home .transcript-border > .edge-light,
+.react-home .transcript-border .url-shell::before,
+.react-home .transcript-border .url-shell::after {
+  display: none;
+}
+.transcript-border .border-glow-inner { overflow: visible; }
+.hero-operation-status { position: relative; height: 0; width: 100%; flex-shrink: 0; }
+.hero-operation-status > .transcription-status { position: absolute; top: 0; left: 0; right: 0; margin: 0; }
+.react-home .transcript-border .url-shell,
+.react-home .transcript-border .url-shell:hover,
+.react-home .transcript-border .url-shell:focus-within {
+  width: 100%;
+  margin: 0;
+  border: 1px solid transparent !important;
+  border-radius: 3px !important;
+  background: transparent;
+  box-shadow: none !important;
+  backdrop-filter: none;
+}
+.react-home[data-visual-theme='react-dark'] .url-input::placeholder { color: #a8b9cd; }
+.react-home[data-visual-theme='react-dark'] .url-icon { color: #a6d8ff; }
+.react-home[data-visual-theme='react-dark'] .transcript-border {
+  background: linear-gradient(180deg, #1b1b1b, #141414);
+}
+.transcript-border::before, .transcript-border::after { pointer-events: none; }
+
+html body .app.react-home[data-visual-theme] .transcribe-cta {
+  position: relative;
+  overflow: hidden;
+  min-width: 150px;
+  justify-content: center;
+  flex-shrink: 0;
+  padding-inline: 14px;
+  gap: 8px;
+  color: #f5f7fa !important;
+  border-color: #44474d !important;
+  background: #2b2d31 !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+  transition: background-color 160ms ease, border-color 160ms ease, transform 100ms ease;
+}
+html body .app.react-home[data-visual-theme] .transcribe-cta:not(:disabled):hover,
+html body .app.react-home[data-visual-theme] .transcribe-cta:focus-visible {
+  background: #35383c !important;
+  border-color: #51555c !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+  transform: none;
+}
+html body .app.react-home[data-visual-theme] .transcribe-cta:not(:disabled):active {
+  background: #35383c !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+  transform: scale(0.97);
+}
+html body .app.react-home[data-visual-theme] .transcribe-cta:disabled {
+  cursor: wait; opacity: 0.8;
+  background: #24262a !important;
+  text-shadow: none !important;
+}
+html body .app.react-home[data-visual-theme] .transcribe-cta:focus-visible {
+  outline: 2px solid #8796a6;
+  outline-offset: 2px;
+}
+.react-home .cta-label { white-space: nowrap; text-align: center; }
+.react-home .transcribe-cta .masked-heading { width: auto; display: inline-block; color: #f5f7fa; }
+.react-home .transcribe-cta .masked-heading__clip { background: #f5f7fa; isolation: isolate; }
+.react-home .transcribe-cta .masked-heading__media { opacity: 1; mix-blend-mode: screen; }
+.react-home .product-information { transition: opacity 160ms ease 150ms, transform 160ms ease 150ms; }
+.react-home[data-transcription-state='loading'] .product-information,
+.react-home[data-transcription-state='ai-loading'] .product-information,
+.react-home[data-transcription-state='ready'] .product-information { opacity: 0.22; transform: translateY(3px); }
+.react-home[data-transcription-state='result'] .result-view { animation: transcript-reveal 300ms ease both; }
+@keyframes transcript-reveal { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
+.react-home[data-visual-theme='react-dark'] .transcription-status { --rt-loader: #A6D8FF; --rt-success: #B7E5FF; }
+.easytran-language-label { display: inline-flex; align-items: center; gap: 6px; }
+.easytran-language .glide-select__trigger { background: transparent; color: #a8b9cd; padding-inline: 4px; }
+.easytran-language .glide-select__menu { border: 1px solid #a6d8ff30; box-shadow: 0 12px 30px #0008; }
+.react-home[data-visual-theme='react-light'] .transcript-border {
+  background: linear-gradient(180deg, #f8fafc, #edf2f8);
+  border-color: #8a8a8a;
+  box-shadow: inset 0 1px 0 #fff, 0 16px 36px -24px #23354a40;
+}
+.react-home[data-visual-theme='react-light'] .easytran-language .glide-select__trigger { color: #34465a; }
+.react-home[data-visual-theme='react-light'] .easytran-language .glide-select__menu { border-color: #ced7e2; box-shadow: 0 12px 30px #23354a22; }
+.react-home[data-visual-theme='react-light'] .transcription-status { --rt-loader: #3e719b; --rt-success: #2d657b; }
+.app.react-home.app-fixed[data-visual-theme='react-light'] {
+  color: #243347;
+}
+.react-home.app-fixed[data-visual-theme='react-light'] :is(.right, .video-info-card, .summary-card) {
+  color: #243347;
+  border-color: #cdd7e1;
+  background: #fafcfe;
+  box-shadow: none;
+}
+.react-home.app-fixed[data-visual-theme='react-light'] :is(.video-title, .video-facts strong, .summary-card h2) { color: #243347; }
+.react-home.app-fixed[data-visual-theme='react-light'] :is(.video-channel, .video-facts span, .line-time) { color: #536479; }
+.react-home.app-fixed[data-visual-theme='react-light'] .video-facts > div { border-color: #d8e0e8; }
+.react-home.app-fixed[data-visual-theme='react-light'] .line { border-bottom-color: #d8e0e8; }
+.react-home.app-fixed[data-visual-theme='react-light'] .line:hover { background: #eff4f8; }
+.react-home.app-fixed[data-visual-theme='react-light'] .line.active { background: #e7eef5; }
+.react-home.app-fixed[data-visual-theme='react-light'] .line.active::before { background: #35749b; box-shadow: none; }
+.react-home.app-fixed[data-visual-theme='react-light'] .line-text { color: #34465a; }
+.react-home.app-fixed[data-visual-theme='react-light'] .line:is(:hover, .active) .line-time { color: #41556c; }
+.react-home.app-fixed[data-visual-theme='react-light'] .right-head :is(.search, .lang-select, .toggle, .pill),
+.react-home.app-fixed[data-visual-theme='react-light'] .summary-head button {
+  color: #34465a;
+  border-color: #c3d0dc;
+  background: #fff;
+  box-shadow: none;
+}
+.react-home.app-fixed[data-visual-theme='react-light'] .right-head :is(input, select) { color: #243347; }
+.react-home.app-fixed[data-visual-theme='react-light'] .right-head svg { color: inherit; }
+.react-home.app-fixed[data-visual-theme='react-light'] .right-head :is(.toggle.on, .command-copy) {
+  color: #235977;
+  border-color: #96b8cd;
+  background: #edf5f9;
+}
+.react-home.app-fixed[data-visual-theme='react-light'] .right-head :is(.pill, .toggle):hover { background: #e7eef5; }
+.react-home.app-fixed[data-visual-theme='react-light'] .download-popover {
+  border-color: #c3d0dc;
+  background: #fff;
+  box-shadow: 0 12px 28px #24334724;
+}
+.react-home.app-fixed[data-visual-theme='react-light'] .download-popover button { color: #34465a; }
+.react-home.app-fixed[data-visual-theme='react-light'] .download-popover button:hover { background: #e7eef5; }
+.react-home.app-fixed[data-visual-theme='react-light'] .summary-head span { color: #235977; }
+.react-home.app-fixed[data-visual-theme='react-light'] .command-error { color: #a52b22; }
+.react-home.app-fixed[data-visual-theme='react-light'] .result-transcription-status { color: #34465a; }
+
+@media (min-width: 761px) and (max-width: 1100px) {
+  .app.react-home .hero-h1.hero-h1-single { font-size: 48px; }
+}
+@media (min-width: 761px) and (max-height: 600px) {
+  .app.react-home .hero {
+    min-height: 100svh;
+    justify-content: flex-start;
+    padding: 106px 0 40px;
+  }
+}
+@media (max-width: 860px) {
+  .app.react-home.app-fixed .result-overview { position: static; }
+}
+@media (max-width: 760px) {
+  .app.react-home .hero {
+    min-height: 100svh;
+    justify-content: flex-start;
+    padding: 164px 0 40px;
+  }
+  .app.react-home .hero-h1.hero-h1-single { font-size: 38px; }
+  .react-home .product-information { margin-top: 40px; }
+  .react-home .transcript-border { margin-bottom: 18px; }
+  .app.react-home .url-clear { width: 44px; height: 44px; flex-basis: 44px; }
+  .react-home > .site-topbar {
+    display: grid !important; grid-template-columns: 1fr auto;
+    gap: 4px 8px !important; align-items: center !important; padding: 8px 12px !important;
+  }
+  .react-home > .site-topbar .logo { grid-column: 1; grid-row: 1; margin: 0 !important; }
+  .react-home > .site-topbar .topbar-controls { grid-column: 2; grid-row: 1; margin: 0 !important; }
+  .react-home > .site-topbar .topbar-nav {
+    grid-column: 1 / -1; grid-row: 2;
+    top: auto !important; right: auto !important; left: auto !important;
+    transform: none !important;
+    width: 100% !important; height: 44px !important;
+    margin: 0 !important; justify-content: center !important;
+  }
+  html body .app.react-home > .site-topbar .topbar-nav .nav-link {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    height: 44px !important;
+    line-height: 1;
+    font-size: 13px !important;
+    min-height: 44px;
+  }
+  .app.react-home.app-fixed .result-view { margin-top: 142px !important; }
+  .app.react-home.app-fixed .right-head {
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 8px;
+  }
+  .app.react-home.app-fixed .right-head :is(.pill, .toggle, .lang-select) {
+    min-height: 44px;
+    flex-shrink: 0;
+  }
+  .app.react-home.app-fixed .right-head .pill-icon { width: 44px; }
+  .app.react-home.app-fixed .search {
+    order: -1;
+    flex: 1 1 100%;
+    min-width: 0;
+    min-height: 44px;
+  }
+  .app.react-home.app-fixed .search input { font-size: 16px; min-width: 0; }
+  .app.react-home.app-fixed .lang-select { width: 144px; min-width: 144px; }
+  .app.react-home.app-fixed .lang-select select { font-size: 16px; }
+  .app.react-home .download-popover button { min-height: 44px; }
+  :root[lang='es'] .app.react-home .hero-h1.hero-h1-single { font-size: 32px; }
+}
+@media (max-width: 560px) {
+  .app.react-home .line-time { flex: 0 0 auto; }
+}
+@media (max-width: 380px) {
+  .app.react-home .hero-h1.hero-h1-single { font-size: 32px; }
+  :root[lang='es'] .app.react-home .hero-h1.hero-h1-single { font-size: 26px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .transcript-border::before, .transcript-border::after, .transcript-border > .edge-light,
+  .easytran-language *, .react-home .transcribe-cta,
+  .react-home .product-information, .react-home .result-view, .transcript-border { transition: none !important; animation: none !important; }
+}
