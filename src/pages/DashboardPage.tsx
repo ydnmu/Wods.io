@@ -1,11 +1,11 @@
-import { useEffect, useMemo, useState } from 'react'
-import type { FormEvent } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { formatTime } from '../lib/formatTime'
 import {
   Activity,
   ArrowRight,
   CalendarClock,
   Check,
+  ChevronDown,
   Clipboard,
   Download,
   FileText,
@@ -14,6 +14,7 @@ import {
   Link2,
   ListVideo,
   LogOut,
+  Moon,
   Plus,
   Radio,
   RotateCw,
@@ -21,6 +22,7 @@ import {
   Settings,
   ShieldCheck,
   Sparkles,
+  Sun,
   Trash2,
   UploadCloud,
   Users,
@@ -29,7 +31,12 @@ import {
 import { PLANS } from '../lib/plans'
 import type { PlanKey } from '../lib/plans'
 import type { SiteLocale } from '../hooks/useLocale'
+import type { Theme } from '../hooks/useTheme'
+import { SecondaryPageShell } from '../components/SecondaryPageShell'
+import { DashboardLoginGate, DashboardSetupGate } from '../components/dashboard/DashboardAuth'
+import '../styles/dashboard.css'
 import './DashboardLogin.css'
+import '../styles/dashboardProduct.css'
 
 type ApiKey = {
   id: string
@@ -182,6 +189,7 @@ type TeamMember = {
 type View = 'overview' | 'usage' | 'archive' | 'keys' | 'webhooks' | 'channels' | 'transcribe' | 'team' | 'settings'
 type TranscriptExportFormat = 'json' | 'txt' | 'srt' | 'vtt' | 'pdf' | 'docx'
 type SettingsSection = 'account' | 'language' | 'output' | 'developer' | 'billing'
+type DashboardTheme = 'dark' | 'light'
 
 const dashboardLocaleOptions: Array<{ value: SiteLocale; code: string; label: string }> = [
   { value: 'en', code: 'EN', label: 'English' },
@@ -197,6 +205,7 @@ type DashboardPreferences = {
 }
 
 const DASHBOARD_PREFERENCES_KEY = 'easytran-dashboard-preferences'
+const DASHBOARD_THEME_KEY = 'easytran-dashboard-theme'
 const localTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC'
 const automationTimezones = [...new Set([localTimezone, 'UTC', 'Europe/Istanbul', 'Europe/London', 'America/New_York', 'America/Los_Angeles', 'Asia/Tokyo'])]
 const defaultDashboardPreferences: DashboardPreferences = {
@@ -237,19 +246,14 @@ function getSavedDashboardPreferences(): DashboardPreferences {
   }
 }
 
-function DashboardImageBackdrop() {
-  return (
-    <div className="dashboard-backdrop" aria-hidden="true">
-      <img
-        className="dashboard-wallpaper-image"
-        src="/wallpapers/evgeni-evgeniev-LPKk3wtkC-g-unsplash.jpg"
-        alt=""
-        decoding="async"
-        fetchPriority="high"
-      />
-      <div className="dashboard-backdrop-shade" />
-    </div>
-  )
+function getSavedDashboardTheme(): DashboardTheme {
+  try {
+    const saved = window.localStorage.getItem(DASHBOARD_THEME_KEY)
+    if (saved === 'dark' || saved === 'light') return saved
+    return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'
+  } catch {
+    return 'dark'
+  }
 }
 
 function relativeTime(value: string): string {
@@ -266,171 +270,6 @@ function relativeTime(value: string): string {
   return new Date(value).toLocaleDateString()
 }
 
-
-function LoginGate() {
-  const [mode, setMode] = useState<'username' | 'key'>(() => (
-    new URLSearchParams(window.location.search).get('mode') === 'key' ? 'key' : 'username'
-  ))
-  const [username, setUsername] = useState('')
-  const [key, setKey] = useState('')
-  const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
-  const [loading, setLoading] = useState(false)
-
-  const submit = async (event: FormEvent) => {
-    event.preventDefault()
-    if (mode === 'username' ? (!username.trim() || !password) : !key.trim()) return
-
-    setLoading(true)
-    setError('')
-    const response = await fetch(mode === 'username' ? '/api/auth/password-login' : '/api/auth/bootstrap-login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(mode === 'username' ? { username, password } : { key }),
-    })
-    const payload = await response.json().catch(() => ({}))
-    setLoading(false)
-    if (!response.ok) {
-      setError(payload.error === 'credential_migration_required'
-        ? 'Dashboard credential setup is not available yet.'
-        : mode === 'username'
-          ? 'Username or password is incorrect.'
-          : 'Access key is incorrect.')
-      return
-    }
-    window.location.reload()
-  }
-
-  return (
-    <main className="dashboard-shell dashboard-login-shell">
-      <DashboardImageBackdrop />
-      <section className="dashboard-auth-frame">
-        <aside className="dashboard-auth-intro">
-          <a className="dashboard-auth-brand" href="/" aria-label="EasyTran home">
-            <span className="dashboard-brand-mark" aria-hidden="true" />
-            <strong>EasyTran</strong>
-          </a>
-
-          <div className="dashboard-auth-copy">
-            <span className="dashboard-auth-kicker">Transcript workspace</span>
-            <h1>Everything after you press Transcribe.</h1>
-            <p>Saved transcripts, scheduled channels, API keys and team access—kept in one place.</p>
-          </div>
-
-          <div className="dashboard-auth-security">
-            <ShieldCheck size={17} aria-hidden="true" />
-            <span><strong>Private workspace</strong><small>Secure session · 7 days</small></span>
-          </div>
-        </aside>
-
-        <form className="login-card dashboard-auth-card" onSubmit={submit}>
-          <div className="dashboard-auth-card-head">
-            <span>{mode === 'username' ? 'Member access' : 'First access'}</span>
-            <h2>{mode === 'username' ? 'Sign in' : 'Use your access key'}</h2>
-            <p>{mode === 'username'
-              ? 'Open your existing EasyTran workspace.'
-              : 'Paste the temporary key sent by email or issued by your workspace admin.'}</p>
-          </div>
-
-          <div className="login-method-tabs" role="tablist" aria-label="Login method">
-            <button className={mode === 'username' ? 'active' : ''} type="button" role="tab" aria-selected={mode === 'username'} onClick={() => { setMode('username'); setError('') }}>
-              <span>Username</span>
-            </button>
-            <button className={mode === 'key' ? 'active' : ''} type="button" role="tab" aria-selected={mode === 'key'} onClick={() => { setMode('key'); setError('') }}>
-              <span>Access key</span>
-            </button>
-          </div>
-
-          <div className="dashboard-auth-fields">
-            {mode === 'username' ? (
-              <>
-                <label>
-                  <span>Username</span>
-                  <input value={username} onChange={(event) => setUsername(event.target.value)} placeholder="Enter your username" autoComplete="username" required />
-                </label>
-                <label>
-                  <span>Password</span>
-                  <input type="password" value={password} onChange={(event) => setPassword(event.target.value)} placeholder="Enter your password" autoComplete="current-password" required />
-                </label>
-              </>
-            ) : (
-              <label>
-                <span>Temporary access key</span>
-                <input autoFocus type="password" value={key} onChange={(event) => setKey(event.target.value)} placeholder="Paste the key from your email" autoComplete="one-time-code" required />
-              </label>
-            )}
-          </div>
-
-          {error && <div className="dashboard-login-error" role="alert">{error}</div>}
-
-          <button className="dashboard-auth-submit" type="submit" disabled={loading}>
-            <span>{loading ? 'Checking…' : mode === 'username' ? 'Enter workspace' : 'Continue setup'}</span>
-            {!loading && <ArrowRight size={18} aria-hidden="true" />}
-          </button>
-
-          <footer className="dashboard-auth-card-footer">
-            <small className="login-session-note"><ShieldCheck size={14} /> Session stays active for 7 days</small>
-            <a href="/">Back to transcribe</a>
-          </footer>
-        </form>
-      </section>
-    </main>
-  )
-}
-
-function SetupGate() {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-  const [confirmation, setConfirmation] = useState('')
-  const [error, setError] = useState('')
-  const [loading, setLoading] = useState(false)
-
-  const submit = async (event: FormEvent) => {
-    event.preventDefault()
-    if (password !== confirmation) {
-      setError('Passwords do not match.')
-      return
-    }
-    setLoading(true)
-    setError('')
-    const response = await fetch('/api/auth/complete-setup', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, password }),
-    })
-    const payload = await response.json().catch(() => ({}))
-    setLoading(false)
-    if (!response.ok) {
-      setError(payload.error === 'username_taken'
-        ? 'That username is already taken.'
-        : payload.error === 'invalid_username'
-          ? 'Use 3–32 letters, numbers, dots, dashes, or underscores.'
-          : payload.error === 'invalid_password'
-            ? 'Use at least 10 characters.'
-            : 'Setup could not be completed.')
-      return
-    }
-    window.history.replaceState(null, '', '/dashboard')
-    window.location.reload()
-  }
-
-  return (
-    <main className="dashboard-shell centered">
-      <form className="login-card setup-card" onSubmit={submit}>
-        <span className="dash-logo">EasyTran</span>
-        <span className="setup-kicker">Required setup</span>
-        <h1>Create your login</h1>
-        <p>Your access key will stop working after this step.</p>
-        <input value={username} onChange={(event) => setUsername(event.target.value)} placeholder="Choose a username" autoComplete="username" minLength={3} maxLength={32} required />
-        <input type="password" value={password} onChange={(event) => setPassword(event.target.value)} placeholder="Create a password" autoComplete="new-password" minLength={10} maxLength={128} required />
-        <input type="password" value={confirmation} onChange={(event) => setConfirmation(event.target.value)} placeholder="Confirm password" autoComplete="new-password" minLength={10} maxLength={128} required />
-        {error && <div className="dashboard-login-error">{error}</div>}
-        <button type="submit" disabled={loading}>{loading ? 'Creating login…' : 'Create login'}</button>
-        <small className="setup-note"><ShieldCheck size={13} /> Access key disabled on completion</small>
-      </form>
-    </main>
-  )
-}
 
 function CodeBlock() {
   const [copied, setCopied] = useState(false)
@@ -459,9 +298,11 @@ function CodeBlock() {
 export function DashboardPage({
   locale,
   onLocaleChange,
+  appearance = 'dark',
 }: {
   locale: SiteLocale
   onLocaleChange: (locale: SiteLocale) => void
+  appearance?: Theme
 }) {
   const [dashboardNow] = useState(() => Date.now())
   const [keys, setKeys] = useState<ApiKey[]>([])
@@ -519,6 +360,9 @@ export function DashboardPage({
   const [issuedTeamKey, setIssuedTeamKey] = useState('')
   const [preferences, setPreferences] = useState<DashboardPreferences>(() => getSavedDashboardPreferences())
   const [settingsSection, setSettingsSection] = useState<SettingsSection>('account')
+  const [dashboardTheme, setDashboardTheme] = useState<DashboardTheme>(getSavedDashboardTheme)
+  const [profileMenuOpen, setProfileMenuOpen] = useState(false)
+  const profileMenuRef = useRef<HTMLDivElement>(null)
   const [profilePhoto, setProfilePhoto] = useState(() => {
     try { return window.localStorage.getItem('easytran-dashboard-profile-photo') || '' } catch { return '' }
   })
@@ -619,6 +463,26 @@ export function DashboardPage({
   useEffect(() => {
     void Promise.resolve().then(loadAll)
   }, [])
+
+  useEffect(() => {
+    try { window.localStorage.setItem(DASHBOARD_THEME_KEY, dashboardTheme) } catch { /* storage is optional */ }
+  }, [dashboardTheme])
+
+  useEffect(() => {
+    if (!profileMenuOpen) return
+    const closeProfileMenu = (event: PointerEvent) => {
+      if (!profileMenuRef.current?.contains(event.target as Node)) setProfileMenuOpen(false)
+    }
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setProfileMenuOpen(false)
+    }
+    document.addEventListener('pointerdown', closeProfileMenu)
+    document.addEventListener('keydown', closeOnEscape)
+    return () => {
+      document.removeEventListener('pointerdown', closeProfileMenu)
+      document.removeEventListener('keydown', closeOnEscape)
+    }
+  }, [profileMenuOpen])
 
   useEffect(() => {
     const hasActiveJobs = batchJobs.some((job) => !['completed', 'failed', 'cancelled'].includes(job.status))
@@ -1024,31 +888,31 @@ export function DashboardPage({
     setIssuedTeamKey(payload.key)
   }
 
-  if (import.meta.env.DEV && new URLSearchParams(window.location.search).get('preview') === 'login') return <LoginGate />
+  if (import.meta.env.DEV && new URLSearchParams(window.location.search).get('preview') === 'login') return <DashboardLoginGate locale={locale} onLocaleChange={onLocaleChange} appearance={appearance} />
 
-  if (authError) return <LoginGate />
+  if (authError) return <DashboardLoginGate locale={locale} onLocaleChange={onLocaleChange} appearance={appearance} />
 
-  if (onboardingRequired) return <SetupGate />
+  if (onboardingRequired) return <DashboardSetupGate locale={locale} onLocaleChange={onLocaleChange} appearance={appearance} />
 
   if (loading) {
     return (
-      <main className="dashboard-shell centered">
-        <span>Loading dashboard...</span>
-      </main>
+      <SecondaryPageShell context="dashboard" appearance={appearance} locale={locale} onLocaleChange={onLocaleChange} className="dashboard-shell">
+        <div className="secondary-state" role="status">Loading dashboard…</div>
+      </SecondaryPageShell>
     )
   }
 
 
   if (loadError) {
     return (
-      <main className="dashboard-shell centered">
-        <div className="login-card">
+      <SecondaryPageShell context="dashboard" appearance={appearance} locale={locale} onLocaleChange={onLocaleChange} className="dashboard-shell">
+        <div className="secondary-state">
           <span className="dash-logo">EasyTran</span>
           <h1>Dashboard unavailable</h1>
           <p>{loadError}</p>
-          <button type="button" onClick={loadAll}>Try again</button>
+          <button className="page-action" type="button" onClick={loadAll}>Try again</button>
         </div>
-      </main>
+      </SecondaryPageShell>
     )
   }
 
@@ -1062,8 +926,7 @@ export function DashboardPage({
   }
 
   return (
-    <main className="dashboard-shell dashboard-glass">
-      <DashboardImageBackdrop />
+    <SecondaryPageShell context="dashboard" appearance={dashboardTheme} locale={locale} onLocaleChange={onLocaleChange} className={`dashboard-shell dashboard-glass dashboard-theme-${dashboardTheme}`}>
       <section className="dash">
         <aside className="sidebar">
           <div className="dashboard-glow-brand" aria-label="EasyTran">
@@ -1071,33 +934,96 @@ export function DashboardPage({
             <strong>EasyTran</strong>
           </div>
 
-          <nav className="dashboard-direct-nav" aria-label="Dashboard navigation">
-            {nav.filter((item) => item.visible).map((item) => (
-              <button key={item.id} className={`nav-item ${view === item.id ? 'active' : ''}`} type="button" onClick={() => selectView(item.id)}>
-                <item.icon size={16} />
-                {item.label}
-                {item.tail && <span className={`nav-tail ${item.id === 'usage' ? 'usage-nav-percent' : ''}`}>{item.tail}</span>}
+          <button className="dashboard-new-task" type="button" onClick={() => {
+            setSourceInspection(null)
+            setSourceInspectProgress(0)
+            setBatchResultView(null)
+            setSelectedTranscript(null)
+            selectView('overview')
+          }}>
+            <Plus size={16} />
+            New transcript
+          </button>
+
+          <button className="dashboard-history-search" type="button" onClick={() => selectView('archive')}>
+            <Search size={15} />
+            Search
+          </button>
+
+          <nav className="dashboard-section-nav" aria-label="Workspace navigation">
+            {nav.filter(item => item.visible).map(item => <button type="button" key={item.id}
+              className={view === item.id ? 'is-active' : ''} aria-current={view === item.id ? 'page' : undefined}
+              onClick={() => selectView(item.id)}><item.icon size={15} /><span>{item.label}</span></button>)}
+          </nav>
+
+          <nav className="dashboard-task-history" aria-label="Recent transcripts">
+            <span className="dashboard-task-history-label">Recent</span>
+            {archive.slice(0, 14).map((transcript) => (
+              <button
+                key={transcript.id}
+                className={selectedTranscript?.id === transcript.id ? 'is-active' : ''}
+                type="button"
+                onClick={() => {
+                  setBatchResultView(null)
+                  selectView('archive')
+                  void openTranscript(transcript.id)
+                }}
+                title={transcript.video_title}
+                data-no-translate
+              >
+                <span>{transcript.video_title}</span>
+                <small>{relativeTime(transcript.created_at)}</small>
               </button>
             ))}
+            {!archive.length && <p>No transcripts yet</p>}
           </nav>
 
           <div className="dashboard-sidebar-spacer" />
 
           {usage && (
-            <div className={`dashboard-sidebar-profile is-${usage.role || 'teammate'}`}>
-              <span className="dashboard-sidebar-avatar" aria-hidden="true">
-                {profilePhoto
-                  ? <img src={profilePhoto} alt="" />
-                  : greetingName.split(/\s+/).map((part) => part[0]).join('').slice(0, 2).toUpperCase()}
-              </span>
-              <strong data-no-translate>{greetingName}</strong>
+            <div className="dashboard-profile-menu-wrap" ref={profileMenuRef}>
+              {profileMenuOpen && (
+                <div className="dashboard-profile-menu" role="menu">
+                  <div className="dashboard-profile-menu-account">
+                    <strong data-no-translate>{greetingName}</strong>
+                    <span>{usage.email}</span>
+                  </div>
+                  <nav aria-label="Workspace sections">
+                    {nav.filter((item) => item.visible && item.id !== 'overview').map((item) => (
+                      <button key={item.id} className={view === item.id ? 'is-active' : ''} type="button" role="menuitem" onClick={() => {
+                        selectView(item.id)
+                        setProfileMenuOpen(false)
+                      }}>
+                        <item.icon size={15} />
+                        <span>{item.label}</span>
+                        {item.tail && <small>{item.tail}</small>}
+                      </button>
+                    ))}
+                  </nav>
+                  <div className="dashboard-theme-picker" aria-label="Dashboard theme">
+                    <button className={dashboardTheme === 'light' ? 'is-active' : ''} type="button" onClick={() => setDashboardTheme('light')}><Sun size={14} /> Light</button>
+                    <button className={dashboardTheme === 'dark' ? 'is-active' : ''} type="button" onClick={() => setDashboardTheme('dark')}><Moon size={14} /> Dark</button>
+                  </div>
+                  <button className="dashboard-profile-sign-out" type="button" role="menuitem" onClick={logout}><LogOut size={15} /> Sign out</button>
+                </div>
+              )}
+              <button
+                className={`dashboard-sidebar-profile is-${usage.role || 'teammate'}`}
+                type="button"
+                aria-expanded={profileMenuOpen}
+                aria-haspopup="menu"
+                onClick={() => setProfileMenuOpen((open) => !open)}
+              >
+                <span className="dashboard-sidebar-avatar" aria-hidden="true">
+                  {profilePhoto
+                    ? <img src={profilePhoto} alt="" />
+                    : greetingName.split(/\s+/).map((part) => part[0]).join('').slice(0, 2).toUpperCase()}
+                </span>
+                <strong data-no-translate>{greetingName}</strong>
+                <ChevronDown size={14} />
+              </button>
             </div>
           )}
-
-          <button className="nav-item dashboard-sign-out" type="button" onClick={logout}>
-            <LogOut size={15} />
-            Sign out
-          </button>
         </aside>
 
         <section className="dash-main">
@@ -1126,17 +1052,25 @@ export function DashboardPage({
           )}
 
           {view === 'overview' && usage && isBusiness && (
-            <div className="dashboard-home-stack">
+            <div className={`dashboard-home-stack dashboard-home-bento ${sourceInspection ? 'has-report' : ''}`}>
               {!sourceInspection && (
                 <header className="dashboard-home-intro">
-                  <h1>Greetings, <span data-no-translate>{greetingName}</span>.</h1>
-                  <p>One URL for a video, playlist, or an entire channel.</p>
+                  <span>Workspace</span>
+                  <h1>New transcript</h1>
                 </header>
               )}
 
               <section className="source-workbench source-workbench-home dashboard-source-focus">
                 {!sourceInspection && (
                   <>
+                    <header className="dashboard-source-card-head">
+                      <span>Source</span>
+                      <div aria-label="Supported source types">
+                        <span>Video</span>
+                        <span>Playlist</span>
+                        <span>Channel</span>
+                      </div>
+                    </header>
                     <div className="dashboard-url-focus">
                       <textarea
                         value={sourceInput}
@@ -1146,7 +1080,7 @@ export function DashboardPage({
                           setSourceInspectProgress(0)
                           setActionMessage('')
                         }}
-                        placeholder={'Paste a video, channel or playlist URL\n—or paste one video URL per line'}
+                        placeholder={'Paste a URL\n—or paste one video URL per line'}
                         rows={4}
                         aria-label="Video, channel, playlist or bulk URLs"
                       />
@@ -1154,21 +1088,19 @@ export function DashboardPage({
                     {sourceInspecting ? (
                       <div className="source-analysis-progress" role="status" aria-live="polite">
                         <div className="source-analysis-progress-head">
-                          <div>
-                            <span>Analyzing source</span>
-                            <strong>{sourceInspectProgress < 30 ? 'Mapping every channel tab' : sourceInspectProgress < 72 ? 'Checking caption availability' : 'Building the job report'}</strong>
-                          </div>
+                            <div>
+                              <span>Analyzing source</span>
+                              <strong>{sourceInspectProgress < 30 ? 'Reading source' : sourceInspectProgress < 72 ? 'Checking captions' : 'Preparing report'}</strong>
+                            </div>
                           <b>{sourceInspectProgress}%</b>
                         </div>
                         <div className="source-analysis-track" aria-label={`Source analysis ${sourceInspectProgress}% complete`}>
                           <i style={{ width: `${sourceInspectProgress}%` }} />
                         </div>
-                        <p>Videos, Shorts and live archives are counted separately. Caption availability is sampled across the full channel.</p>
                       </div>
                     ) : (
                       <div className="source-preflight">
-                        <p>Nothing starts until you review the source map.</p>
-                        <button type="button" disabled={!sourceLines.length} onClick={inspectSource}>Analyze source <ArrowRight size={16} /></button>
+                        <button type="button" disabled={!sourceLines.length} onClick={inspectSource}>Analyze <ArrowRight size={16} /></button>
                       </div>
                     )}
                   </>
@@ -1182,7 +1114,7 @@ export function DashboardPage({
                             : <ListVideo size={30} aria-hidden="true" />}
                       </div>
                       <div className="source-report-title">
-                        <h1>{sourceInspection.title}</h1>
+                        <h1 data-no-translate>{sourceInspection.title}</h1>
                         <p>
                           {sourceInspection.captionSampleSize
                             ? sourceInspection.captionEstimateExact
@@ -1252,9 +1184,27 @@ export function DashboardPage({
                 {actionMessage && <p className="source-error">{actionMessage}</p>}
               </section>
 
+              {!sourceInspection && (
+                <section className="dashboard-home-usage-card" aria-label="Workspace usage">
+                  <header>
+                    <span>Usage</span>
+                    <button type="button" onClick={() => selectView('usage')} aria-label="Open usage">Open <ArrowRight size={14} /></button>
+                  </header>
+                  {([['Captions', captionHours], ['AI fallback', aiFallbackHours]] as const).map(([label, meter]) => (
+                    <div className="dashboard-home-usage-row" key={label}>
+                      <div><span>{label}</span><strong>{formatHours(meter.remainingHours)}</strong></div>
+                      <div className="dashboard-home-usage-track" aria-label={`${meter.remainingPercentage}% remaining`}><i style={{ width: `${meter.remainingPercentage}%` }} /></div>
+                      <small>{meter.remainingPercentage}%</small>
+                    </div>
+                  ))}
+                  <footer>Resets {usage.resetAt ? new Date(usage.resetAt).toLocaleDateString() : '—'}</footer>
+                </section>
+              )}
+
               {batchJobs.length > 0 && <section className="dashboard-home-recent">
                 <div className="dashboard-home-recent-head">
                   <h2>Recent jobs</h2>
+                  <button type="button" onClick={() => selectView('archive')}>Library <ArrowRight size={14} /></button>
                 </div>
                 <div className="dashboard-job-grid">
                   {batchJobs.slice(0, 6).map((job) => {
@@ -1311,7 +1261,7 @@ export function DashboardPage({
               {transcribeResult && (
                 <a className="qa-card" href={`https://youtube.com/watch?v=${transcribeResult.video_id}`} target="_blank" rel="noreferrer">
                   <span className="ico"><Check size={18} /></span>
-                  <span><strong>{transcribeResult.video_title}</strong><span>{transcribeResult.word_count.toLocaleString()} words saved</span></span>
+                  <span><strong data-no-translate>{transcribeResult.video_title}</strong><span>{transcribeResult.word_count.toLocaleString()} words saved</span></span>
                   <ArrowRight size={16} />
                 </a>
               )}
@@ -1377,8 +1327,8 @@ export function DashboardPage({
                   <div className="archive-detail-head">
                     <div>
                       <button className="panel-link" type="button" onClick={() => setSelectedTranscript(null)}>← Back to archive</button>
-                      <h2>{selectedTranscript.video_title}</h2>
-                      <p>{selectedTranscript.video_channel} · {selectedTranscript.word_count.toLocaleString()} words · {new Date(selectedTranscript.created_at).toLocaleDateString()}</p>
+                      <h2 data-no-translate>{selectedTranscript.video_title}</h2>
+                      <p><span data-no-translate>{selectedTranscript.video_channel}</span> · {selectedTranscript.word_count.toLocaleString()} words · {new Date(selectedTranscript.created_at).toLocaleDateString()}</p>
                     </div>
                     <div className="actions">
                       <button className="btn" type="button" onClick={copyArchivedTranscript}><Clipboard size={14} /> Copy</button>
@@ -1404,18 +1354,18 @@ export function DashboardPage({
                     <section className="archive-ai-brief">
                       <div>
                         <span>AI brief</span>
-                        <h3>{selectedTranscript.ai_summary.title || selectedTranscript.video_title}</h3>
+                        <h3 data-no-translate>{selectedTranscript.ai_summary.title || selectedTranscript.video_title}</h3>
                       </div>
-                      <p>{selectedTranscript.ai_summary.summary}</p>
+                      <p data-no-translate>{selectedTranscript.ai_summary.summary}</p>
                       <footer>
-                        <div>{selectedTranscript.ai_summary.tags?.map((tag) => <span key={tag}>{tag}</span>)}</div>
+                        <div data-no-translate>{selectedTranscript.ai_summary.tags?.map((tag) => <span key={tag}>{tag}</span>)}</div>
                         <button className="btn" type="button" onClick={() => navigator.clipboard.writeText(selectedTranscript.ai_summary?.summary || '')}><Clipboard size={14} /> Copy brief</button>
                       </footer>
                     </section>
                   )}
                   <div className="archive-transcript">
                     {selectedTranscript.lines.slice(0, visibleTranscriptLineCount).map((line, index) => (
-                      <p key={`${line.start}-${index}`}><time>{formatTime(line.start)}</time><span>{line.text}</span></p>
+                      <p key={`${line.start}-${index}`}><time>{formatTime(line.start)}</time><span data-no-translate>{line.text}</span></p>
                     ))}
                   </div>
                   {visibleTranscriptLineCount < selectedTranscript.lines.length && (
@@ -1451,9 +1401,9 @@ export function DashboardPage({
                             <span className={`dur ${item.status === 'completed' ? 'ok' : ''}`}>{item.status}</span>
                           </div>
                           <div>
-                            <div className="title">{transcript?.video_title || item.url}</div>
+                            <div className="title" data-no-translate>{transcript?.video_title || item.url}</div>
                             <div className="sub">
-                              <span>{transcript?.video_channel || (item.error ? 'Could not transcribe' : 'Transcript result')}</span>
+                              <span data-no-translate={transcript?.video_channel ? true : undefined}>{transcript?.video_channel || (item.error ? 'Could not transcribe' : 'Transcript result')}</span>
                               <span>{transcript ? `${transcript.word_count.toLocaleString()} words · ${transcript.video_duration}` : item.status === 'failed' ? formatBatchResultError(item.error) : 'Waiting for worker'}</span>
                             </div>
                           </div>
@@ -1478,7 +1428,7 @@ export function DashboardPage({
                         <img src={transcript.video_thumbnail || `https://img.youtube.com/vi/${transcript.video_id}/mqdefault.jpg`} alt="" loading="lazy" />
                         <span className="dur ok">{transcript.video_duration || `${transcript.word_count} words`}</span>
                       </div>
-                      <div><div className="title">{transcript.video_title}</div><div className="sub"><span>{relativeTime(transcript.created_at)}</span><span>{transcript.video_channel} · {transcript.word_count.toLocaleString()} words</span></div></div>
+                      <div><div className="title" data-no-translate>{transcript.video_title}</div><div className="sub"><span>{relativeTime(transcript.created_at)}</span><span><span data-no-translate>{transcript.video_channel}</span> · {transcript.word_count.toLocaleString()} words</span></div></div>
                       <span className="arrow"><ArrowRight size={16} /></span>
                     </button>
                   ))}
@@ -1546,7 +1496,7 @@ export function DashboardPage({
                       <div className="name">
                         <div className="icon"><KeyRound size={15} /></div>
                         <div>
-                          <strong>{key.name}</strong>
+                          <strong data-no-translate>{key.name}</strong>
                           <div className="preview">Created {new Date(key.created_at).toLocaleDateString()}</div>
                         </div>
                       </div>
@@ -1612,8 +1562,8 @@ export function DashboardPage({
                   {channelFrequency === 'daily' && <label><span>Run at</span><input type="time" value={channelTime} onChange={(event) => setChannelTime(event.target.value)} /></label>}
                   <label><span>Timezone</span><select value={channelTimezone} onChange={(event) => setChannelTimezone(event.target.value)}>{automationTimezones.map((timezone) => <option value={timezone} key={timezone}>{timezone}</option>)}</select></label>
                   <label><span>First run</span><select value={channelBackfill} onChange={(event) => setChannelBackfill(Number(event.target.value))}><option value="0">New uploads only</option><option value="25">Latest 25 videos</option><option value="100">Latest 100 videos</option><option value="250">Latest 250 videos</option></select></label>
-                  <button className={`automation-option ${channelAutoSummary ? 'active' : ''}`} type="button" aria-pressed={channelAutoSummary} onClick={() => setChannelAutoSummary((value) => !value)}><Sparkles size={15} /><span><strong>AI brief</strong><small>{channelAutoSummary ? 'Enabled' : 'Disabled'}</small></span><i className="automation-toggle" aria-hidden="true" /></button>
-                  <button className={`automation-option ${channelAiFallback ? 'active' : ''}`} type="button" aria-pressed={channelAiFallback} onClick={() => setChannelAiFallback((value) => !value)}><Activity size={15} /><span><strong>AI fallback</strong><small>{channelAiFallback ? 'Enabled' : 'Captions only'}</small></span><i className="automation-toggle" aria-hidden="true" /></button>
+                  <button className={`automation-option ${channelAutoSummary ? 'active' : ''}`} type="button" aria-pressed={channelAutoSummary} onClick={() => setChannelAutoSummary((value) => !value)}><Sparkles size={15} /><span><strong>AI brief</strong><small>Automatic summary</small></span></button>
+                  <button className={`automation-option ${channelAiFallback ? 'active' : ''}`} type="button" aria-pressed={channelAiFallback} onClick={() => setChannelAiFallback((value) => !value)}><Activity size={15} /><span><strong>AI fallback</strong><small>Caption backup</small></span></button>
                 </div>
                 <p>The first run begins immediately after the automation is added.</p>
               </section>
@@ -1625,7 +1575,7 @@ export function DashboardPage({
                 {channels.map((channel) => (
                   <article className={`automation-channel ${channel.paused ? 'is-paused' : ''}`} key={channel.id}>
                     <header>
-                      <div className="automation-channel-name"><span><Radio size={17} /></span><div><h3>{channel.channel_name}</h3><p>{channel.channel_id}</p></div></div>
+                      <div className="automation-channel-name"><span><Radio size={17} /></span><div data-no-translate><h3>{channel.channel_name}</h3><p>{channel.channel_id}</p></div></div>
                       <span className={`automation-run-state is-${channel.last_run_status}`}>{channel.paused ? 'Paused' : channel.last_run_status || 'Pending'}</span>
                     </header>
                     <div className="automation-run-grid">
@@ -1640,8 +1590,8 @@ export function DashboardPage({
                       {channel.schedule_frequency === 'daily' && <label><span>Run at</span><input key={channel.schedule_time} type="time" defaultValue={String(channel.schedule_time).slice(0, 5)} disabled={channelSavingId === channel.id} onBlur={(event) => void updateChannel(channel, { schedule_time: event.target.value })} /></label>}
                       <label><span>Timezone</span><select value={channel.timezone} disabled={channelSavingId === channel.id} onChange={(event) => void updateChannel(channel, { timezone: event.target.value })}>{[...new Set([channel.timezone, ...automationTimezones])].map((timezone) => <option value={timezone} key={timezone}>{timezone}</option>)}</select></label>
                       <label><span>Next run scope</span><select value={channel.backfill_limit} disabled={channelSavingId === channel.id} onChange={(event) => void updateChannel(channel, { backfill_limit: Number(event.target.value) })}><option value="0">New uploads</option><option value="25">Latest 25</option><option value="100">Latest 100</option><option value="250">Latest 250</option></select></label>
-                      <button className={`automation-option ${channel.auto_summary ? 'active' : ''}`} type="button" aria-pressed={channel.auto_summary} disabled={channelSavingId === channel.id} onClick={() => void updateChannel(channel, { auto_summary: !channel.auto_summary })}><Sparkles size={14} /><span><strong>AI brief</strong><small>{channel.auto_summary ? 'On' : 'Off'}</small></span><i className="automation-toggle" aria-hidden="true" /></button>
-                      <button className={`automation-option ${channel.ai_fallback ? 'active' : ''}`} type="button" aria-pressed={channel.ai_fallback} disabled={channelSavingId === channel.id} onClick={() => void updateChannel(channel, { ai_fallback: !channel.ai_fallback })}><Activity size={14} /><span><strong>Fallback</strong><small>{channel.ai_fallback ? 'On' : 'Off'}</small></span><i className="automation-toggle" aria-hidden="true" /></button>
+                      <button className={`automation-option ${channel.auto_summary ? 'active' : ''}`} type="button" aria-pressed={channel.auto_summary} disabled={channelSavingId === channel.id} onClick={() => void updateChannel(channel, { auto_summary: !channel.auto_summary })}><Sparkles size={14} /><span><strong>AI brief</strong><small>Automatic summary</small></span></button>
+                      <button className={`automation-option ${channel.ai_fallback ? 'active' : ''}`} type="button" aria-pressed={channel.ai_fallback} disabled={channelSavingId === channel.id} onClick={() => void updateChannel(channel, { ai_fallback: !channel.ai_fallback })}><Activity size={14} /><span><strong>AI fallback</strong><small>Caption backup</small></span></button>
                     </div>
                     <footer>
                       <button type="button" disabled={channelSavingId === channel.id} onClick={() => void runChannelNow(channel)}><RotateCw size={14} /> Run now</button>
@@ -1855,6 +1805,6 @@ export function DashboardPage({
           )}
         </section>
       </section>
-    </main>
+    </SecondaryPageShell>
   )
 }

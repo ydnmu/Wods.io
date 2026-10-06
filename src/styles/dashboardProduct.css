@@ -1,0 +1,100 @@
+/* Keep workspace tools intact while replacing the old glass/wallpaper shell. */
+.app.secondary-page.dashboard-glass {
+  --dash-bg: var(--page-base); --dash-panel: var(--page-surface); --dash-panel-2: var(--page-raised);
+  --dash-line: var(--page-line); --dash-line-strong: var(--page-line-strong);
+  --dash-blue: var(--page-accent); --dash-blue-soft: #59e7f20d;
+  --bento-line: var(--page-line);
+}
+.secondary-page.dashboard-glass .dash {
+  display: grid; grid-template-columns: 220px minmax(0,1fr);
+  width: min(1440px,calc(100% - 48px)); min-height: calc(100svh - 110px);
+  margin: 92px auto 24px; gap: 24px; padding: 0; background: none; border: 0;
+}
+.secondary-page.dashboard-glass .sidebar {
+  position: sticky; top: 20px; height: calc(100svh - 40px); min-height: 0;
+  padding: 20px 12px; border: 1px solid var(--page-line); border-radius: 4px;
+  background: var(--page-surface); box-shadow: none; backdrop-filter: none;
+}
+.secondary-page.dashboard-glass .dash-main {
+  min-width: 0; min-height: 0; padding: 0; border: 0;
+  border-radius: 0; color: var(--page-text); background: transparent;
+  box-shadow: none; backdrop-filter: none;
+}
+.secondary-page.dashboard-glass .dashboard-glow-brand { padding: 0 9px 16px; filter: none; }
+.secondary-page.dashboard-glass .dashboard-brand-mark { background: #a6deff; filter: none; }
+.secondary-page.dashboard-glass .dashboard-glow-brand strong { color: var(--page-text); font-weight: 600; text-shadow: none; }
+.secondary-page.dashboard-glass :is(.dashboard-new-task,.dashboard-history-search) {
+  min-height: 36px; margin: 4px 0; border: 1px solid var(--page-line); border-radius: 3px;
+  color: var(--page-text); background: var(--page-raised); box-shadow: none;
+}
+.secondary-page.dashboard-glass .dashboard-section-nav { display: grid; gap: 3px; margin: 18px 0; padding: 14px 0; border-block: 1px solid var(--page-line); }
+.secondary-page.dashboard-glass .dashboard-section-nav button {
+  display: flex; gap: 9px; align-items: center; width: 100%; min-height: 34px; padding: 0 9px;
+  border: 0; border-radius: 2px; background: none; color: var(--page-muted); font: 500 12px var(--sans);
+  text-align: left; cursor: pointer; transition: background 160ms ease,color 160ms ease;
+}
+.secondary-page.dashboard-glass .dashboard-section-nav button.is-active { color: var(--page-accent); background: var(--page-raised); }
+.secondary-page.dashboard-glass .dashboard-section-nav button:hover { color: var(--page-ink); background: var(--page-accent); }
+.secondary-page.dashboard-glass :is(.panel,.source-workbench,.dashboard-source-focus,.dashboard-home-usage-card,.dashboard-home-recent,.dashboard-job-card,.usage-meter-card,.qa-card,.key-row,.webhook-row,.automation-row,.team-workspace-stats,.team-workspace-stat) {
+  border-color: var(--page-line); border-radius: 4px; color: var(--page-text);
+  background: var(--page-surface); box-shadow: none; backdrop-filter: none;
+}
+.secondary-page.dashboard-glass .source-workbench-home.dashboard-source-focus {
+  margin-top: 0; min-height: 0; height: auto; padding: 24px; border: 1px solid var(--page-line-strong); border-radius: 4px;
+  background: var(--page-code); box-shadow: none;
+}
+.secondary-page.dashboard-glass .source-workbench-home.dashboard-source-focus::before,
+.secondary-page.dashboard-glass .source-workbench-home.dashboard-source-focus::after { display: none; }
+.secondary-page.dashboard-glass .dashboard-home-intro { display: block; align-items: flex-start; text-align: left; padding: 0; }
+.secondary-page.dashboard-glass .dashboard-home-intro h1 { font-size: 34px; font-weight: 600; line-height: 1.1; }
+.secondary-page.dashboard-glass .dashboard-home-usage-card { min-height: 0; height: auto; }
+.secondary-page.dashboard-glass .source-workbench-home.dashboard-source-focus .dashboard-url-focus textarea {
+  height: 150px; min-height: 150px; padding: 14px; border: 1px solid var(--page-line-strong);
+  border-radius: 3px; color: var(--page-text); background: var(--page-code);
+  font: 400 14px/1.6 var(--sans); box-shadow: none; backdrop-filter: none;
+}
+.secondary-page.dashboard-glass .source-workbench-home.dashboard-source-focus .dashboard-url-focus textarea::placeholder { color: var(--page-muted); opacity: .75; }
+.secondary-page.dashboard-glass .source-workbench-home.dashboard-source-focus .source-preflight button {
+  border-radius: 3px; border: 1px solid var(--page-line-strong); box-shadow: none;
+}
+.secondary-page.dashboard-glass .source-workbench-home.dashboard-source-focus .source-preflight button:not(:disabled) {
+  color: var(--page-ink); background: #f4f7fb;
+}
+.secondary-page.dashboard-glass .source-workbench-home.dashboard-source-focus .source-preflight button:not(:disabled):hover { background: var(--page-accent); }
+.secondary-page.dashboard-glass :is(.dashboard-url-focus textarea,.inline-form input,.key-table input,.archive-toolbar input,.settings-page select) {
+  color: var(--page-text); border-color: var(--page-line-strong); border-radius: 3px;
+  background: var(--page-code); box-shadow: none;
+}
+.secondary-page.dashboard-glass .dashboard-url-focus textarea:focus { border-color: var(--page-accent); box-shadow: none; }
+.secondary-page.dashboard-glass :is(.dashboard-profile-menu,.dashboard-sidebar-profile) { color: var(--page-text); border: 1px solid var(--page-line); border-radius: 3px; background: var(--page-raised); box-shadow: none; backdrop-filter: none; }
+.secondary-page.dashboard-glass :is(.dashboard-sidebar-avatar,.settings-photo-preview) { color: var(--page-text); background: var(--page-raised); box-shadow: none; border-color: var(--page-line); }
+.secondary-page.dashboard-glass :is(.dashboard-home-intro h1,.usage-workspace-head h1,.usage-meter-primary strong,.dashboard-home-usage-row strong,.archive-workspace-head h1,.settings-workspace-head h1) { color: var(--page-text); }
+.secondary-page.dashboard-glass :is(.dashboard-home-intro > span,.usage-workspace-head p,.panel-head p,.usage-meter-primary small,.dashboard-home-recent p,.dashboard-task-history-label,.dashboard-task-history p) { color: var(--page-muted); }
+.secondary-page.dashboard-glass :is(.dashboard-job-progress i,.usage-meter-track i,.dashboard-home-usage-track i) { background: var(--page-accent); box-shadow: none; border-radius: 1px; }
+.secondary-page.dashboard-glass :is(.job-status,.recent-item .dur.ok) { color: var(--page-accent); background: none; border-color: var(--page-line); border-radius: 2px; }
+.secondary-page.dashboard-glass :is(.keys-table-wrap,.team-table-wrap,.archive-table-wrap) { max-width: 100%; overflow-x: auto; }
+.secondary-page.dashboard-glass :is(.key-list,.team-list) { min-width: 0; max-width: 100%; overflow-x: auto; }
+.secondary-page.dashboard-glass .dashboard-key-modal {
+  width: min(480px,calc(100vw - 40px)); border: 1px solid var(--page-line-strong);
+  border-radius: 4px; color: var(--page-text); background: var(--page-surface);
+  box-shadow: 0 16px 60px #0005; backdrop-filter: none;
+}
+.secondary-page.dashboard-glass .dashboard-key-modal :is(input,select) {
+  color: var(--page-text); background: var(--page-code); border-color: var(--page-line-strong); border-radius: 3px;
+}
+.secondary-page.dashboard-glass :is(.settings-page-nav button,.archive-switch button,.dashboard-source-card-head > div span) { border-radius: 2px; box-shadow: none; }
+@media (max-width: 1000px) {
+  .secondary-page.dashboard-glass .dash { grid-template-columns: 190px minmax(0,1fr); gap: 16px; width: calc(100% - 32px); }
+  .secondary-page.dashboard-glass .dash-main { padding: 0; }
+}
+@media (max-width: 680px) {
+  .secondary-page.dashboard-glass .dash { display: block; width: calc(100% - 28px); margin: 24px 14px; }
+  .secondary-page.dashboard-glass .sidebar { position: relative; top: 0; width: 100%; height: auto; margin-bottom: 16px; padding: 15px; }
+  .secondary-page.dashboard-glass .dashboard-section-nav { display: flex; overflow-x: auto; margin: 12px 0; padding: 10px 0; }
+  .secondary-page.dashboard-glass .dashboard-section-nav button { width: auto; flex-shrink: 0; }
+  .secondary-page.dashboard-glass .dashboard-task-history { display: none; }
+  .secondary-page.dashboard-glass .dashboard-sidebar-profile { display: flex; }
+  .secondary-page.dashboard-glass .dashboard-profile-menu { left: 0; right: auto; max-width: 100%; }
+  .secondary-page.dashboard-glass .dash-main { padding: 0; border-radius: 0; }
+  .secondary-page.dashboard-glass .source-workbench-home.dashboard-source-focus { padding: 18px; }
+}
