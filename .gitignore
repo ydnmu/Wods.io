@@ -16,14 +16,6 @@ dist-ssr
 deploy.local.ps1
 .env
 server/.env
-.env.example
-server/
-src/pages/AdminPage.*
-src/pages/ShaderLabPage.*
-src/assets/react.svg
-src/assets/vite.svg
-scripts/apply-dashboard-readiness.mjs
-scripts/stress-dashboard.mjs
 
 # Editor directories and files
 .vscode/*
@@ -36,17 +28,5 @@ scripts/stress-dashboard.mjs
 *.sln
 *.sw?
 
-# Local archives and snapshots
+# Local archives
 *.zip
-snapshots/
-EasyTran-Mimari-Paketi-*/
-ARCHITECTURE_NOTES.md
-DEPLOYMENT.md
-deploy/
-deploy.ps1
-deploy.local.ps1.example
-start-easytran.ps1
-render.yaml
-
-# Generated migration bundle (npm run db:check -- --out)
-easytran-migrations.sql
