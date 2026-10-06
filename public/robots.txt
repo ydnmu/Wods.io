@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /dashboard
+Disallow: /checkout
+Disallow: /auth/
+Disallow: /api/
+Disallow: /v1/
+
+Sitemap: https://easytran.app/sitemap.xml
