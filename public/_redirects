@@ -1,3 +1,0 @@
-/api/* https://api.easytran.app/api/:splat 200
-/v1/* https://api.easytran.app/v1/:splat 200
-/* /index.html 200
