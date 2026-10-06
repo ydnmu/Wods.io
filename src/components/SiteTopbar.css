@@ -1,0 +1,96 @@
+.site-topbar {
+  --topbar-text-muted: #a8b9cd;
+  --topbar-text-active: #edf3fb;
+}
+
+:root[data-theme='light'] .site-topbar {
+  --topbar-text-muted: #536168;
+  --topbar-text-active: #11191d;
+}
+
+/* Override legacy pill feedback without changing the controls' hit areas. */
+html body .topbar.site-topbar :is(.topbar-nav .nav-link, .language-trigger, .easytran-language .glide-select__trigger) {
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  filter: none !important;
+  text-shadow: none !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+body .topbar.site-topbar .easytran-language .glide-select__menu {
+  --gs-surface: #151515;
+  --gs-highlight: #292929;
+  --gs-text: #edf3fb;
+  --gs-accent: #edf3fb;
+  border-color: rgba(255, 255, 255, .12);
+}
+
+.site-topbar .nav-link::before,
+.site-topbar .nav-link::after,
+.site-topbar .rubber-segment-link::before,
+.site-topbar .rubber-segment-link::after {
+  display: none !important;
+}
+
+.site-topbar .topbar-marker {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  line-height: 1;
+  color: var(--topbar-text-muted);
+  text-shadow: none;
+  transition: color 160ms ease;
+}
+
+/* The absolute block provides 2px/6px clearance with no layout change. */
+.site-topbar .topbar-marker::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: -2px -6px;
+  border: 0;
+  border-radius: 0;
+  background: #59e7f2;
+  box-shadow: none;
+  pointer-events: none;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 160ms ease;
+}
+
+.site-topbar .nav-link.active .topbar-marker {
+  color: var(--topbar-text-active);
+  font-weight: 580;
+}
+
+.site-topbar .nav-link:is(:hover, :focus-visible) .topbar-marker {
+  color: #061015;
+}
+
+.site-topbar .nav-link:is(:hover, :focus-visible) .topbar-marker::before {
+  transform: scaleX(1);
+}
+
+/* RubberSegment owns the shared category background. Keep the legacy marker
+   in the stylesheet for other callers, but never paint it in this nav. */
+.site-topbar .rubber-segment-link .topbar-marker { display: none; }
+.site-topbar .rubber-segment-link > span { position: relative; z-index: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .site-topbar .topbar-marker,
+  .site-topbar .topbar-marker::before {
+    transition: none;
+  }
+}
+
+html body :is(.react-home, .secondary-page) .site-topbar :is(.nav-link, .glide-select__trigger) { font-family: 'Geist', ui-sans-serif, system-ui, sans-serif; font-size: 15.5px; font-weight: 550; }
+.site-topbar .easytran-language .glide-select__label { display: inline-flex; align-items: center; line-height: 1; }
+.site-topbar .easytran-language-label svg { flex-shrink: 0; color: var(--topbar-text-active); opacity: 1; }
+.site-topbar .easytran-language-code { color: var(--topbar-text-active); line-height: 1; }
+.site-topbar .easytran-language .glide-select__trigger:focus-visible { outline: 1px solid var(--topbar-text-muted); outline-offset: 3px; }
+/* Optically align the uppercase locale with the mixed-case navigation. */
+@media (min-width: 761px) { .site-topbar .easytran-language { top: 2px; } }
+@media (max-width: 760px) { html body :is(.react-home, .secondary-page) .site-topbar :is(.nav-link, .glide-select__trigger) { font-size: 13px; } }

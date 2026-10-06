@@ -1,16 +1,23 @@
 import { useEffect, useRef, useState } from 'react'
 import type { CSSProperties, MouseEvent } from 'react'
-import { Check, ChevronDown, Languages } from 'lucide-react'
+import { ChevronDown, Languages } from 'lucide-react'
 import type { SiteLocale } from '../hooks/useLocale'
 import type { Theme } from '../hooks/useTheme'
+import '../styles/language-flags.css'
+import GlideSelect from './react-bits/GlideSelect'
+import RubberSegmentNav from './RubberSegmentNav'
+import './SiteTopbar.css'
 
 let retainedBannerProgress = 0
 
-const localeOptions: Array<{ value: SiteLocale; shortLabel: string; label: string }> = [
-  { value: 'en', shortLabel: 'EN', label: 'English' },
-  { value: 'zh', shortLabel: '中文', label: '简体中文' },
-  { value: 'tr', shortLabel: 'TR', label: 'Türkçe' },
-  { value: 'es', shortLabel: 'ES', label: 'Español' },
+// Restore the navigation entry when paid plans launch.
+const dashboardNavigationEnabled = false
+
+const localeOptions: Array<{ value: SiteLocale; shortLabel: string; label: string; flag: string }> = [
+  { value: 'en', shortLabel: 'EN', label: 'English', flag: 'gb' },
+  { value: 'zh', shortLabel: '中文', label: '简体中文', flag: 'cn' },
+  { value: 'tr', shortLabel: 'TR', label: 'Türkçe', flag: 'tr' },
+  { value: 'es', shortLabel: 'ES', label: 'Español', flag: 'es' },
 ]
 
 const topbarLabels: Record<SiteLocale, {
@@ -47,8 +54,8 @@ const topbarLabels: Record<SiteLocale, {
     useDarkTheme: '使用深色主题',
   },
   tr: {
-    transcribe: 'Transkript',
-    docs: 'Dokümanlar',
+    transcribe: 'Transkripsiyon',
+    docs: 'Dokümantasyon',
     pricing: 'Fiyatlar',
     dashboard: 'Panel',
     navigation: 'Ana menü',
@@ -74,12 +81,15 @@ export function SiteTopbar({
   onHomeClick,
   locale,
   onLocaleChange,
+  glideLanguage = false,
+  theme,
 }: {
   onHomeClick?: () => void
   theme?: Theme
   onThemeToggle?: () => void
   locale?: SiteLocale
   onLocaleChange?: (locale: SiteLocale) => void
+  glideLanguage?: boolean
 }) {
   const [localLocale, setLocalLocale] = useState<SiteLocale>(() =>
     ['en', 'zh', 'tr', 'es'].includes(window.localStorage.getItem('easytran-locale') ?? '')
@@ -87,12 +97,13 @@ export function SiteTopbar({
       : 'en',
   )
   const [languageMenuOpen, setLanguageMenuOpen] = useState(false)
+  const topbarRef = useRef<HTMLElement>(null)
   const languageMenuRef = useRef<HTMLDivElement>(null)
   const activeLocale = locale ?? localLocale
   const path = window.location.pathname
   const active = path === '/docs'
     ? 'docs'
-    : path === '/business' || path.startsWith('/checkout')
+    : path === '/business' || path === '/pricing' || path.startsWith('/checkout')
       ? 'pricing'
       : path === '/dashboard'
         ? 'dashboard'
@@ -169,29 +180,42 @@ export function SiteTopbar({
 
   const labels = topbarLabels[activeLocale]
   const activeLocaleOption = localeOptions.find((option) => option.value === activeLocale) ?? localeOptions[0]
+  const light = theme === 'light'
 
   return (
     <header
-      className={scrollProgress > 0 ? 'topbar is-scrolled' : 'topbar'}
+      ref={topbarRef}
+      className={scrollProgress > 0 ? 'topbar site-topbar is-scrolled' : 'topbar site-topbar'}
       style={{ '--topbar-banner-progress': scrollProgress } as CSSProperties}
       data-no-translate
     >
       <a
-        className="logo"
+        className="logo site-brand"
         href="/"
         onClick={(event) => navigate(event, '/')}
         aria-label={labels.home}
       >
-        <img className="logo-icon" src="/easytran-logo.svg" alt="" aria-hidden="true" />
+        <span className="site-brand-mark" aria-hidden="true" />
       </a>
-      <nav className="topbar-nav" aria-label={labels.navigation}>
-        <a className={active === 'transcribe' ? 'nav-link active' : 'nav-link'} href="/" onClick={(event) => navigate(event, '/')}>{labels.transcribe}</a>
-        <a className={active === 'docs' ? 'nav-link active' : 'nav-link'} href="/docs" onClick={(event) => navigate(event, '/docs')}>{labels.docs}</a>
-        <a className={active === 'pricing' ? 'nav-link active' : 'nav-link'} href="/business" onClick={(event) => navigate(event, '/business')}>{labels.pricing}</a>
-        <a className={active === 'dashboard' ? 'nav-link active' : 'nav-link'} href="/dashboard" onClick={(event) => navigate(event, '/dashboard')}>{labels.dashboard}</a>
-      </nav>
+      <RubberSegmentNav ariaLabel={labels.navigation} items={[
+        { href: '/', label: labels.transcribe, active: active === 'transcribe', onClick: event => navigate(event, '/') },
+        { href: '/docs', label: labels.docs, active: active === 'docs', onClick: event => navigate(event, '/docs') },
+        { href: '/business', label: labels.pricing, active: active === 'pricing', onClick: event => navigate(event, '/business') },
+        ...(dashboardNavigationEnabled ? [{ href: '/dashboard', label: labels.dashboard, active: active === 'dashboard', onClick: (event: MouseEvent<HTMLAnchorElement>) => navigate(event, '/dashboard') }] : []),
+      ]} />
       <span className="topbar-controls">
-        <div className="language-selector" ref={languageMenuRef}>
+        {glideLanguage ? <GlideSelect className="easytran-language" value={activeLocale} ariaLabel={labels.language}
+          options={['en', 'tr', 'es', 'zh'].map(value => {
+            const option = localeOptions.find(item => item.value === value)!
+            return { value, label: value === 'zh' ? '中文' : option.label, tag: value.toUpperCase() }
+          })}
+          onChange={value => setFallbackLocale(value as SiteLocale)} size="md" placement="right" align="left"
+          menuWidth={208} rowHeight={38} fallbackAnchorRef={topbarRef}
+          surfaceColor={light ? 'var(--et-select-surface-light)' : 'var(--et-select-surface-dark)'}
+          highlightColor={light ? 'var(--et-select-highlight-light)' : 'var(--et-select-highlight-dark)'}
+          accentColor="var(--et-select-accent)" textColor={light ? 'var(--et-select-text-light)' : 'var(--et-select-text-dark)'}
+          radius={2} popDuration={190} glideDuration={190}
+          triggerLabel={<span className="easytran-language-label"><Languages size={17} strokeWidth={2.25} aria-hidden="true" /><span className="easytran-language-code">{activeLocaleOption.shortLabel}</span></span>} /> : <div className="language-selector" ref={languageMenuRef}>
           <button
             className={languageMenuOpen ? 'language-trigger is-open' : 'language-trigger'}
             type="button"
@@ -214,15 +238,17 @@ export function SiteTopbar({
                   role="menuitemradio"
                   aria-checked={option.value === activeLocale}
                   onClick={() => setFallbackLocale(option.value)}
-                >
-                  <span className="language-option-code">{option.shortLabel}</span>
-                  <span>{option.label}</span>
-                  {option.value === activeLocale ? <Check size={14} aria-hidden="true" /> : null}
-                </button>
+                  >
+                    <span className="language-option-code">{option.shortLabel}</span>
+                    <span>{option.label}</span>
+                    <span className="language-option-tail" aria-hidden="true">
+                      <span className={`fi fi-${option.flag}`} />
+                    </span>
+                  </button>
               ))}
             </div>
           ) : null}
-        </div>
+        </div>}
       </span>
     </header>
   )
