@@ -1,39 +1,31 @@
 # EasyTran
 
-Fast, readable transcripts from supported video URLs.
+<img src="public/easytran-logo.svg" alt="EasyTran" width="160" />
 
-EasyTran turns supported video captions into searchable, timestamped text with
-clean exports and an optional AI fallback when a usable subtitle track is not
-available.
+Readable transcripts from supported video URLs.
 
-## Product
+[Website](https://easytran.app) · [Docs](https://easytran.app/docs) · [Dashboard](https://easytran.app/dashboard)
 
-- Free browser-based transcript flow
-- Searchable timestamped output
+## Free web
+
+- Unlimited free transcription
+- AI fallback when captions are unavailable
+- Transcript segmentation
+- Timestamped, searchable transcript output
 - JSON, TXT, SRT, and VTT exports
-- API and dashboard plans for production workflows
-- Batch, webhook, channel-sync, and archive capabilities on eligible plans
 
-## Local development
+## Paid plans
 
-```bash
-npm install
-npm run dev
-```
+Planned features:
 
-The Vite frontend runs locally with the Node API. Copy the example environment
-file and configure only the providers required for the feature you are testing.
-Never commit API keys or production credentials.
-
-## Quality checks
-
-```bash
-npm run lint
-npm test
-npm run build
-```
-
-Product documentation lives at `/docs`. Deployment and HTTPS notes are kept in
-`DEPLOYMENT.md`.
-
-[easytran.app](https://easytran.app)
+- 1,000,000 hours of video transcription
+- 50,000 hours of AI fallback transcription
+- Playlist transcription
+- Channel transcription and auto-sync
+- Website transcription
+- Bulk and parallel transcription
+- AI-edited transcripts
+- API access and API key management
+- Automations and completion webhooks
+- MCP server integration
+- Searchable transcript archives
