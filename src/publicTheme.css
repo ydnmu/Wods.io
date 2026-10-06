@@ -137,9 +137,14 @@
 :root[data-theme='light'] .app > .topbar::before,
 :root[data-theme='light'] .business-shell > .topbar::before,
 :root[data-theme='light'] .docs-shell > .topbar::before {
-  display: none !important;
-  opacity: 0 !important;
-  content: none !important;
+  display: block !important;
+  content: '' !important;
+  border-color: rgba(6, 25, 25, .13) !important;
+  background: rgba(244, 248, 247, .82) !important;
+  box-shadow:
+    0 14px 34px rgba(6, 25, 25, .14),
+    inset 0 1px 0 rgba(255, 255, 255, .75) !important;
+  opacity: var(--topbar-banner-progress) !important;
 }
 
 :root[data-theme='light'] .docs-shell,
@@ -172,7 +177,6 @@
 :root[data-theme='light'] .docs-shell .capability-grid article,
 :root[data-theme='light'] .docs-shell .docs-policy-grid article,
 :root[data-theme='light'] .docs-shell .docs-plan-rules,
-:root[data-theme='light'] .docs-shell .docs-question,
 :root[data-theme='light'] .docs-shell .docs-policy-copy,
 :root[data-theme='light'] .docs-shell .docs-footer a {
   border-color: var(--public-light-border) !important;
@@ -188,8 +192,20 @@
 :root[data-theme='light'] .docs-shell .docs-hero-copy,
 :root[data-theme='light'] .docs-shell .quickstart-layout,
 :root[data-theme='light'] .docs-shell .endpoint-bar,
-:root[data-theme='light'] .docs-shell .reference-grid {
+:root[data-theme='light'] .docs-shell .reference-grid,
+:root[data-theme='light'] .docs-shell .error-block,
+:root[data-theme='light'] .docs-shell .capability-grid article,
+:root[data-theme='light'] .docs-shell .docs-policy-grid article,
+:root[data-theme='light'] .docs-shell .docs-plan-rules,
+:root[data-theme='light'] .docs-shell .docs-policy-copy {
   background: var(--public-light-panel-strong) !important;
+}
+
+:root[data-theme='light'] .docs-shell .docs-question {
+  background: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
 }
 
 :root[data-theme='light'] .docs-shell .quickstart-steps,
@@ -253,6 +269,11 @@
   border-color: rgba(37, 70, 83, .2) !important;
   color: #26414c !important;
   background: rgba(199, 209, 210, .58) !important;
+}
+
+:root[data-theme='light'] .docs-shell .docs-errors-toggle,
+:root[data-theme='light'] .docs-shell .error-block.is-open .error-table {
+  background: rgba(226, 229, 225, .46) !important;
 }
 
 :root[data-theme='light'] .docs-shell .language-modal {
@@ -397,7 +418,55 @@
   }
 }
 
-/* Dark-only release navigation: compact at rest, one shared glass bar on scroll. */
+/* Local next pass: crisp, focus-retaining URL bar treatment. */
+.app-wallpaper .url-shell {
+  box-sizing: border-box;
+  padding: 5px !important;
+  border: 2px solid transparent !important;
+  border-radius: 3px !important;
+  transition:
+    border-color .16s ease,
+    box-shadow .16s ease,
+    background .16s ease !important;
+}
+
+.app-wallpaper .url-shell:hover,
+.app-wallpaper .url-shell:focus-within,
+:root[data-theme='light'] .app-wallpaper .url-shell:hover,
+:root[data-theme='light'] .app-wallpaper .url-shell:focus-within {
+  border-color: rgba(255, 255, 255, .96) !important;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, .22),
+    0 18px 48px -26px rgba(0, 0, 0, .88) !important;
+}
+
+.app-wallpaper .promise-help-button {
+  width: 18px !important;
+  height: 18px !important;
+  display: inline-grid;
+  place-items: center;
+  margin-left: -2px;
+  border: 0 !important;
+  border-radius: 4px !important;
+  color: rgba(159, 231, 255, .72);
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.app-wallpaper .promise-help-button > svg {
+  display: block;
+  width: 14px;
+  height: 14px;
+}
+
+.app-wallpaper .promise-help-button:hover,
+.app-wallpaper .promise-help-button:focus-visible {
+  color: #dff7ff;
+  background: rgba(121, 216, 255, .1) !important;
+  box-shadow: none !important;
+}
+
+/* Original release navigation: compact at rest, one shared glass bar on scroll. */
 .app > .topbar::before,
 .business-shell > .topbar::before,
 .docs-shell > .topbar::before {
@@ -428,5 +497,397 @@
   .docs-shell > .topbar .topbar-nav {
     flex: 1 1 auto;
     justify-content: center !important;
+  }
+}
+
+/* Keep every topbar control on one visual baseline. */
+@media (min-width: 761px) {
+.app > .topbar .logo,
+.business-shell > .topbar .logo,
+.docs-shell > .topbar .logo,
+.app > .topbar .topbar-nav .nav-link,
+.business-shell > .topbar .topbar-nav .nav-link,
+.docs-shell > .topbar .topbar-nav .nav-link,
+.app > .topbar .topbar-controls,
+.business-shell > .topbar .topbar-controls,
+.docs-shell > .topbar .topbar-controls,
+.app > .topbar .language-selector,
+.business-shell > .topbar .language-selector,
+.docs-shell > .topbar .language-selector,
+.app > .topbar .language-trigger,
+.business-shell > .topbar .language-trigger,
+.docs-shell > .topbar .language-trigger {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.app > .topbar .topbar-nav,
+.business-shell > .topbar .topbar-nav,
+.docs-shell > .topbar .topbar-nav {
+  display: flex !important;
+  align-items: center !important;
+  flex-wrap: nowrap !important;
+  height: 40px !important;
+}
+
+.app > .topbar .logo-icon,
+.business-shell > .topbar .logo-icon,
+.docs-shell > .topbar .logo-icon {
+  top: 0 !important;
+  margin: 0 !important;
+}
+
+.app > .topbar .topbar-nav .nav-link,
+.business-shell > .topbar .topbar-nav .nav-link,
+.docs-shell > .topbar .topbar-nav .nav-link,
+.app > .topbar .language-selector,
+.business-shell > .topbar .language-selector,
+.docs-shell > .topbar .language-selector,
+.app > .topbar .language-trigger,
+.business-shell > .topbar .language-trigger,
+.docs-shell > .topbar .language-trigger {
+  height: 40px !important;
+  line-height: 1 !important;
+}
+
+html body .app > .topbar .topbar-nav .nav-link,
+html body .business-shell > .topbar .topbar-nav .nav-link,
+html body .docs-shell > .topbar .topbar-nav .nav-link {
+  height: 40px !important;
+  padding-top: 0 !important;
+}
+
+  html body .app > .topbar .topbar-nav,
+  html body .business-shell > .topbar .topbar-nav,
+  html body .docs-shell > .topbar .topbar-nav {
+    position: static !important;
+    top: auto !important;
+    right: auto !important;
+    left: auto !important;
+    transform: none !important;
+  }
+}
+
+/* Category hover stays text-only; no translucent pill/rectangle. */
+html body .app > .topbar .topbar-nav .nav-link:hover,
+html body .business-shell > .topbar .topbar-nav .nav-link:hover,
+html body .docs-shell > .topbar .topbar-nav .nav-link:hover,
+html body .app > .topbar .topbar-nav .nav-link:focus-visible,
+html body .business-shell > .topbar .topbar-nav .nav-link:focus-visible,
+html body .docs-shell > .topbar .topbar-nav .nav-link:focus-visible {
+  color: #fff !important;
+  background: transparent !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  filter: none !important;
+  text-shadow: none !important;
+  transform: none !important;
+}
+
+:root[data-theme='light'] body .app > .topbar .topbar-nav .nav-link:hover,
+:root[data-theme='light'] body .business-shell > .topbar .topbar-nav .nav-link:hover,
+:root[data-theme='light'] body .docs-shell > .topbar .topbar-nav .nav-link:hover,
+:root[data-theme='light'] body .app > .topbar .topbar-nav .nav-link:focus-visible,
+:root[data-theme='light'] body .business-shell > .topbar .topbar-nav .nav-link:focus-visible,
+:root[data-theme='light'] body .docs-shell > .topbar .topbar-nav .nav-link:focus-visible {
+  color: #17212a !important;
+}
+
+/* Stable global navigation: page-level lazy CSS must never move this component. */
+@media (min-width: 761px) {
+  html body .app > .topbar.site-topbar {
+    position: fixed !important;
+    top: 22px !important;
+    right: auto !important;
+    left: 50% !important;
+    z-index: 1000 !important;
+    width: max-content !important;
+    height: 44px !important;
+    min-height: 44px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex: 0 0 auto !important;
+    flex-wrap: nowrap !important;
+    gap: 18px !important;
+    margin: 0 !important;
+    padding: 0 12px 0 16px !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    transform: translateX(-50%) !important;
+    isolation: isolate;
+  }
+
+  html body .app > .topbar.site-topbar .logo {
+    position: relative !important;
+    top: auto !important;
+    width: 39px !important;
+    height: 40px !important;
+    min-height: 40px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex: 0 0 39px !important;
+    margin: 0 !important;
+    padding: 0 4px !important;
+    transform: none !important;
+  }
+
+  html body .app > .topbar.site-topbar .logo-icon {
+    position: relative !important;
+    top: 0 !important;
+    width: 31px !important;
+    height: 24px !important;
+    margin: 0 !important;
+    transform: none !important;
+  }
+
+  html body .app > .topbar.site-topbar .topbar-nav {
+    position: static !important;
+    top: auto !important;
+    right: auto !important;
+    left: auto !important;
+    width: auto !important;
+    height: 40px !important;
+    min-width: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex: 0 0 auto !important;
+    flex-wrap: nowrap !important;
+    gap: 2px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    transform: none !important;
+  }
+
+  html body .app > .topbar.site-topbar .topbar-nav .nav-link {
+    position: relative !important;
+    top: auto !important;
+    width: auto !important;
+    height: 40px !important;
+    min-width: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex: 0 0 auto !important;
+    margin: 0 !important;
+    padding: 0 11px !important;
+    line-height: 1 !important;
+    transform: none !important;
+  }
+
+  html body .app > .topbar.site-topbar .topbar-controls,
+  html body .app > .topbar.site-topbar .language-selector,
+  html body .app > .topbar.site-topbar .language-trigger {
+    position: relative !important;
+    top: auto !important;
+    height: 40px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex: 0 0 auto !important;
+    margin: 0 !important;
+    transform: none !important;
+  }
+
+  html body .app > .topbar.site-topbar .topbar-controls {
+    padding: 0 !important;
+    border: 0 !important;
+  }
+}
+
+html body .app > .topbar.site-topbar::before {
+  content: '' !important;
+  position: absolute !important;
+  z-index: -1 !important;
+  inset: -5px -9px !important;
+  display: block !important;
+  border: 1px solid rgba(255, 255, 255, .095) !important;
+  border-radius: 9px !important;
+  background: #151515 !important;
+  box-shadow:
+    0 14px 34px rgba(0, 0, 0, .25),
+    inset 0 1px 0 rgba(255, 255, 255, .055) !important;
+  opacity: 0 !important;
+  transform: translateY(-3px) scale(.985) !important;
+  backdrop-filter: blur(16px) saturate(.92) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(.92) !important;
+  transition:
+    opacity .28s cubic-bezier(.22, 1, .36, 1),
+    transform .32s cubic-bezier(.22, 1, .36, 1) !important;
+  pointer-events: none !important;
+}
+
+html body .app > .topbar.site-topbar.is-scrolled::before {
+  opacity: 1 !important;
+  transform: scale(1) !important;
+}
+
+:root[data-theme='light'] body .app > .topbar.site-topbar::before {
+  border-color: rgba(255, 255, 255, .095) !important;
+  background: #151515 !important;
+  box-shadow:
+    0 14px 34px rgba(6, 25, 25, .14),
+    inset 0 1px 0 rgba(255, 255, 255, .78) !important;
+}
+
+:root[data-theme='light'] .site-topbar.is-scrolled {
+  --topbar-text-muted: #a8b9cd;
+  --topbar-text-active: #edf3fb;
+}
+
+:root[data-theme='light'] body .app > .topbar.site-topbar.is-scrolled :is(.language-trigger, .easytran-language .glide-select__trigger) {
+  color: #a8b9cd !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html body .app > .topbar.site-topbar::before {
+    transition: none !important;
+  }
+}
+
+/* Temporary pricing maintenance surface, kept inside the public visual system. */
+.pricing-maintenance-shell {
+  min-height: 100svh;
+}
+
+.pricing-maintenance-view {
+  position: relative;
+  z-index: 2;
+  width: min(780px, calc(100% - 48px));
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  flex: 1 1 auto;
+  margin: 0 auto;
+  padding: 126px 0 72px;
+  text-align: center;
+}
+
+.pricing-maintenance-panel {
+  width: min(640px, 100%);
+  padding: clamp(38px, 6vw, 62px);
+  border: 1px solid rgba(255, 255, 255, .11);
+  border-radius: 10px;
+  background: linear-gradient(145deg, rgba(22, 27, 34, .58), rgba(7, 11, 17, .48));
+  box-shadow:
+    0 34px 90px rgba(0, 0, 0, .32),
+    inset 0 1px 0 rgba(255, 255, 255, .055);
+  backdrop-filter: blur(18px) saturate(105%);
+  -webkit-backdrop-filter: blur(18px) saturate(105%);
+}
+
+.pricing-maintenance-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #9fe7ff;
+  font-size: 10.5px;
+  font-weight: 720;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  text-shadow: 0 0 18px rgba(66, 202, 255, .52);
+}
+
+.pricing-maintenance-kicker::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #79d8ff;
+  box-shadow: 0 0 14px rgba(66, 202, 255, .78);
+}
+
+.pricing-maintenance-panel h1 {
+  max-width: 560px;
+  margin: 24px auto 16px;
+  color: #f7f9fb;
+  font-size: clamp(42px, 6vw, 68px);
+  font-weight: 560;
+  letter-spacing: -.055em;
+  line-height: .98;
+  text-shadow: 0 18px 52px rgba(0, 0, 0, .38);
+}
+
+.pricing-maintenance-panel p {
+  max-width: 430px;
+  margin: 0 auto;
+  color: rgba(229, 235, 241, .62);
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.pricing-maintenance-panel a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 34px;
+  padding: 0 18px;
+  border: 1px solid rgba(255, 255, 255, .13);
+  border-radius: 6px;
+  color: rgba(245, 248, 250, .86);
+  background: linear-gradient(180deg, rgba(48, 52, 59, .9), rgba(30, 34, 40, .9));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .07);
+  font-size: 12px;
+  font-weight: 680;
+  text-decoration: none;
+  transition: border-color .18s ease, color .18s ease, transform .18s ease;
+}
+
+.pricing-maintenance-panel a:hover,
+.pricing-maintenance-panel a:focus-visible {
+  border-color: rgba(159, 231, 255, .44);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+:root[data-theme='light'] .pricing-maintenance-panel {
+  border-color: rgba(20, 31, 36, .14);
+  background: rgba(235, 239, 237, .64);
+  box-shadow:
+    0 34px 90px rgba(21, 29, 33, .18),
+    inset 0 1px 0 rgba(255, 255, 255, .62);
+}
+
+:root[data-theme='light'] .pricing-maintenance-kicker {
+  color: #086f93;
+  text-shadow: none;
+}
+
+:root[data-theme='light'] .pricing-maintenance-kicker::before {
+  background: #087ca3;
+  box-shadow: 0 0 12px rgba(8, 124, 163, .28);
+}
+
+:root[data-theme='light'] .pricing-maintenance-panel h1 {
+  color: #172126;
+  text-shadow: none;
+}
+
+:root[data-theme='light'] .pricing-maintenance-panel p {
+  color: rgba(23, 33, 38, .64);
+}
+
+:root[data-theme='light'] .pricing-maintenance-panel a {
+  border-color: rgba(24, 33, 38, .72);
+  color: #f5f7f7;
+  background: #242d32;
+}
+
+@media (max-width: 560px) {
+  .pricing-maintenance-view {
+    width: min(100% - 28px, 780px);
+    padding: 132px 0 52px;
+  }
+
+  .pricing-maintenance-panel {
+    padding: 38px 24px;
   }
 }
