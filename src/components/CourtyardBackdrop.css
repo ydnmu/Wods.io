@@ -1,0 +1,69 @@
+.courtyard-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background: #0b1013;
+  contain: layout paint;
+}
+
+.courtyard-backdrop[data-active='false'] { visibility: hidden; }
+
+.courtyard-scene {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  /* One constant grade; no edge fade, letterboxing or animated exposure. */
+  filter: saturate(1.065) contrast(1.02) brightness(.98);
+}
+
+.courtyard-image,
+.courtyard-motion {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+}
+
+.courtyard-image {
+  --courtyard-zoom: 1;
+  --courtyard-focus-x: 18%;
+  object-fit: cover;
+  object-position: var(--courtyard-focus-x) 50%;
+  transform: scale(var(--courtyard-zoom));
+  transform-origin: var(--courtyard-focus-x) 50%;
+  /* Static fallback only. The GPU performs softness in its single pass. */
+  filter: blur(.3px);
+}
+
+.courtyard-motion { visibility: hidden; }
+
+.courtyard-backdrop::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 32% 37% at 50% 46%, rgb(3 7 10 / .2), rgb(3 7 10 / .1) 42%, transparent 75%),
+    radial-gradient(ellipse at center, transparent 65%, rgb(2 5 7 / .1));
+}
+
+.app.courtyard-home { background: transparent !important; }
+.app.courtyard-home > .dot-grid { opacity: 0; }
+
+@media (max-aspect-ratio: 4 / 3) {
+  .courtyard-image { --courtyard-focus-x: 12%; }
+}
+
+/* Cover already magnifies a 16:9 crop. Wider screens need a little more depth. */
+@media (min-aspect-ratio: 2 / 1) {
+  .courtyard-image { --courtyard-zoom: 1.12; }
+}
+
+@media (max-width: 760px) and (pointer: coarse) {
+  .courtyard-image { --courtyard-focus-x: 50%; --courtyard-zoom: 1; filter: blur(.2px); }
+}
