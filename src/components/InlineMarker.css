@@ -1,0 +1,12 @@
+.inline-marker {
+  padding: 0 5px;
+  border: 0;
+  border-radius: 0;
+  color: #061015;
+  font-weight: inherit;
+  background: #59e7f2;
+  opacity: 1;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+.react-home[data-visual-theme='react-dark'] .inline-marker { border-radius: 1px; }
