@@ -1,6 +1,7 @@
 import {
   ArrowLeft,
   Check,
+  CircleHelp,
   Clipboard,
   Download,
   Fingerprint,
@@ -20,7 +21,6 @@ import type { FormEvent } from 'react'
 import { NoCaptionsModal } from '../components/NoCaptionsModal'
 import { SiteTopbar } from '../components/SiteTopbar'
 import { Footer } from '../components/Footer'
-import { ThemeBackdrop } from '../components/ThemeBackdrop'
 import { trackEvent } from '../lib/analytics'
 import { ClientYoutubeError, fetchYoutubeTranscriptFromClient, isYoutubeUrl } from '../lib/clientYoutube'
 import { formatTime } from '../lib/formatTime'
@@ -34,12 +34,20 @@ import type {
 } from '../lib/types'
 import type { SiteLocale } from '../hooks/useLocale'
 import type { Theme } from '../hooks/useTheme'
+import type { ProductTheme } from '../themes/productThemes'
+import { useTranscriptionStatus } from '../hooks/useTranscriptionStatus'
+import { TranscriptionIndicator } from '../components/TranscriptionIndicator'
+import BorderGlow from '../components/react-bits/BorderGlow'
+import { TranscribeButton } from '../components/TranscribeButton'
+import { ProductInformation } from '../components/ProductInformation'
+import { usePublicTranscriptMetrics } from '../hooks/usePublicTranscriptMetrics'
 
-type AppState = 'idle' | 'loading' | 'ai-confirm' | 'ai-loading' | 'result'
+type AppState = 'idle' | 'loading' | 'ai-confirm' | 'ai-loading' | 'ready' | 'result'
 
 type PendingAiFallback = {
   url: string
   title: string
+  preserveTitle: boolean
   message: string
   force: boolean
 }
@@ -58,6 +66,7 @@ const homeCopy = {
     promises: ['No tracking', 'No ads', 'No limit', 'AI fallback'],
     noLimitLabel: 'What does no limit mean?',
     noLimitHelp: 'Web transcripts are free for everyone, subject to fair-use safeguards. Need hundreds of thousands in one click? Explore our pricing options.',
+    aiFallbackHelp: 'When a standard transcript is unavailable, AI fallback can generate one from the audio.',
     generated: 'transcripts generated',
     response: 'average response time',
     languages: 'languages supported',
@@ -68,26 +77,28 @@ const homeCopy = {
     placeholder: '粘贴视频链接（YouTube、Vimeo、TED、Dailymotion）',
     inputLabel: '视频链接',
     clear: '清除链接',
-    submit: '开始转录',
+    submit: '转录',
     promisesLabel: 'EasyTran 承诺',
-    promises: ['无追踪', '无广告', '网页不限量', 'AI 备用转录'],
+    promises: ['无追踪', '无广告', '网页不限量', 'AI 转录'],
     noLimitLabel: '网页不限量是什么意思？',
-    noLimitHelp: '网页转录对所有人免费，并受合理使用保护。需要一次处理大量视频？请查看价格方案。',
-    generated: '已生成转录',
+    noLimitHelp: '网页转录对所有人免费，但须遵守合理使用规则。如需批量处理大量视频，请查看我们的方案。',
+    aiFallbackHelp: '无法获取字幕时，可以使用 AI 将音频转换为文字。',
+    generated: '已生成的转录',
     response: '平均响应时间',
     languages: '支持的语言',
   },
   tr: {
     titleStart: 'URL',
     titleEnd: 'Transkript.',
-    placeholder: 'Video bağlantısını yapıştır (YouTube, Vimeo, TED, Dailymotion)',
+    placeholder: 'Video bağlantısını yapıştırın (YouTube, Vimeo, TED, Dailymotion)',
     inputLabel: 'Video bağlantısı',
     clear: 'Bağlantıyı temizle',
-    submit: 'Transkript oluştur',
+    submit: 'Metne dönüştür',
     promisesLabel: 'EasyTran ilkeleri',
-    promises: ['Takip yok', 'Reklam yok', 'Web limiti yok', 'AI yedekleme'],
-    noLimitLabel: 'Web limiti yok ne demek?',
-    noLimitHelp: 'Web transkriptleri, adil kullanım korumaları kapsamında herkes için ücretsizdir. Tek seferde yüz binlerce video mu işleyeceksiniz? Fiyatlandırma seçeneklerini inceleyin.',
+    promises: ['Takip yok', 'Reklam yok', 'Sınırsız web kullanımı', 'Yapay zekâ desteği'],
+    noLimitLabel: 'Sınırsız web kullanımı ne anlama geliyor?',
+    noLimitHelp: 'Web üzerinden transkripsiyon, adil kullanım kuralları çerçevesinde herkes için ücretsizdir. Çok sayıda videoyu toplu işlemek için planlarımızı inceleyin.',
+    aiFallbackHelp: 'Altyazı bulunamadığında sesi yapay zekâ ile metne dönüştürebilirsiniz.',
     generated: 'oluşturulan transkript',
     response: 'ortalama yanıt süresi',
     languages: 'desteklenen dil',
@@ -95,14 +106,15 @@ const homeCopy = {
   es: {
     titleStart: 'URL',
     titleEnd: 'Transcripción.',
-    placeholder: 'Pega la URL de un vídeo (YouTube, Vimeo, TED, Dailymotion)',
+    placeholder: 'Pega el enlace de un vídeo (YouTube, Vimeo, TED, Dailymotion)',
     inputLabel: 'URL del vídeo',
     clear: 'Borrar URL',
     submit: 'Transcribir',
     promisesLabel: 'Compromisos de EasyTran',
-    promises: ['Sin rastreo', 'Sin anuncios', 'Sin límite web', 'Respaldo con IA'],
-    noLimitLabel: '¿Qué significa sin límite web?',
+    promises: ['Sin rastreo', 'Sin anuncios', 'Uso web ilimitado', 'Transcripción con IA'],
+    noLimitLabel: '¿Qué significa el uso web ilimitado?',
     noLimitHelp: 'Las transcripciones web son gratuitas para todos, con medidas de uso razonable. ¿Necesitas procesar cientos de miles de vídeos de una vez? Consulta nuestros planes.',
+    aiFallbackHelp: 'Cuando no hay subtítulos disponibles, puedes transcribir el audio con IA.',
     generated: 'transcripciones generadas',
     response: 'tiempo medio de respuesta',
     languages: 'idiomas compatibles',
@@ -174,17 +186,6 @@ const renderHighlightedText = (text: string, query: string) => {
   )
 }
 
-const transcriptNeedsAiFallback = (transcript: TranscriptResponse) => {
-  const words = transcript.plainText.toLowerCase().match(/[\p{L}\p{N}']+/gu) ?? []
-  if (transcript.segments.length < 2 || words.length < 8) return true
-  if (words.length < 30) return false
-  const uniqueRatio = new Set(words).size / words.length
-  const noisySegments = transcript.segments.filter((segment) =>
-    !/[\p{L}\p{N}]/u.test(segment.text) || /(.)\1{7,}/u.test(segment.text),
-  ).length
-  return uniqueRatio < 0.12 || noisySegments / transcript.segments.length > 0.35
-}
-
 const getEmbedUrl = (sourceUrl: string, videoId: string, startTime: number) => {
   if (sourceUrl.includes('vimeo.com'))
     return `https://player.vimeo.com/video/${videoId}?autoplay=1&muted=1${startTime ? `#t=${Math.floor(startTime)}s` : ''}`
@@ -213,16 +214,22 @@ const getThumbnailUrl = (sourceUrl: string, videoId: string, thumbnail?: string)
 
 export function HomePage({
   theme,
+  productTheme,
   onThemeToggle,
   locale,
   onLocaleChange,
 }: {
   theme: Theme
+  productTheme: ProductTheme
   onThemeToggle: () => void
   locale: SiteLocale
   onLocaleChange: (locale: SiteLocale) => void
 }) {
   const copy = homeCopy[locale]
+  const inlineTranscription = productTheme.inlineTranscription
+  const reactDark = productTheme.id === 'react-dark'
+  const reactTheme = inlineTranscription
+  const { operationStatus, begin, finish, isCurrent, clear } = useTranscriptionStatus()
   const [state, setState] = useState<AppState>(transientTranscriptSession ? 'result' : 'idle')
   const [url, setUrl] = useState(transientTranscriptSession?.url ?? '')
   const [query, setQuery] = useState('')
@@ -246,11 +253,46 @@ export function HomePage({
   const [aiProgress, setAiProgress] = useState(0)
   const inputRef = useRef<HTMLInputElement>(null)
   const iframeRef = useRef<HTMLIFrameElement>(null)
+  const downloadMenuRef = useRef<HTMLDivElement>(null)
   const [startTime, setStartTime] = useState(0)
+  const { metrics: publicMetrics, refresh: metricRefresh, holdMetrics, completeMetrics,
+    returnHomeMetrics, finishMetricRefresh } = usePublicTranscriptMetrics(state === 'idle')
+  const requestStartedAtRef = useRef(0)
+
+  // The response is already complete; give the ready label one short transition
+  // before revealing the real workspace. Cleanup also covers a reset/navigation.
+  useEffect(() => {
+    if (state !== 'ready') return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const reveal = window.setTimeout(() => setState('result'), 0)
+      return () => window.clearTimeout(reveal)
+    }
+    const responseMs = operationStatus.status === 'done' ? operationStatus.elapsed * 1_000 : 350
+    const reveal = window.setTimeout(() => setState('result'), Math.max(160, 350 - responseMs))
+    return () => window.clearTimeout(reveal)
+  }, [state, operationStatus])
 
   useEffect(() => {
     trackEvent('page_view')
   }, [])
+
+  useEffect(() => {
+    if (!downloadOpen) return
+    const closeOnOutsideClick = (event: PointerEvent) => {
+      if (!downloadMenuRef.current?.contains(event.target as Node)) setDownloadOpen(false)
+    }
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key !== 'Escape') return
+      setDownloadOpen(false)
+      downloadMenuRef.current?.querySelector<HTMLButtonElement>('button')?.focus()
+    }
+    document.addEventListener('pointerdown', closeOnOutsideClick)
+    document.addEventListener('keydown', closeOnEscape)
+    return () => {
+      document.removeEventListener('pointerdown', closeOnOutsideClick)
+      document.removeEventListener('keydown', closeOnEscape)
+    }
+  }, [downloadOpen])
 
   const allParagraphs = useMemo(
     () => (transcript ? buildParagraphs(transcript.segments) : []),
@@ -325,14 +367,14 @@ export function HomePage({
   }, [transcript])
 
   useEffect(() => {
-    if (state !== 'ai-loading') return
+    if (state !== 'ai-loading' || inlineTranscription) return
     const interval = window.setInterval(() => {
       setAiProgress((value) => Math.min(92, value + Math.max(1, Math.round((94 - value) / 10))))
     }, 650)
     return () => window.clearInterval(interval)
-  }, [state])
+  }, [state, inlineTranscription])
 
-  const showTranscript = (payload: TranscriptResponse, sourceUrl: string) => {
+  const showTranscript = (payload: TranscriptResponse, sourceUrl: string, recordOnClient = false) => {
     transientTranscriptSession = { transcript: payload, url: sourceUrl }
     setTranscript(payload)
     setActiveIndex(0)
@@ -342,8 +384,11 @@ export function HomePage({
     setSummaryError('')
     setPendingAiFallback(null)
     setPlaying(true)
-    setState('result')
+    setState(reactTheme ? 'ready' : 'result')
     trackEvent('transcript_success', { videoId: payload.videoId })
+
+    const responseMs = Math.max(1, Math.round(performance.now() - requestStartedAtRef.current))
+    completeMetrics(recordOnClient ? { completionId: crypto.randomUUID(), responseMs } : undefined)
   }
 
   const requestAiFallback = (details: PendingAiFallback) => {
@@ -354,46 +399,48 @@ export function HomePage({
 
   const handleSubmit = async (event?: FormEvent<HTMLFormElement>) => {
     event?.preventDefault()
+    if (state === 'loading' || state === 'ai-loading' || state === 'ready') return
     const trimmedUrl = url.trim()
 
     if (!trimmedUrl) {
-      setMessage('Paste a YouTube URL first.')
+      setMessage('Paste a video URL first.')
       return
     }
 
+    holdMetrics()
     setState('loading')
     setMessage('')
     setCopied(false)
+    const operation = begin()
+    requestStartedAtRef.current = operation.startedAt
     trackEvent('transcript_submit')
 
     try {
       let response: Response | null = null
+      let recordOnClient = false
       let payload: TranscriptResponse & { error?: string; message?: string }
 
       if (isYoutubeUrl(trimmedUrl)) {
         try {
           payload = await fetchYoutubeTranscriptFromClient(trimmedUrl)
-          if (transcriptNeedsAiFallback(payload)) {
-            requestAiFallback({
-              url: trimmedUrl,
-              title: payload.title || 'AI fallback available',
-              message: 'The available captions look incomplete or unreliable. AI can transcribe the audio instead. Continue?',
-              force: true,
-            })
-            return
-          }
+          recordOnClient = true
         } catch (error) {
-          if (!(error instanceof ClientYoutubeError) || error.code !== 'no_captions') throw error
-          requestAiFallback({
-            url: trimmedUrl,
-            title: 'No usable captions found',
-            message: 'This video has no usable subtitle track. AI can transcribe the audio instead. Continue?',
-            force: true,
+          if (!isCurrent(operation)) return
+          if (!(error instanceof ClientYoutubeError)) throw error
+          response = await fetch('/api/transcript', {
+            signal: operation.signal,
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ url: trimmedUrl, allowAiFallback: false }),
           })
-          return
+          payload = await response.json().catch(() => ({
+            error: 'invalid_response',
+            message: 'The transcript service returned an invalid response.',
+          })) as TranscriptResponse & { error?: string; message?: string }
         }
       } else {
         response = await fetch('/api/transcript', {
+          signal: operation.signal,
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ url: trimmedUrl, allowAiFallback: false }),
@@ -403,10 +450,13 @@ export function HomePage({
           message: 'The transcript service returned an invalid response.',
         })) as TranscriptResponse & { error?: string; message?: string }
       }
+      if (!isCurrent(operation)) return
       if (payload.error === 'ai_fallback_confirmation_required') {
+        clear()
         requestAiFallback({
           url: trimmedUrl,
           title: payload.title || 'AI fallback available',
+          preserveTitle: Boolean(payload.title),
           message: payload.message || 'A transcript could not be generated for this video.',
           force: true,
         })
@@ -423,11 +473,17 @@ export function HomePage({
       }
 
       if (response && !response.ok) {
-        throw new Error(payload.error || 'Transcript could not be loaded.')
+        throw new Error(payload.message || payload.error || 'Transcript could not be loaded.')
       }
 
-      showTranscript(payload, trimmedUrl)
+      if (!Array.isArray(payload.segments) || typeof payload.plainText !== 'string') {
+        throw new Error('The transcript service returned an invalid response.')
+      }
+      finish(operation, 'done')
+      showTranscript(payload, trimmedUrl, recordOnClient)
     } catch (error) {
+      if (!finish(operation, 'error')) return
+      returnHomeMetrics()
       setState('idle')
       setMessage(error instanceof Error ? error.message : 'Transcript could not be loaded.')
       trackEvent('transcript_error')
@@ -435,12 +491,16 @@ export function HomePage({
   }
 
   const confirmAiFallback = async () => {
-    if (!pendingAiFallback) return
+    if (!pendingAiFallback || state === 'ai-loading') return
+    const operation = begin()
+    requestStartedAtRef.current = operation.startedAt
+    holdMetrics()
     setState('ai-loading')
     setAiProgress(4)
     setMessage('')
     try {
       const response = await fetch('/api/transcript', {
+        signal: operation.signal,
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -453,11 +513,18 @@ export function HomePage({
         error: 'invalid_response',
         message: 'The transcript service returned an invalid response.',
       })) as TranscriptResponse & { error?: string; message?: string }
+      if (!isCurrent(operation)) return
       if (!response.ok || payload.error) throw new Error(payload.message || payload.error || 'AI transcription failed.')
+      if (!Array.isArray(payload.segments) || typeof payload.plainText !== 'string') {
+        throw new Error('The transcript service returned an invalid response.')
+      }
+      finish(operation, 'done')
       setAiProgress(100)
       showTranscript(payload, pendingAiFallback.url)
     } catch (error) {
+      if (!finish(operation, 'error')) return
       setPendingAiFallback(null)
+      returnHomeMetrics()
       setState('idle')
       setMessage(error instanceof Error ? error.message : 'AI transcription failed.')
       trackEvent('transcript_error')
@@ -513,8 +580,8 @@ export function HomePage({
         }),
       })
       const payload = await response.json()
-      if (!response.ok && !payload.summary) {
-        throw new Error(payload.error || 'Summary failed')
+      if (!response.ok || payload.error) {
+        throw new Error(payload.message || payload.error || 'Summary failed')
       }
       setSummary({
         title: payload.title || transcript.title || 'AI Summary',
@@ -553,7 +620,9 @@ export function HomePage({
   }
 
   const reset = () => {
+    clear()
     transientTranscriptSession = null
+    returnHomeMetrics()
     setState('idle')
     setTranscript(null)
     setMessage('')
@@ -586,13 +655,39 @@ export function HomePage({
 
   const appClassName = [
     'app',
-    state === 'result' || state === 'loading' ? 'app-fixed' : '',
-    state === 'idle' ? 'app-wallpaper' : '',
+    inlineTranscription ? 'react-home' : 'courtyard-home',
+    state === 'result' || (!inlineTranscription && state === 'loading') ? 'app-fixed' : '',
+    state === 'idle' || inlineTranscription ? 'app-wallpaper' : '',
   ].filter(Boolean).join(' ')
 
+  const working = state === 'loading' || state === 'ai-loading'
+  const ready = state === 'ready'
+  const transcriptForm = (
+    <form className="url-shell" onSubmit={handleSubmit} data-no-translate aria-busy={working}>
+      <span className="url-progress" aria-hidden="true" />
+      <div className="url-input-wrap">
+        <Link className="url-icon" size={18} aria-hidden="true" />
+        <input value={url} ref={inputRef} onChange={event => {
+          setUrl(event.target.value)
+          setMessage('')
+        }}
+          className="url-input" placeholder={copy.placeholder} aria-label={copy.inputLabel}
+          inputMode="url" autoCapitalize="none" autoCorrect="off" spellCheck={false}
+          aria-describedby={message ? 'transcript-form-message' : undefined} readOnly={working || ready} />
+        {url && state === 'idle' && <button className="url-clear" type="button" onClick={() => {
+          setUrl('')
+          setMessage('')
+          inputRef.current?.focus()
+        }} aria-label={copy.clear}><X size={16} /></button>}
+      </div>
+      {reactTheme ? <TranscribeButton locale={locale} disabled={working || ready || state === 'ai-confirm'} /> : (
+        <button className="cta" type="submit" disabled={working || state === 'ai-confirm'}>{copy.submit}</button>
+      )}
+    </form>
+  )
+
   return (
-    <main className={appClassName}>
-      <ThemeBackdrop active theme={theme} variant="home" />
+    <main className={appClassName} data-visual-theme={productTheme.id} data-transcription-state={state}>
       <div className="dot-grid" aria-hidden="true" />
 
       <SiteTopbar
@@ -601,76 +696,84 @@ export function HomePage({
         onThemeToggle={onThemeToggle}
         locale={locale}
         onLocaleChange={onLocaleChange}
+        glideLanguage={reactTheme}
       />
 
-      {state === 'idle' && (
+      {(state === 'idle' || (inlineTranscription && state !== 'result')) && (
         <section className="hero" id="app">
-          <h1 className="hero-h1 hero-h1-single">
+          <h1 className="hero-h1 hero-h1-single" data-no-translate>
             <span>{copy.titleStart}</span>
-            <span className="hero-title-arrow" aria-hidden="true" />
+            <span className="hero-title-arrow" aria-hidden="true">
+              {reactTheme && <svg viewBox="0 0 80 40" fill="none" focusable="false">
+                <path d="M8 20H72M56 4L72 20L56 36" stroke="currentColor" strokeWidth="2.4"
+                  strokeLinecap="round" strokeLinejoin="round" vectorEffect="non-scaling-stroke" />
+              </svg>}
+            </span>
             <span>{copy.titleEnd}</span>
           </h1>
 
-          <form className="url-shell" onSubmit={handleSubmit}>
-            <span className="url-progress" aria-hidden="true" />
-            <div className="url-input-wrap">
-              <Link className="url-icon" size={18} />
-              <input
-                value={url}
-                ref={inputRef}
-                onChange={(event) => setUrl(event.target.value)}
-                className="url-input"
-                placeholder={copy.placeholder}
-                aria-label={copy.inputLabel}
-              />
-              {url && (
-                <button className="url-clear" type="button" onClick={() => setUrl('')} aria-label={copy.clear}>
-                  <X size={13} />
-                </button>
-              )}
-            </div>
-            <button className="cta" type="submit">
-              {copy.submit}
-            </button>
-          </form>
+          {reactTheme ? <BorderGlow className="transcript-border" backgroundColor={reactDark ? '#0B1422' : '#F5F8FC'}
+            active={working}
+            borderRadius={4} glowColor="214 100 79" colors={['#F5F9FF', '#A6D8FF', '#DBF4FF']}
+            edgeSensitivity={20} glowRadius={16} glowIntensity={0.42} coneSpread={16} fillOpacity={0.04}>
+            {transcriptForm}
+          </BorderGlow> : transcriptForm}
 
-          {message && <p className="form-message">{message}</p>}
+          {inlineTranscription && <div className="hero-operation-status">
+            {state !== 'ai-loading' && <TranscriptionIndicator operation={operationStatus} locale={locale} />}
+          </div>}
 
-          <div className="hero-meta">
+          {message && <p className="form-message" id="transcript-form-message" role="alert">{message}</p>}
+
+          {reactTheme ? <ProductInformation locale={locale} metrics={publicMetrics}
+            refresh={metricRefresh} onRefreshComplete={finishMetricRefresh} /> : <div className="hero-meta" data-no-translate>
             <div className="hero-meta-promises" aria-label={copy.promisesLabel}>
               {copy.promises.map((label, index) => {
                 const Icon = promiseIcons[index]
                 const highlighted = index === 3
-                const hasHelp = index === 2
+                const hasNoLimitHelp = index === 2
+                const hasAiFallbackHelp = index === 3
+                const hasHelp = hasNoLimitHelp || hasAiFallbackHelp
+                const tooltipId = hasNoLimitHelp ? 'no-limit-tooltip' : 'ai-fallback-tooltip'
                 return (
-                <span className={`${highlighted ? 'is-highlighted' : ''}${hasHelp ? ' has-help' : ''}`} key={label}>
+                <span
+                  className={`${highlighted ? 'is-highlighted' : ''}${hasHelp ? ' has-help' : ''}`}
+                  key={label}
+                  tabIndex={hasAiFallbackHelp ? 0 : undefined}
+                  aria-describedby={hasAiFallbackHelp ? tooltipId : undefined}
+                >
                   <Icon className="promise-icon" size={13} strokeWidth={1.8} aria-hidden="true" />
                   {label}
-                  {hasHelp && (
+                  {hasNoLimitHelp && (
                     <>
                       <button
                         className="promise-help-button"
                         type="button"
                         aria-label={copy.noLimitLabel}
-                        aria-describedby="no-limit-tooltip"
+                        aria-describedby={tooltipId}
                       >
-                        ?
+                        <CircleHelp size={14} strokeWidth={1.7} aria-hidden="true" />
                       </button>
-                      <small className="promise-tooltip" id="no-limit-tooltip" role="tooltip">
+                      <small className="promise-tooltip" id={tooltipId} role="tooltip">
                         {copy.noLimitHelp}
                       </small>
                     </>
+                  )}
+                  {hasAiFallbackHelp && (
+                    <small className="promise-tooltip ai-fallback-tooltip" id={tooltipId} role="tooltip">
+                      {copy.aiFallbackHelp}
+                    </small>
                   )}
                 </span>
               )})}
             </div>
             <div>
-              <strong>4.2M</strong>
+              <strong>{publicMetrics ? new Intl.NumberFormat(locale, { notation: 'compact', maximumFractionDigits: 1 }).format(publicMetrics.transcriptCount) : 'N/A'}</strong>
               <span>{copy.generated}</span>
             </div>
             <i />
             <div>
-              <strong>~3.4s</strong>
+              <strong>{publicMetrics?.averageResponseMs == null ? 'N/A' : `~${(publicMetrics.averageResponseMs / 1_000).toFixed(1)}s`}</strong>
               <span>{copy.response}</span>
             </div>
             <i />
@@ -678,11 +781,11 @@ export function HomePage({
               <strong>{LANGUAGES.length}</strong>
               <span>{copy.languages}</span>
             </div>
-          </div>
+          </div>}
         </section>
       )}
 
-      {state === 'loading' && (
+      {state === 'loading' && !inlineTranscription && (
         <section className="result-view result-loading-view" aria-live="polite" aria-label="Preparing transcript">
           <div className="split">
             <aside className="left result-overview">
@@ -705,6 +808,7 @@ export function HomePage({
 
       {state === 'result' && transcript && (
         <section className="result-view">
+          {inlineTranscription && <TranscriptionIndicator operation={operationStatus} locale={locale} className="result-transcription-status" />}
           {summaryOpen && (
             <section className="summary-card">
               <div className="summary-head">
@@ -724,10 +828,10 @@ export function HomePage({
               {summaryError && <p className="summary-muted">{summaryError}</p>}
               {summary && (
                 <>
-                  <h2>{summary.title}</h2>
-                  <p>{summary.summary}</p>
+                  <h2 data-no-translate>{summary.title}</h2>
+                  <p data-no-translate>{summary.summary}</p>
                   {summary.tags.length > 0 && (
-                    <div className="summary-tags">
+                    <div className="summary-tags" data-no-translate>
                       {summary.tags.map((tag) => <span key={tag}>{tag}</span>)}
                     </div>
                   )}
@@ -745,6 +849,7 @@ export function HomePage({
                       ref={iframeRef}
                       src={getEmbedUrl(transcript.sourceUrl, transcript.videoId, startTime)}
                       title={transcript.title || `Video ${transcript.videoId}`}
+                      data-no-translate
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
                       allowFullScreen
                     />
@@ -764,7 +869,7 @@ export function HomePage({
 
               <div className="video-info-card">
                 <div className="video-meta">
-                  <div className="video-title">{transcript.title || `Video ${transcript.videoId}`}</div>
+                  <div className="video-title" data-no-translate>{transcript.title || `Video ${transcript.videoId}`}</div>
                   <a
                     className="video-channel"
                     href={transcript.sourceUrl}
@@ -829,6 +934,7 @@ export function HomePage({
                 <button
                   className={showTimestamps ? 'toggle on' : 'toggle'}
                   type="button"
+                  aria-pressed={showTimestamps}
                   onClick={() => setShowTimestamps((value) => !value)}
                 >
                   Timestamps
@@ -841,18 +947,20 @@ export function HomePage({
                   {copied ? <Check size={14} /> : <Clipboard size={14} />}
                   {copied ? 'Copied' : 'Copy'}
                 </button>
-                <div className="download-menu">
+                <div className="download-menu" ref={downloadMenuRef}>
                   <button
                     className="pill pill-icon"
                     type="button"
                     onClick={() => setDownloadOpen((value) => !value)}
                     aria-label="Download transcript"
+                    aria-expanded={downloadOpen}
+                    aria-controls={downloadOpen ? 'transcript-downloads' : undefined}
                     title="Download"
                   >
                     <Download size={14} />
                   </button>
                   {downloadOpen && (
-                    <div className="download-popover">
+                    <div className="download-popover" id="transcript-downloads">
                       {(['json', 'txt', 'srt', 'vtt'] as const).map((format) => (
                         <button type="button" key={format} onClick={() => handleDownload(format)}>
                           {format.toUpperCase()}
@@ -885,7 +993,7 @@ export function HomePage({
                     }}
                   >
                     {showTimestamps && <time className="line-time">{formatTime(paragraph.start)}</time>}
-                    <span className="line-text">{renderHighlightedText(paragraphText(paragraph), query)}</span>
+                    <span className="line-text" data-no-translate>{renderHighlightedText(paragraphText(paragraph), query)}</span>
                   </li>
                 ))}
               </ol>
@@ -899,9 +1007,11 @@ export function HomePage({
       {pendingAiFallback && (
         <NoCaptionsModal
           videoTitle={pendingAiFallback.title}
+          preserveTitle={pendingAiFallback.preserveTitle}
           message={pendingAiFallback.message}
           progress={aiProgress}
           isTranscribing={state === 'ai-loading'}
+          transcriptionStatus={inlineTranscription ? <TranscriptionIndicator operation={operationStatus} locale={locale} /> : undefined}
           onConfirm={confirmAiFallback}
           onDecline={reset}
         />
