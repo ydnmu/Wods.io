@@ -201,7 +201,6 @@ export function SiteTopbar({
         aria-label={labels.home}
       >
         <span className="site-brand-mark" aria-hidden="true" />
-        <span className="logo-text">EasyTran</span>
       </a>
       <RubberSegmentNav ariaLabel={labels.navigation} items={[
         { href: '/', label: labels.transcribe, active: active === 'transcribe', onClick: event => navigate(event, '/') },
