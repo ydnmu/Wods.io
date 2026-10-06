@@ -1,4 +1,5 @@
 import { ArrowRight, Check, Mail, X } from 'lucide-react'
+import '../styles/checkout.css'
 
 export function CheckoutCompletePage() {
   const params = new URLSearchParams(window.location.search)

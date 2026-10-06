@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
+    <title>Sign in | EasyTran</title>
+    <link rel="icon" href="/favicon.svg" />
+    <style>
+      :root {
+        color-scheme: dark;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: #0c0d10;
+        color: #f5f6f7;
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        min-width: 320px;
+        min-height: 100vh;
+        margin: 0;
+        background: #0c0d10;
+      }
+
+      main {
+        display: grid;
+        min-height: 100vh;
+        place-items: center;
+        padding: 24px;
+      }
+
+      .card {
+        width: min(440px, 100%);
+        padding: clamp(24px, 6vw, 44px);
+        border: 1px solid rgba(255, 255, 255, .11);
+        border-radius: 22px;
+        background: #141519;
+        box-shadow: 0 28px 90px rgba(0, 0, 0, .28);
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        color: #f5f6f7;
+        text-decoration: none;
+        font-size: 15px;
+        font-weight: 700;
+      }
+
+      .brand img { width: 30px; height: 30px; }
+
+      h1 {
+        margin: 72px 0 34px;
+        font-size: clamp(42px, 8vw, 60px);
+        font-weight: 470;
+        letter-spacing: -.055em;
+        line-height: 1;
+      }
+
+      form { display: grid; gap: 17px; }
+
+      label {
+        display: grid;
+        gap: 7px;
+        color: rgba(238, 241, 243, .62);
+        font-size: 11px;
+        font-weight: 650;
+      }
+
+      input,
+      button {
+        width: 100%;
+        min-height: 50px;
+        border: 1px solid rgba(255, 255, 255, .12);
+        border-radius: 10px;
+        font: inherit;
+      }
+
+      input {
+        padding: 0 14px;
+        color: rgba(242, 244, 246, .45);
+        background: #0d0e11;
+      }
+
+      button {
+        margin-top: 5px;
+        color: rgba(242, 244, 246, .4);
+        background: rgba(255, 255, 255, .035);
+        font-weight: 700;
+        cursor: not-allowed;
+      }
+
+      p {
+        margin: 20px 0 0;
+        color: rgba(235, 238, 241, .5);
+        font-size: 12px;
+        line-height: 1.5;
+        text-align: center;
+      }
+
+      .back {
+        display: block;
+        margin-top: 42px;
+        color: rgba(235, 238, 241, .52);
+        font-size: 12px;
+        text-align: center;
+        text-decoration: none;
+      }
+
+      .back:hover { color: #fff; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section class="card">
+        <a class="brand" href="/" aria-label="EasyTran home">
+          <img src="/easytran-logo.svg" alt="" />
+          <span>EasyTran</span>
+        </a>
+        <h1>Sign in</h1>
+        <form>
+          <label>Username<input type="text" placeholder="Enter your username" disabled /></label>
+          <label>Password<input type="password" placeholder="Enter your password" disabled /></label>
+          <button type="button" disabled>Enter workspace</button>
+        </form>
+        <p>Dashboard access is temporarily paused.</p>
+        <a class="back" href="/">Back to transcribe</a>
+      </section>
+    </main>
+  </body>
+</html>
