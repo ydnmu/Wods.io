@@ -1,6 +1,4 @@
-# EasyTran
-
-<img src="public/easytran-logo.svg" alt="EasyTran" width="160" />
+<h1>EasyTran <img src="public/easytran-mark-rive.svg" alt="" width="48" height="32" /></h1>
 
 Readable transcripts from supported video URLs.
 

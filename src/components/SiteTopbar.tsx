@@ -186,7 +186,12 @@ export function SiteTopbar({
     <header
       ref={topbarRef}
       className={scrollProgress > 0 ? 'topbar site-topbar is-scrolled' : 'topbar site-topbar'}
-      style={{ '--topbar-banner-progress': scrollProgress } as CSSProperties}
+      style={{
+        '--topbar-banner-progress': scrollProgress,
+        ...(path === '/pricing' || path === '/business'
+          ? { backdropFilter: 'none', WebkitBackdropFilter: 'none' }
+          : {}),
+      } as CSSProperties}
       data-no-translate
     >
       <a

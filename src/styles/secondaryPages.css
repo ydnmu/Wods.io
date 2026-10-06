@@ -73,6 +73,15 @@
 .secondary-page > .site-topbar .nav-link,
 .secondary-page > .site-topbar .glide-select__trigger { font-family: inherit; font-weight: 500; }
 .secondary-page .site-topbar { --topbar-text-muted: var(--page-muted); --topbar-text-active: var(--page-text); }
+html body .app.secondary-page[data-page-context='pricing'] > .site-topbar {
+  background: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+html body .app.secondary-page[data-page-context='pricing'] > .site-topbar::before,
+html body .app.secondary-page[data-page-context='pricing'] > .site-topbar.is-scrolled::before {
+  display: none !important;
+}
 .secondary-page .page-container { width: min(1060px, calc(100% - 64px)); margin-inline: auto; }
 .secondary-page .page-kicker { color: var(--page-muted); font: 500 11px var(--mono); letter-spacing: .12em; text-transform: uppercase; }
 .secondary-page .editorial-accent { padding: 0 5px; color: var(--page-ink); background: var(--page-accent); border-radius: 1px; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
@@ -99,14 +108,7 @@
 .secondary-page .pricing-maintenance-copy > p { max-width: 580px; margin: 0 auto 28px; color: var(--page-muted); font-size: 19px; line-height: 1.6; }
 .secondary-page .pricing-maintenance-copy .editorial-accent { white-space: nowrap; }
 .secondary-page .pricing-minimal { display:block; min-height:calc(100svh - 80px); padding:calc(clamp(72px,10svh,112px) + 64px) 0 90px; }
-.secondary-page .pricing-minimal .pricing-maintenance-copy { width:100%; max-width:880px; position:relative; isolation:isolate; }
-.secondary-page[data-page-tone='dark'] .pricing-minimal .pricing-maintenance-copy::before {
-  content:''; position:absolute; z-index:-1; left:50%; top:50%;
-  width:min(1320px,calc(100vw + 240px)); height:calc(100% + 160px);
-  transform:translate(-50%,-50%);
-  background:radial-gradient(ellipse 50% 50% at center,#000000b8 0%,#000000a3 32%,#0000006b 58%,#0000002e 80%,transparent 100%);
-  pointer-events:none;
-}
+.secondary-page .pricing-minimal .pricing-maintenance-copy { width:100%; max-width:880px; }
 .secondary-page .pricing-minimal h1 { margin:0 0 20px; font-size:clamp(32px,4.2vw,56px); line-height:1.12; letter-spacing:-.045em; text-wrap:balance; }
 .secondary-page .pricing-planned-features { display:flex; flex-wrap:wrap; justify-content:center; gap:14px 28px; max-width:880px; margin:16px auto 0; padding:0; list-style:none; color:var(--page-text); font-size:16px; font-weight:500; line-height:1.65; text-align:left; }
 .secondary-page .pricing-planned-features li { position:relative; max-width:100%; padding-left:18px; }
