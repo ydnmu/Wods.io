@@ -8,8 +8,7 @@
       <stop offset="1" stop-color="#DFF7FF"/>
     </linearGradient>
   </defs>
-  <rect x="1" y="1" width="1278" height="178" rx="22" fill="#171717"/>
-  <rect x="1" y="1" width="1278" height="178" rx="22" stroke="#2B2B2B" stroke-width="2"/>
+  <rect width="1280" height="180" fill="#202020"/>
   <g transform="translate(408.5 29)">
     <g transform="translate(0 12) scale(.64)" fill="url(#banner-mark)">
       <path d="M28 18 152 91 106 108 132 148 100 160 76 121 47 150z"/>

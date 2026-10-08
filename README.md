@@ -20,6 +20,8 @@
 
 ## Paid plans
 
+<p align="center"><strong>Coming soon</strong></p>
+
 Planned features:
 
 - 1,000,000 hours of video transcription
@@ -27,7 +29,7 @@ Planned features:
 - Playlist transcription
 - Channel transcription and auto-sync
 - Website transcription
-- Bulk and parallel transcription
+- Bulk and parallel transcription to process thousands of videos with cost-efficient scaling.
 - AI-edited transcripts
 - API access and API key management
 - Automations and completion webhooks
