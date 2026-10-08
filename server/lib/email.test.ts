@@ -24,7 +24,7 @@ test('renders a safe Developer onboarding email with one-time dashboard access',
   assert.match(email.html, /Login with key/)
   assert.match(email.html, /After you use the key, make a username and password/)
   assert.match(email.html, /feedback@easytran\.app/)
-  assert.match(email.html, /easytran-logo\.svg/)
+  assert.match(email.html, /wods-logo\.svg/)
   assert.doesNotMatch(email.html, /Photo:/)
   assert.match(email.html, /evgeni-evgeniev-LPKk3wtkC-g-unsplash\.jpg/)
 })

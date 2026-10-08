@@ -1,12 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 160" role="img" aria-label="WODS mark">
   <defs>
-    <linearGradient id="easytran-mark" x1="0" y1="0" x2="1" y2="1">
+    <linearGradient id="wods-mark" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#e9f9ff"/>
       <stop offset=".55" stop-color="#79d8ff"/>
       <stop offset="1" stop-color="#dff7ff"/>
     </linearGradient>
   </defs>
-  <g fill="url(#easytran-mark)">
+  <g fill="url(#wods-mark)">
     <path d="M28 18 152 91 106 108 132 148 100 160 76 121 47 150z"/>
     <path d="M124 41h92v24h-74z"/>
     <path d="M166 88h49v21h-78z"/>
