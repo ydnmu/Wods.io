@@ -4,7 +4,7 @@
 .dashboard-login-shell .dashboard-auth-card { display:flex; flex-direction:column; width:100%; height:auto; margin:0; padding:32px; border:0; border-radius:0; background:transparent; box-shadow:none; }
 .dashboard-auth-topline { display:flex; align-items:center; justify-content:space-between; gap:20px; padding-bottom:22px; border-bottom:1px solid var(--page-line); }
 .dashboard-auth-brand { display:inline-flex; align-items:center; gap:10px; color:var(--page-text); text-decoration:none; }
-.dashboard-auth-brand .dashboard-brand-mark { width:28px; height:23px; background:#a6deff; mask:url('/easytran-mark-rive.svg') center/contain no-repeat; -webkit-mask:url('/easytran-mark-rive.svg') center/contain no-repeat; }
+.dashboard-auth-brand .dashboard-brand-mark { width:28px; height:23px; background:#a6deff; mask:url('/wods-mark.svg') center/contain no-repeat; -webkit-mask:url('/wods-mark.svg') center/contain no-repeat; }
 .dashboard-auth-brand strong { font-size:17px; font-weight:600; letter-spacing:-.035em; }
 .dashboard-auth-card-head h2 { margin:26px 0 0; font-size:36px; font-weight:600; line-height:1.05; letter-spacing:-.045em; }
 .dashboard-auth-mode-title,.dashboard-auth-field-stack,.dashboard-auth-submit-label { animation:dashboard-auth-mode-in 200ms ease both; }

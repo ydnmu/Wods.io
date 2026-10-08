@@ -41,7 +41,7 @@ export function renderWorkspaceAccessEmail(params: {
   const escapedKey = escapeHtml(params.accessKey)
   const copyKeyJs = escapeHtml(JSON.stringify(params.accessKey))
   const forestImageUrl = `${clientUrl}/wallpapers/evgeni-evgeniev-LPKk3wtkC-g-unsplash.jpg`
-  const logoUrl = `${clientUrl}/easytran-logo.svg`
+  const logoUrl = `${clientUrl}/wods-logo.svg`
 
   return {
     subject: `Your WODS ${planLabel} dashboard access`,

@@ -10,7 +10,7 @@ export function CheckoutCompletePage() {
     <main className="app checkout-complete-shell">
       <div className="dot-grid" aria-hidden="true" />
       <a className="logo checkout-complete-brand" href="/" aria-label="WODS home">
-        <img className="logo-icon" src="/easytran-logo.svg" alt="" aria-hidden="true" />
+        <img className="logo-icon" src="/wods-logo.svg" alt="" aria-hidden="true" />
         <span className="logo-text">WODS</span>
       </a>
       <section className="checkout-complete-card">

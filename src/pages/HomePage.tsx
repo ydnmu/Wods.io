@@ -208,7 +208,7 @@ const getThumbnailUrl = (sourceUrl: string, videoId: string, thumbnail?: string)
   if (thumbnail) return thumbnail
   if (sourceUrl.includes('vimeo.com')) return `https://vumbnail.com/${videoId}.jpg`
   if (sourceUrl.includes('dailymotion.com')) return `https://www.dailymotion.com/thumbnail/video/${videoId}`
-  if (sourceUrl.includes('bilibili.')) return '/easytran-logo.svg'
+  if (sourceUrl.includes('bilibili.')) return '/wods-logo.svg'
   return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`
 }
 

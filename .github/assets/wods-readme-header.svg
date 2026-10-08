@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="360" viewBox="0 0 1280 360" fill="none">
+  <title>WODS — wods.io</title>
+  <desc>WODS original light blue and white logo on a dark gray header.</desc>
+  <defs>
+    <linearGradient id="surface" x1="640" y1="0" x2="640" y2="360" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#171A1E"/>
+      <stop offset="1" stop-color="#101215"/>
+    </linearGradient>
+    <linearGradient id="banner-mark" x1="18" y1="20" x2="210" y2="134" gradientUnits="userSpaceOnUse">
+      <stop offset="0.02" stop-color="#E9F9FF"/>
+      <stop offset="0.55" stop-color="#79D8FF"/>
+      <stop offset="1" stop-color="#DFF7FF"/>
+    </linearGradient>
+  </defs>
+  <rect x="1" y="1" width="1278" height="358" rx="26" fill="url(#surface)"/>
+  <rect x="1" y="1" width="1278" height="358" rx="26" stroke="#30343A" stroke-width="2"/>
+  <g transform="translate(447 72)">
+    <g transform="translate(0 4) scale(.64)" fill="url(#banner-mark)">
+      <path d="M28 18 152 91 106 108 132 148 100 160 76 121 47 150z"/>
+      <path d="M124 41h92v24h-74z"/>
+      <path d="M166 88h49v21h-78z"/>
+      <path d="M148 129h58v21h-42z"/>
+    </g>
+    <text x="178" y="105" fill="#F4F8FA" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" font-size="92" font-weight="650" letter-spacing="-4">WODS</text>
+  </g>
+  <text x="640" y="260" text-anchor="middle" fill="#AFC1CB" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" font-size="24" font-weight="450" letter-spacing="1.4">wods.io</text>
+  <path d="M472 292H808" stroke="#3B454C"/>
+</svg>
