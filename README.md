@@ -1,8 +1,17 @@
-<h1>WODS <img src="public/easytran-mark-rive.svg" alt="" width="48" height="32" /></h1>
+<p align="center">
+  <a href="https://wods.io">
+    <img src=".github/assets/wods-readme.svg" alt="WODS — free web transcription and planned paid workflows. Visit wods.io." width="100%" />
+  </a>
+</p>
+
+<p align="center">
+  <a href="https://wods.io">wods.io</a>&nbsp; · &nbsp;<a href="https://wods.io/docs">Documentation</a>&nbsp; · &nbsp;<a href="https://wods.io/dashboard">Dashboard</a>
+</p>
+
+<details>
+<summary>Read the text version</summary>
 
 Readable transcripts from supported video URLs.
-
-[Website](https://wods.io) · [Docs](https://wods.io/docs) · [Dashboard](https://wods.io/dashboard)
 
 ## Free web
 
@@ -27,3 +36,5 @@ Planned features:
 - Automations and completion webhooks
 - MCP server integration
 - Searchable transcript archives
+
+</details>
