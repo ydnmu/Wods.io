@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  <a href="https://wods.io">wods.io</a>&nbsp; · &nbsp;<a href="https://wods.io/docs">Documentation</a>&nbsp; · &nbsp;<a href="https://wods.io/dashboard">Dashboard</a>
+  <a href="https://wods.io">wods.io</a>
 </p>
 
 Readable transcripts from supported video URLs.
