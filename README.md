@@ -10,28 +10,27 @@
 
 <p align="center">Readable transcripts from supported video URLs.</p>
 
-## Free web
+<h2 align="center">Free web</h2>
 
-- Unlimited free transcription
-- AI fallback when captions are unavailable
-- Transcript segmentation
-- Timestamped, searchable transcript output
-- JSON, TXT, SRT, and VTT exports
+<p align="center">• Unlimited free transcription</p>
+<p align="center">• AI fallback when captions are unavailable</p>
+<p align="center">• Transcript segmentation</p>
+<p align="center">• Timestamped, searchable transcript output</p>
+<p align="center">• JSON, TXT, SRT, and VTT exports</p>
 
-## Paid plans
+<h2 align="center">Paid plans</h2>
 
 <p align="center"><strong>Coming soon</strong></p>
+<p align="center">Planned features:</p>
 
-Planned features:
-
-- 1,000,000 hours of video transcription
-- 50,000 hours of AI fallback transcription
-- Playlist transcription
-- Channel transcription and auto-sync
-- Website transcription
-- Bulk and parallel transcription to process thousands of videos with cost-efficient scaling.
-- AI-edited transcripts
-- API access and API key management
-- Automations and completion webhooks
-- MCP server integration
-- Searchable transcript archives
+<p align="center">• 1,000,000 hours of video transcription</p>
+<p align="center">• 50,000 hours of AI fallback transcription</p>
+<p align="center">• Playlist transcription</p>
+<p align="center">• Channel transcription and auto-sync</p>
+<p align="center">• Website transcription</p>
+<p align="center">• Bulk and parallel transcription to process thousands of videos with cost-efficient scaling.</p>
+<p align="center">• AI-edited transcripts</p>
+<p align="center">• API access and API key management</p>
+<p align="center">• Automations and completion webhooks</p>
+<p align="center">• MCP server integration</p>
+<p align="center">• Searchable transcript archives</p>
