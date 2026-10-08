@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://wods.io">
-    <img src=".github/assets/wods-readme-header.svg" alt="WODS — wods.io" width="100%" />
+    <img src=".github/assets/wods-readme-header.svg" alt="WODS" width="100%" />
   </a>
 </p>
 
