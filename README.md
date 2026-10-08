@@ -8,7 +8,7 @@
   <a href="https://wods.io">wods.io</a>
 </p>
 
-Readable transcripts from supported video URLs.
+<p align="center">Readable transcripts from supported video URLs.</p>
 
 ## Free web
 
