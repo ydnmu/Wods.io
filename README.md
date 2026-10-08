@@ -5,32 +5,29 @@
 </p>
 
 <p align="center">
-  <a href="https://wods.io">wods.io</a>
+  <a href="https://wods.io"><strong>wods.io</strong></a>
 </p>
 
 <p align="center">Readable transcripts from supported video URLs.</p>
 
+<p align="center">
+  <img src=".github/assets/wods-readme-flow.svg" alt="Video URL to transcript to export" width="720" />
+</p>
+
 <h2 align="center">Free web</h2>
 
-<p align="center">• Unlimited free transcription</p>
-<p align="center">• AI fallback when captions are unavailable</p>
-<p align="center">• Transcript segmentation</p>
-<p align="center">• Timestamped, searchable transcript output</p>
-<p align="center">• JSON, TXT, SRT, and VTT exports</p>
+<table align="center" width="100%">
+  <tr>
+    <td align="center" width="50%"><strong>Unlimited transcription</strong><br /><sub>Turn supported video URLs into readable text.</sub></td>
+    <td align="center" width="50%"><strong>AI fallback</strong><br /><sub>Keep going when captions are unavailable.</sub></td>
+  </tr>
+  <tr>
+    <td align="center"><strong>Searchable output</strong><br /><sub>Timestamped segments for quick navigation.</sub></td>
+    <td align="center"><strong>Flexible exports</strong><br /><sub>JSON, TXT, SRT, and VTT formats.</sub></td>
+  </tr>
+</table>
 
 <h2 align="center">Paid plans</h2>
 
 <p align="center"><strong>Coming soon</strong></p>
-<p align="center">Planned features:</p>
-
-<p align="center">• 1,000,000 hours of video transcription</p>
-<p align="center">• 50,000 hours of AI fallback transcription</p>
-<p align="center">• Playlist transcription</p>
-<p align="center">• Channel transcription and auto-sync</p>
-<p align="center">• Website transcription</p>
-<p align="center">• Bulk and parallel transcription to process thousands of videos with cost-efficient scaling.</p>
-<p align="center">• AI-edited transcripts</p>
-<p align="center">• API access and API key management</p>
-<p align="center">• Automations and completion webhooks</p>
-<p align="center">• MCP server integration</p>
-<p align="center">• Searchable transcript archives</p>
+<p align="center">Bulk and parallel transcription for thousands of videos with cost-efficient scaling.</p>

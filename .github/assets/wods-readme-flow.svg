@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="188" viewBox="0 0 960 188" fill="none">
+  <title>WODS workflow</title>
+  <desc>Video URL to readable transcript to export workflow.</desc>
+  <defs>
+    <linearGradient id="flow-line" x1="272" y1="94" x2="688" y2="94" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#79D8FF"/>
+      <stop offset="1" stop-color="#DFF7FF"/>
+    </linearGradient>
+  </defs>
+
+  <g stroke="url(#flow-line)" stroke-width="2" stroke-linecap="round">
+    <path d="M254 94h98"/>
+    <path d="m342 86 10 8-10 8"/>
+    <path d="M608 94h98"/>
+    <path d="m696 86 10 8-10 8"/>
+  </g>
+
+  <g font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" text-anchor="middle">
+    <g transform="translate(180 94)">
+      <circle r="48" fill="none" stroke="#79D8FF" stroke-width="2"/>
+      <path d="m-11-16 28 16-28 16z" fill="#79D8FF"/>
+      <path d="M-25-24h8M-25 24h8" stroke="#DFF7FF" stroke-width="3" stroke-linecap="round"/>
+      <text y="74" fill="#F4F8FA" font-size="13" font-weight="650" letter-spacing="1.6">VIDEO URL</text>
+    </g>
+
+    <g transform="translate(480 94)">
+      <circle r="48" fill="none" stroke="#79D8FF" stroke-width="2"/>
+      <path d="M-20-15h40M-20-2h40M-20 11h28" stroke="#DFF7FF" stroke-width="4" stroke-linecap="round"/>
+      <text y="74" fill="#F4F8FA" font-size="13" font-weight="650" letter-spacing="1.6">TRANSCRIPT</text>
+    </g>
+
+    <g transform="translate(780 94)">
+      <circle r="48" fill="none" stroke="#79D8FF" stroke-width="2"/>
+      <path d="M0-22v30M-12-2 0 10 12-2M-22 22h44" stroke="#DFF7FF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+      <text y="74" fill="#F4F8FA" font-size="13" font-weight="650" letter-spacing="1.6">EXPORT</text>
+    </g>
+  </g>
+</svg>
