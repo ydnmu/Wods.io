@@ -1,5 +1,5 @@
 param(
-  [string]$KeyPath = 'C:\Users\1n\Documents\EasyTran-admin-key.txt',
+  [string]$KeyPath = 'C:\Users\1n\Documents\WODS-admin-key.txt',
   [string]$LocalEnvPath = (Join-Path $PSScriptRoot '..\server\.env'),
   [string]$RemoteEnvPath = '/etc/easytran/easytran-api.env',
   [switch]$Force

@@ -343,7 +343,7 @@ export function CheckoutPage({
                 <BadgeCheck size={18} />
                 <span>
                   <strong>{`Secure ${checkoutProviderName} checkout`}</strong>
-                  {`Payment details stay on ${checkoutProviderName}; EasyTran never handles your card number.`}
+                  {`Payment details stay on ${checkoutProviderName}; WODS never handles your card number.`}
                 </span>
               </div>
             )}

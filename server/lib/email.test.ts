@@ -18,7 +18,7 @@ test('renders a safe Developer onboarding email with one-time dashboard access',
   assert.doesNotMatch(email.html, /et_access_<secret>/)
   assert.match(email.html, /Copy your key/)
   assert.match(email.html, /Your dashboard is ready\./)
-  assert.doesNotMatch(email.html, /Welcome to EasyTran/)
+  assert.doesNotMatch(email.html, /Welcome to WODS/)
   assert.match(email.html, /Copy access key/)
   assert.match(email.html, /This key is temporary/)
   assert.match(email.html, /Login with key/)

@@ -44,7 +44,7 @@ export function renderWorkspaceAccessEmail(params: {
   const logoUrl = `${clientUrl}/easytran-logo.svg`
 
   return {
-    subject: `Your EasyTran ${planLabel} dashboard access`,
+    subject: `Your WODS ${planLabel} dashboard access`,
     html: `
       <!DOCTYPE html>
       <html lang="en">
@@ -52,7 +52,7 @@ export function renderWorkspaceAccessEmail(params: {
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="color-scheme" content="dark" />
-        <title>Your EasyTran dashboard access</title>
+        <title>Your WODS dashboard access</title>
         <style>
           @media only screen and (max-width: 640px) {
             .email-frame { padding: 18px 10px !important; }
@@ -81,7 +81,7 @@ export function renderWorkspaceAccessEmail(params: {
                           <table role="presentation" cellspacing="0" cellpadding="0" border="0">
                             <tr>
                               <td style="padding-right:9px;"><img src="${logoUrl}" width="25" height="25" alt="" style="display:block;width:25px;height:25px;border:0;" /></td>
-                              <td style="color:#d7d7d7;font-size:19px;font-weight:750;letter-spacing:-.03em;text-shadow:0 0 16px rgba(255,255,255,.24);">EasyTran</td>
+                              <td style="color:#d7d7d7;font-size:19px;font-weight:750;letter-spacing:-.03em;text-shadow:0 0 16px rgba(255,255,255,.24);">WODS</td>
                             </tr>
                           </table>
                         </td>
@@ -161,13 +161,13 @@ export async function sendMagicLinkEmail(params: { to: string; token: string }) 
 
   await sendEmail({
     to: params.to,
-    subject: 'Sign in to easytran dashboard',
+    subject: 'Sign in to WODS dashboard',
     html: `
       <!DOCTYPE html>
       <html>
       <body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0e0f12;color:#f4f5f7;margin:0;padding:40px 20px;">
         <div style="background:#16181c;border:1px solid rgba(255,255,255,0.08);border-radius:8px;max-width:480px;margin:0 auto;padding:40px;">
-          <div style="font-size:20px;font-weight:700;margin-bottom:32px;">easytran<span style="color:#ec3b6e;">.</span></div>
+          <div style="font-size:20px;font-weight:700;margin-bottom:32px;">WODS<span style="color:#ec3b6e;">.</span></div>
           <h1 style="font-size:22px;font-weight:600;margin:0 0 8px;">Sign in to Dashboard</h1>
           <p style="color:#c8cad0;line-height:1.6;margin:0 0 24px;font-size:15px;">Click the button below to sign in. This link expires in 15 minutes.</p>
           <a href="${link}" style="display:inline-block;background:linear-gradient(110deg,#a855f7,#ec3b6e);color:white;text-decoration:none;padding:14px 28px;border-radius:6px;font-weight:600;font-size:15px;margin-bottom:24px;">Sign In</a>
@@ -193,7 +193,7 @@ export async function sendPlanUpdatedEmail(params: {
 
   await sendEmail({
     to: params.to,
-    subject: 'Your EasyTran plan has been updated',
+    subject: 'Your WODS plan has been updated',
     html: `<p>Your plan has been updated to <strong>${planLabel}</strong>.</p><p>Your monthly allowance is <strong>${captionHours} caption hours</strong> and <strong>${fallbackHours} AI fallback hours</strong>. There is no request-count quota; usage is measured by source duration. Your existing API key continues to work.</p>`,
   })
 }
@@ -205,13 +205,13 @@ export async function sendFeedbackEmail(params: { username: string; message: str
 
   await sendEmail({
     to: supportEmail,
-    subject: `EasyTran feedback from ${subjectUsername}`,
+    subject: `WODS feedback from ${subjectUsername}`,
     html: `
       <!DOCTYPE html>
       <html>
       <body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#08090b;color:#f4f5f7;margin:0;padding:40px 20px;">
         <div style="background:#121418;border:1px solid rgba(255,255,255,0.1);border-radius:12px;max-width:600px;margin:0 auto;padding:32px;">
-          <div style="font-size:20px;font-weight:750;margin-bottom:26px;">EasyTran<span style="color:#79d8ff;">.</span> Feedback</div>
+          <div style="font-size:20px;font-weight:750;margin-bottom:26px;">WODS<span style="color:#79d8ff;">.</span> Feedback</div>
           <div style="font-size:12px;color:#8f949e;margin-bottom:7px;">Username</div>
           <div style="color:#f4f5f7;font-size:15px;margin-bottom:22px;">${username}</div>
           <div style="font-size:12px;color:#8f949e;margin-bottom:7px;">Message</div>

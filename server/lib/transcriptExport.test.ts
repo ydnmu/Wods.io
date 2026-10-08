@@ -6,7 +6,7 @@ const transcript = {
   id: 'user-video',
   video_id: 'dQw4w9WgXcQ',
   video_title: 'Example',
-  video_channel: 'EasyTran',
+  video_channel: 'WODS',
   video_duration: '0:10',
   word_count: 2,
   caption_source: 'youtube',

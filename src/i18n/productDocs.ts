@@ -22,7 +22,7 @@ export const productDocs: Record<SiteLocale, DocumentationCopy> = {
   en: {
     title: 'Documentation',
     purposeTitle: 'Purpose',
-    purpose: 'EasyTran was created to turn video URLs into usable transcripts without requiring users to download the source video or configure transcription software. It retrieves available captions and can transcribe audio when captions are missing. Read, search, copy or export the result in your browser without creating an account.',
+    purpose: 'WODS was created to turn video URLs into usable transcripts without requiring users to download the source video or configure transcription software. It retrieves available captions and can transcribe audio when captions are missing. Read, search, copy or export the result in your browser without creating an account.',
     privacyTitle: 'Privacy',
     privacy: [
       ['What data is processed?', 'Video URLs, source metadata, captions and transcript text. AI fallback also processes the source audio.'],
@@ -62,7 +62,7 @@ export const productDocs: Record<SiteLocale, DocumentationCopy> = {
   tr: {
     title: 'Dokümantasyon',
     purposeTitle: 'Amaç',
-    purpose: 'EasyTran, videoyu indirmenize veya transkripsiyon yazılımı kurmanıza gerek kalmadan video bağlantılarından transkript oluşturur. Mevcut altyazıları kullanır; altyazı bulunamadığında sesi yapay zekâ ile metne dönüştürebilir. Hesap oluşturmadan sonucu tarayıcınızda okuyabilir, metin içinde arama yapabilir, kopyalayabilir veya dışa aktarabilirsiniz.',
+    purpose: 'WODS, videoyu indirmenize veya transkripsiyon yazılımı kurmanıza gerek kalmadan video bağlantılarından transkript oluşturur. Mevcut altyazıları kullanır; altyazı bulunamadığında sesi yapay zekâ ile metne dönüştürebilir. Hesap oluşturmadan sonucu tarayıcınızda okuyabilir, metin içinde arama yapabilir, kopyalayabilir veya dışa aktarabilirsiniz.',
     privacyTitle: 'Gizlilik',
     privacy: [
       ['İşlenen veriler', 'Video bağlantıları, kaynak bilgileri, altyazılar ve transkript metni işlenir. Yapay zekâ ile transkripsiyon sırasında videonun sesi de işlenir.'],
@@ -102,7 +102,7 @@ export const productDocs: Record<SiteLocale, DocumentationCopy> = {
   es: {
     title: 'Documentación',
     purposeTitle: 'Propósito',
-    purpose: 'EasyTran convierte URL de vídeos en transcripciones útiles sin tener que descargar el vídeo ni configurar software de transcripción. Recupera los subtítulos disponibles y puede transcribir el audio cuando no hay subtítulos. Lee, busca, copia o exporta el resultado en tu navegador sin crear una cuenta.',
+    purpose: 'WODS convierte URL de vídeos en transcripciones útiles sin tener que descargar el vídeo ni configurar software de transcripción. Recupera los subtítulos disponibles y puede transcribir el audio cuando no hay subtítulos. Lee, busca, copia o exporta el resultado en tu navegador sin crear una cuenta.',
     privacyTitle: 'Privacidad',
     privacy: [
       ['Datos que se procesan', 'URL de vídeos, metadatos de origen, subtítulos y texto transcrito. La transcripción con IA también procesa el audio original.'],
@@ -142,7 +142,7 @@ export const productDocs: Record<SiteLocale, DocumentationCopy> = {
   zh: {
     title: '文档',
     purposeTitle: '用途',
-    purpose: 'EasyTran 将视频链接转换为可用的转录文本，无需下载源视频或配置转录软件。它获取已有字幕，并可在没有字幕时通过 AI 转录音频。无需创建账户，即可在浏览器中阅读、搜索、复制或导出结果。',
+    purpose: 'WODS 将视频链接转换为可用的转录文本，无需下载源视频或配置转录软件。它获取已有字幕，并可在没有字幕时通过 AI 转录音频。无需创建账户，即可在浏览器中阅读、搜索、复制或导出结果。',
     privacyTitle: '隐私',
     privacy: [
       ['处理的数据', '视频链接、源视频元数据、字幕和转录文本。AI 转录还会处理源音频。'],

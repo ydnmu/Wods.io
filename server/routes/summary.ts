@@ -35,8 +35,8 @@ async function summarizeWithOpenRouter(title: string, text: string) {
         headers: {
           Authorization: `Bearer ${lease.key}`,
           'Content-Type': 'application/json',
-          'HTTP-Referer': process.env.CLIENT_URL || 'https://easytran.app',
-          'X-Title': 'EasyTran',
+          'HTTP-Referer': process.env.CLIENT_URL || 'https://wods.io',
+          'X-Title': 'WODS',
         },
         body: JSON.stringify({
           model: process.env.OPENROUTER_SUMMARY_MODEL || 'openrouter/free',

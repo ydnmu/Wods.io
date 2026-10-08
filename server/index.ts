@@ -273,8 +273,8 @@ app.use((request, response, next) => {
   response.status(503).json({
     error: operationsMode,
     message: operationsMode === 'security'
-      ? 'EasyTran is temporarily accepting dashboard traffic only.'
-      : 'EasyTran is temporarily offline.',
+      ? 'WODS is temporarily accepting dashboard traffic only.'
+      : 'WODS is temporarily offline.',
   })
 })
 
@@ -382,7 +382,7 @@ async function start() {
     console.error('[operations] startup hydration failed:', error)
   })
   app.listen(port, host, () => {
-    console.log(`EasyTranscript listening on http://${host}:${port}`)
+    console.log(`WODS listening on http://${host}:${port}`)
     if (process.env.NODE_ENV !== 'production' && process.env.DEV_AUTH_BYPASS === 'true') {
       console.warn('⚠️  DEV_AUTH_BYPASS is ON — dashboard auth is disabled. Do NOT use in production.')
     }

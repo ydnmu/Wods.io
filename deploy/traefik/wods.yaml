@@ -1,0 +1,65 @@
+http:
+  routers:
+    wods-site-http:
+      entryPoints:
+        - http
+      rule: Host(`wods.io`)
+      middlewares:
+        - easytran-https-redirect
+      service: easytran-app
+
+    wods-site-https:
+      entryPoints:
+        - https
+      rule: Host(`wods.io`)
+      middlewares:
+        - easytran-compress
+      service: easytran-app
+      tls:
+        certResolver: letsencrypt
+        domains:
+          - main: wods.io
+            sans:
+              - www.wods.io
+              - api.wods.io
+
+    wods-www-http:
+      entryPoints:
+        - http
+      rule: Host(`www.wods.io`)
+      middlewares:
+        - wods-canonical-redirect
+      service: easytran-app
+
+    wods-www-https:
+      entryPoints:
+        - https
+      rule: Host(`www.wods.io`)
+      middlewares:
+        - wods-canonical-redirect
+      service: easytran-app
+      tls: {}
+
+    wods-api-http:
+      entryPoints:
+        - http
+      rule: Host(`api.wods.io`)
+      middlewares:
+        - easytran-https-redirect
+      service: easytran-app
+
+    wods-api-https:
+      entryPoints:
+        - https
+      rule: Host(`api.wods.io`)
+      middlewares:
+        - easytran-compress
+      service: easytran-app
+      tls: {}
+
+  middlewares:
+    wods-canonical-redirect:
+      redirectRegex:
+        regex: '^https?://www\.wods\.io(:[0-9]+)?(.*)'
+        replacement: 'https://wods.io${2}'
+        permanent: true

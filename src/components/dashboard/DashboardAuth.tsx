@@ -7,28 +7,28 @@ import { SecondaryPageShell } from '../SecondaryPageShell'
 
 const loginCopy = {
   en: {
-    home: 'EasyTran home', workspace: 'Workspace', language: 'Language', signIn: 'Sign in', accessKey: 'Access key', loginMethod: 'Login method',
+    home: 'WODS home', workspace: 'Workspace', language: 'Language', signIn: 'Sign in', accessKey: 'Access key', loginMethod: 'Login method',
     username: 'Username', password: 'Password', usernamePlaceholder: 'Enter your username', passwordPlaceholder: 'Enter your password',
     temporaryKey: 'Temporary access key', keyPlaceholder: 'Paste the key from your email', checking: 'Checking…', enter: 'Enter workspace',
     continue: 'Continue setup', session: 'Session stays active for 7 days', back: 'Back to transcribe',
     migrationError: 'Dashboard credential setup is not available yet.', credentialError: 'Username or password is incorrect.', keyError: 'Access key is incorrect.',
   },
   zh: {
-    home: 'EasyTran 首页', workspace: '工作区', language: '语言', signIn: '登录', accessKey: '访问密钥', loginMethod: '登录方式',
+    home: 'WODS 首页', workspace: '工作区', language: '语言', signIn: '登录', accessKey: '访问密钥', loginMethod: '登录方式',
     username: '用户名', password: '密码', usernamePlaceholder: '输入用户名', passwordPlaceholder: '输入密码',
     temporaryKey: '临时访问密钥', keyPlaceholder: '粘贴邮件中的密钥', checking: '正在检查…', enter: '进入工作区',
     continue: '继续设置', session: '登录状态保持 7 天', back: '返回转录',
     migrationError: '控制台凭据设置暂不可用。', credentialError: '用户名或密码不正确。', keyError: '访问密钥不正确。',
   },
   tr: {
-    home: 'EasyTran ana sayfası', workspace: 'Çalışma alanı', language: 'Dil', signIn: 'Oturum aç', accessKey: 'Erişim anahtarı', loginMethod: 'Giriş yöntemi',
+    home: 'WODS ana sayfası', workspace: 'Çalışma alanı', language: 'Dil', signIn: 'Oturum aç', accessKey: 'Erişim anahtarı', loginMethod: 'Giriş yöntemi',
     username: 'Kullanıcı adı', password: 'Şifre', usernamePlaceholder: 'Kullanıcı adınızı girin', passwordPlaceholder: 'Şifrenizi girin',
     temporaryKey: 'Geçici erişim anahtarı', keyPlaceholder: 'E-postanızdaki anahtarı yapıştırın', checking: 'Kontrol ediliyor…', enter: 'Çalışma alanına gir',
     continue: 'Kuruluma devam et', session: 'Oturumunuz 7 gün boyunca açık kalır', back: 'Transkripsiyona dön',
     migrationError: 'Panel giriş bilgileri henüz oluşturulamıyor.', credentialError: 'Kullanıcı adı veya şifre hatalı.', keyError: 'Erişim anahtarı hatalı.',
   },
   es: {
-    home: 'Inicio de EasyTran', workspace: 'Espacio de trabajo', language: 'Idioma', signIn: 'Iniciar sesión', accessKey: 'Clave de acceso', loginMethod: 'Método de acceso',
+    home: 'Inicio de WODS', workspace: 'Espacio de trabajo', language: 'Idioma', signIn: 'Iniciar sesión', accessKey: 'Clave de acceso', loginMethod: 'Método de acceso',
     username: 'Usuario', password: 'Contraseña', usernamePlaceholder: 'Introduce tu usuario', passwordPlaceholder: 'Introduce tu contraseña',
     temporaryKey: 'Clave de acceso temporal', keyPlaceholder: 'Pega la clave de tu correo', checking: 'Comprobando…', enter: 'Entrar al espacio de trabajo',
     continue: 'Continuar configuración', session: 'La sesión permanece activa 7 días', back: 'Volver a transcribir',
@@ -86,7 +86,7 @@ export function DashboardLoginGate({
           <header className="dashboard-auth-topline">
             <a className="dashboard-auth-brand" href="/" aria-label={copy.home}>
               <span className="dashboard-brand-mark" aria-hidden="true" />
-              <strong>EasyTran</strong>
+              <strong>WODS</strong>
             </a>
             <span className="page-kicker">{copy.workspace}</span>
           </header>
@@ -184,7 +184,7 @@ export function DashboardSetupGate({ locale, onLocaleChange, appearance = 'dark'
   return (
     <SecondaryPageShell context="auth" appearance={appearance} locale={locale} onLocaleChange={onLocaleChange} className="dashboard-shell dashboard-login-shell">
       <section className="dashboard-auth-view"><form className="login-card setup-card" onSubmit={submit}>
-        <span className="dash-logo">EasyTran</span>
+        <span className="dash-logo">WODS</span>
         <span className="setup-kicker">Required setup</span>
         <h1>Create your login</h1>
         <p>Your access key will stop working after this step.</p>

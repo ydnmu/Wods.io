@@ -9,8 +9,8 @@ $root = $PSScriptRoot
 $local = Join-Path $root 'deploy.local.ps1'
 if (Test-Path $local) { . $local }
 
-$Api = if ($env:EASYTRAN_API) { $env:EASYTRAN_API.TrimEnd('/') } else { 'https://api.easytran.app' }
-$Site = if ($env:EASYTRAN_SITE) { $env:EASYTRAN_SITE.TrimEnd('/') } else { 'https://easytran.app' }
+$Api = if ($env:EASYTRAN_API) { $env:EASYTRAN_API.TrimEnd('/') } else { 'https://api.wods.io' }
+$Site = if ($env:EASYTRAN_SITE) { $env:EASYTRAN_SITE.TrimEnd('/') } else { 'https://wods.io' }
 $Ssh = $env:EASYTRAN_SSH
 $archive = Join-Path ([System.IO.Path]::GetTempPath()) ("easytran-release-{0}.tar.gz" -f [guid]::NewGuid().ToString('N'))
 
@@ -61,7 +61,7 @@ function Test-PublicSmoke {
   if ($authStatus -ne 401) { throw 'API authentication boundary smoke failed (expected 401 without a key).' }
 }
 
-Write-Host "== EasyTran deploy ==" -ForegroundColor Green
+Write-Host "== WODS deploy ==" -ForegroundColor Green
 
 Push-Location $root
 try {

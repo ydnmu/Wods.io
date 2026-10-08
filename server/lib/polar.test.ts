@@ -13,7 +13,7 @@ import {
 
 test('builds a Polar checkout payload for Developer access', () => {
   const previousClientUrl = process.env.CLIENT_URL
-  process.env.CLIENT_URL = 'https://easytran.app'
+  process.env.CLIENT_URL = 'https://wods.io'
   const payload = buildPolarCheckoutPayload({
     plan: 'api',
     billingCycle: 'annual',
@@ -28,8 +28,8 @@ test('builds a Polar checkout payload for Developer access', () => {
   assert.deepEqual(payload.products, ['prod_developer'])
   assert.equal(payload.external_customer_id, 'user_123')
   assert.equal(payload.customer_email, 'buyer@example.com')
-  assert.equal(payload.success_url, 'https://easytran.app/checkout/complete?status=success&plan=developer&billing=annual&checkout_id={CHECKOUT_ID}')
-  assert.equal(payload.return_url, 'https://easytran.app/checkout/developer?billing=annual')
+  assert.equal(payload.success_url, 'https://wods.io/checkout/complete?status=success&plan=developer&billing=annual&checkout_id={CHECKOUT_ID}')
+  assert.equal(payload.return_url, 'https://wods.io/checkout/developer?billing=annual')
   assert.equal(payload.metadata.plan, 'api')
   assert.equal(payload.metadata.billing_cycle, 'annual')
   assert.equal(payload.metadata.quantity, '1')

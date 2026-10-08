@@ -181,7 +181,7 @@ const withCaptionAnalysis = async (
 
 const scrapeCollectionPage = async (url: URL, advertisedTotal: string, maxVideos: number) => {
   const response = await fetch(url, {
-    headers: { 'User-Agent': 'Mozilla/5.0 (compatible; EasyTran/1.0)' },
+    headers: { 'User-Agent': 'Mozilla/5.0 (compatible; WODS/1.0)' },
     signal: AbortSignal.timeout(10_000),
   })
   if (!response.ok) return { videos: [], truncated: false }
@@ -198,7 +198,7 @@ const scrapeCollectionPage = async (url: URL, advertisedTotal: string, maxVideos
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'User-Agent': 'Mozilla/5.0 (compatible; EasyTran/1.0)',
+        'User-Agent': 'Mozilla/5.0 (compatible; WODS/1.0)',
       },
       body: JSON.stringify({
         context: { client: { clientName: 'WEB', clientVersion } },

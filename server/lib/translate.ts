@@ -14,7 +14,7 @@ async function translateChunk(text: string, target: string, source = 'auto'): Pr
 
   const response = await fetch(url, {
     signal: AbortSignal.timeout(10_000),
-    headers: { 'User-Agent': 'Mozilla/5.0 (compatible; easytran/1.0)' },
+    headers: { 'User-Agent': 'Mozilla/5.0 (compatible; WODS/1.0)' },
   })
 
   if (!response.ok) throw new Error(`translate_failed_${response.status}`)

@@ -35,7 +35,7 @@ export const resolveChannel = async (value: string) => {
 
   try {
     const page = await fetch(parsedUrl.toString(), {
-      headers: { 'User-Agent': 'Mozilla/5.0 (compatible; EasyTran/1.0)' },
+      headers: { 'User-Agent': 'Mozilla/5.0 (compatible; WODS/1.0)' },
       signal: AbortSignal.timeout(8_000),
     })
     if (!page.ok) return null

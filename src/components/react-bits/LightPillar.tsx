@@ -1,5 +1,5 @@
 // LightPillar's React Bits shader is retained in lightPillarShaders.ts.
-// EasyTran adapts resolution, scheduling, visibility and resource ownership.
+// WODS adapts resolution, scheduling, visibility and resource ownership.
 import { useEffect, useRef } from 'react'
 import * as THREE from 'three'
 import { lightPillarShaders } from './lightPillarShaders'

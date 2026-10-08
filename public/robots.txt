@@ -7,4 +7,4 @@ Disallow: /auth/
 Disallow: /api/
 Disallow: /v1/
 
-Sitemap: https://easytran.app/sitemap.xml
+Sitemap: https://wods.io/sitemap.xml

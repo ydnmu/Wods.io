@@ -61,7 +61,7 @@ export function DocsPage({ locale = 'en' }: { locale?: SiteLocale }) {
           <details className="docs-privacy-policy" id="privacy-policy" ref={privacyPolicyRef}>
             <summary className="docs-text-link" data-no-translate>{text.privacyLink}<ChevronDown size={16} aria-hidden="true" /></summary>
             <div className="docs-policy-content">
-              <p className="docs-policy-date">EasyTran · Effective {privacyEffectiveDate}</p>
+              <p className="docs-policy-date">WODS · Effective {privacyEffectiveDate}</p>
               <PrivacyPolicy embedded />
             </div>
           </details>
@@ -81,7 +81,7 @@ export function DocsPage({ locale = 'en' }: { locale?: SiteLocale }) {
         <section className="docs-section docs-project" id="project" aria-labelledby="project-title" data-no-translate>
           <h2 id="project-title">{text.projectTitle}</h2>
           <nav className="docs-project-links" aria-label={text.projectLinks}>
-            <a href="https://github.com/ydnmu/easytran" target="_blank" rel="noreferrer">GitHub<ArrowUpRight size={16} aria-hidden="true" /></a>
+            <a href="https://github.com/ydnmu/wods" target="_blank" rel="noreferrer">GitHub<ArrowUpRight size={16} aria-hidden="true" /></a>
             <a href="https://x.com/avenkoze" target="_blank" rel="noreferrer">X<ArrowUpRight size={16} aria-hidden="true" /></a>
           </nav>
         </section>

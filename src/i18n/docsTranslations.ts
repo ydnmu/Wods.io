@@ -3,7 +3,7 @@ import type { SiteLocale } from '../hooks/useLocale'
 // Functional documentation copy; code samples and API identifiers remain unchanged.
 const rows: ReadonlyArray<readonly [string, string, string, string]> = [
   ['Documentation.', 'Dokümantasyon.', 'Documentación.', '文档。'],
-  ['Build with EasyTran in minutes.', 'EasyTran ile dakikalar içinde geliştirmeye başlayın.', 'Desarrolla con EasyTran en minutos.', '几分钟内开始使用 EasyTran 开发。'],
+  ['Build with WODS in minutes.', 'WODS ile dakikalar içinde geliştirmeye başlayın.', 'Desarrolla con WODS en minutos.', '几分钟内开始使用 WODS 开发。'],
   ['Quickstart.', 'Hızlı başlangıç.', 'Inicio rápido.', '快速入门。'],
   ['Create one in Dashboard.', 'Panelden bir anahtar oluşturun.', 'Crea una en el panel.', '在控制台创建密钥。'],
   ['Use', 'Kullanın:', 'Usa', '使用'],
@@ -23,10 +23,10 @@ const rows: ReadonlyArray<readonly [string, string, string, string]> = [
   ['Go and PHP →', 'Go ve PHP →', 'Go y PHP →', 'Go 和 PHP →'],
   ['Back to Quickstart', 'Hızlı başlangıca dön', 'Volver al inicio rápido', '返回快速入门'],
   [
-    "Build with EasyTran.",
-    "EasyTran ile geliştirin.",
-    "Desarrolla con EasyTran.",
-    "使用 EasyTran 开发。"
+    "Build with WODS.",
+    "WODS ile geliştirin.",
+    "Desarrolla con WODS.",
+    "使用 WODS 开发。"
   ],
   [
     "Get started",
@@ -179,10 +179,10 @@ const rows: ReadonlyArray<readonly [string, string, string, string]> = [
     "项目链接"
   ],
   [
-    "Use EasyTran without an account.",
-    "EasyTran’ı hesap açmadan kullanın.",
-    "Usa EasyTran sin una cuenta.",
-    "无需账户即可使用 EasyTran。"
+    "Use WODS without an account.",
+    "WODS’u hesap açmadan kullanın.",
+    "Usa WODS sin una cuenta.",
+    "无需账户即可使用 WODS。"
   ],
   [
     "Bearer API keys, workspace access, and key rotation.",

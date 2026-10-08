@@ -100,7 +100,7 @@ const planSignals: Record<PlanKey, readonly [string, string][]> = {
 const faqs = [
   [
     'What will I pay at checkout?',
-    'The selected plan and billing cycle determine the subscription price shown before payment. Yearly billing includes the advertised 40% discount. Applicable taxes may be added by Polar. EasyTran does not add automatic overage charges.',
+    'The selected plan and billing cycle determine the subscription price shown before payment. Yearly billing includes the advertised 40% discount. Applicable taxes may be added by Polar. WODS does not add automatic overage charges.',
   ],
   [
     'What counts toward my quota?',

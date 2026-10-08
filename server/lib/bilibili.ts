@@ -50,7 +50,7 @@ export const resolveBilibiliId = async (value: string): Promise<string | null> =
     const response = await fetch(`https://b23.tv/${encodeURIComponent(slug)}`, {
       method: 'HEAD',
       redirect: 'follow',
-      headers: { 'User-Agent': 'Mozilla/5.0 (compatible; EasyTran/1.0)' },
+      headers: { 'User-Agent': 'Mozilla/5.0 (compatible; WODS/1.0)' },
       signal: AbortSignal.timeout(6000),
     })
     const resolved = extractBilibiliId(response.url)

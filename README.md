@@ -1,8 +1,8 @@
-<h1>EasyTran <img src="public/easytran-mark-rive.svg" alt="" width="48" height="32" /></h1>
+<h1>WODS <img src="public/easytran-mark-rive.svg" alt="" width="48" height="32" /></h1>
 
 Readable transcripts from supported video URLs.
 
-[Website](https://easytran.app) · [Docs](https://easytran.app/docs) · [Dashboard](https://easytran.app/dashboard)
+[Website](https://wods.io) · [Docs](https://wods.io/docs) · [Dashboard](https://wods.io/dashboard)
 
 ## Free web
 

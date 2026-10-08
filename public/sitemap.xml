@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://easytran.app/</loc>
+    <loc>https://wods.io/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://easytran.app/business</loc>
+    <loc>https://wods.io/business</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://easytran.app/docs</loc>
+    <loc>https://wods.io/docs</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://easytran.app/privacy</loc>
+    <loc>https://wods.io/privacy</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://easytran.app/terms</loc>
+    <loc>https://wods.io/terms</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://easytran.app/refunds</loc>
+    <loc>https://wods.io/refunds</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>

@@ -273,7 +273,7 @@ function relativeTime(value: string): string {
 
 function CodeBlock() {
   const [copied, setCopied] = useState(false)
-  const command = `curl -X POST https://easytran.app/v1/transcripts \\
+  const command = `curl -X POST https://wods.io/v1/transcripts \\
   -H "Authorization: Bearer YOUR_API_KEY" \\
   -H "Content-Type: application/json" \\
   -d '{"url":"https://youtube.com/watch?v=dQw4w9WgXcQ"}'`
@@ -907,7 +907,7 @@ export function DashboardPage({
     return (
       <SecondaryPageShell context="dashboard" appearance={appearance} locale={locale} onLocaleChange={onLocaleChange} className="dashboard-shell">
         <div className="secondary-state">
-          <span className="dash-logo">EasyTran</span>
+          <span className="dash-logo">WODS</span>
           <h1>Dashboard unavailable</h1>
           <p>{loadError}</p>
           <button className="page-action" type="button" onClick={loadAll}>Try again</button>
@@ -929,9 +929,9 @@ export function DashboardPage({
     <SecondaryPageShell context="dashboard" appearance={dashboardTheme} locale={locale} onLocaleChange={onLocaleChange} className={`dashboard-shell dashboard-glass dashboard-theme-${dashboardTheme}`}>
       <section className="dash">
         <aside className="sidebar">
-          <div className="dashboard-glow-brand" aria-label="EasyTran">
+          <div className="dashboard-glow-brand" aria-label="WODS">
             <span className="dashboard-brand-mark" aria-hidden="true" />
-            <strong>EasyTran</strong>
+            <strong>WODS</strong>
           </div>
 
           <button className="dashboard-new-task" type="button" onClick={() => {
@@ -1779,7 +1779,7 @@ export function DashboardPage({
                 )}
                 {settingsSection === 'developer' && (
                   <article className="panel">
-                    <div className="panel-head"><div><h2>API connection test</h2><p>Only needed when connecting EasyTran to your own app. This command sends one authenticated transcript request.</p></div></div>
+                    <div className="panel-head"><div><h2>API connection test</h2><p>Only needed when connecting WODS to your own app. This command sends one authenticated transcript request.</p></div></div>
                     <CodeBlock />
                   </article>
                 )}

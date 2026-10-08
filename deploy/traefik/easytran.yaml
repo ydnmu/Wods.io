@@ -5,13 +5,33 @@ http:
         - http
       rule: Host(`easytran.app`) || Host(`www.easytran.app`)
       middlewares:
-        - easytran-https-redirect
+        - easytran-wods-redirect
       service: easytran-app
 
     easytran-site-https:
       entryPoints:
         - https
       rule: Host(`easytran.app`) || Host(`www.easytran.app`)
+      middlewares:
+        - easytran-wods-redirect
+      service: easytran-app
+      tls:
+        certResolver: letsencrypt
+
+    easytran-legacy-api-http:
+      entryPoints:
+        - http
+      rule: (Host(`easytran.app`) || Host(`www.easytran.app`)) && (Path(`/api`) || PathPrefix(`/api/`) || Path(`/v1`) || PathPrefix(`/v1/`))
+      priority: 100
+      middlewares:
+        - easytran-https-redirect
+      service: easytran-app
+
+    easytran-legacy-api-https:
+      entryPoints:
+        - https
+      rule: (Host(`easytran.app`) || Host(`www.easytran.app`)) && (Path(`/api`) || PathPrefix(`/api/`) || Path(`/v1`) || PathPrefix(`/v1/`))
+      priority: 100
       middlewares:
         - easytran-compress
       service: easytran-app
@@ -37,6 +57,11 @@ http:
         certResolver: letsencrypt
 
   middlewares:
+    easytran-wods-redirect:
+      redirectRegex:
+        regex: '^https?://(www\.)?easytran\.app(:[0-9]+)?(.*)'
+        replacement: 'https://wods.io${3}'
+        permanent: true
     easytran-https-redirect:
       redirectScheme:
         scheme: https

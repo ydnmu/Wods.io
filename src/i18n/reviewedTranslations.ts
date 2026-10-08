@@ -210,8 +210,8 @@ const rows: ReadonlyArray<readonly [string, string, string, string]> = [
   ['Terms of Service', 'Kullanım koşulları', 'Términos del servicio', '服务条款'],
   ['Retention and your choices', 'Veri saklama ve haklarınız', 'Conservación de datos y tus opciones', '数据保留与您的选择'],
   ['Service providers', 'Hizmet sağlayıcılar', 'Proveedores de servicios', '服务提供商'],
-  ['EasyTran · Effective', 'EasyTran · Yürürlük tarihi:', 'EasyTran · Fecha de entrada en vigor:', 'EasyTran · 生效日期：'],
-  ['EasyTran promises', 'EasyTran ilkeleri', 'Compromisos de EasyTran', 'EasyTran 承诺'],
+  ['WODS · Effective', 'WODS · Yürürlük tarihi:', 'WODS · Fecha de entrada en vigor:', 'WODS · 生效日期：'],
+  ['WODS promises', 'WODS ilkeleri', 'Compromisos de WODS', 'WODS 承诺'],
   ['SSO / security', 'SSO / güvenlik', 'SSO / seguridad', 'SSO / 安全'],
   ['White-label', 'Kendi markanızla kullanım', 'Personalización de marca', '自有品牌定制'],
   ['White-label options', 'Kendi markanızla kullanım seçenekleri', 'Opciones de personalización de marca', '自有品牌定制选项'],
@@ -316,7 +316,7 @@ const rows: ReadonlyArray<readonly [string, string, string, string]> = [
   ['Do not shard accounts or keys to evade a limit.', 'Kullanım sınırlarını aşmak için birden fazla hesap veya anahtar kullanmayın.', 'No repartas el uso entre cuentas o claves para eludir los límites.', '请勿将用量分散到多个账户或密钥以绕过限制。'],
   ['Design for partial failure: validate responses, make webhook handling idempotent, cap retries, and keep a durable record of work your application must not lose.', 'İşlemlerin bir kısmının başarısız olabileceğini hesaba katın: yanıtları doğrulayın, aynı webhook olayı tekrar geldiğinde işlemin yinelenmesini önleyin, yeniden denemeleri sınırlayın ve kaybolmaması gereken işlemleri kalıcı olarak kaydedin.', 'Diseña el flujo para gestionar fallos parciales: valida las respuestas, procesa los webhooks de forma idempotente, limita los reintentos y conserva un registro persistente de las tareas que no deben perderse.', '设计流程时应考虑部分任务失败的情况：验证响应、确保 Webhook 处理具有幂等性、限制重试次数，并持久化记录不可丢失的任务。'],
   ['Custom volume, support targets, security requirements, retention, or service levels apply only when documented in a signed order.', 'Özel işlem hacmi, destek hedefleri, güvenlik gereksinimleri, veri saklama koşulları veya hizmet seviyeleri yalnızca imzalı sipariş belgesinde yer alıyorsa geçerlidir.', 'El volumen personalizado, los objetivos de soporte, los requisitos de seguridad, la conservación de datos y los niveles de servicio solo se aplican si constan en un pedido firmado.', '自定义处理量、支持目标、安全要求、数据保留条件或服务级别，仅在已签署的订单文件中明确约定时适用。'],
-  ['EasyTran · Effective July 6, 2026', 'EasyTran · Yürürlük tarihi: 6 Temmuz 2026', 'EasyTran · Fecha de entrada en vigor: 6 de julio de 2026', 'EasyTran · 生效日期：2026 年 7 月 6 日'],
+  ['WODS · Effective July 6, 2026', 'WODS · Yürürlük tarihi: 6 Temmuz 2026', 'WODS · Fecha de entrada en vigor: 6 de julio de 2026', 'WODS · 生效日期：2026 年 7 月 6 日'],
   ['Arabic', 'Arapça', 'Árabe', '阿拉伯语'],
   ['Finnish', 'Fince', 'Finés', '芬兰语'],
   ['Hmong', 'Hmong', 'Hmong', '苗语'],
@@ -381,7 +381,7 @@ export const reviewedTranslations = (locale: LocalizedLocale): Record<string, st
 
 const identifiers = new Set([
   ...LANGUAGES.map(language => language.code),
-  'EasyTran', 'YouTube', 'Shorts', 'Unsplash', 'GitHub', 'AssemblyAI', 'Fireworks AI',
+  'WODS', 'YouTube', 'Shorts', 'Unsplash', 'GitHub', 'AssemblyAI', 'Fireworks AI',
   'OpenAI', 'Polar', 'Resend', 'Supabase', 'Developer', 'Business', 'Enterprise',
   'WORD (.DOCX)', 'Word (.DOCX)', 'JSON', 'TXT', 'SRT', 'VTT', 'PDF',
   'GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'Bearer', 'UTC', 'Escape',

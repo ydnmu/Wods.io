@@ -100,7 +100,7 @@ function AdminLogin() {
     setLoading(false)
   }
   return <main className="dashboard-shell centered"><form className="login-card" onSubmit={submit}>
-    <span className="dash-logo">EasyTran</span><h1>Admin access</h1><p>Enter the private administrator key stored on this computer.</p>
+    <span className="dash-logo">WODS</span><h1>Admin access</h1><p>Enter the private administrator key stored on this computer.</p>
     <input type="password" value={key} onChange={(event) => setKey(event.target.value)} placeholder="Administrator key" autoComplete="current-password" minLength={48} required />
     {error && <div className="error-box">{error}</div>}
     <button disabled={loading}>{loading ? 'Verifying…' : 'Unlock admin'}</button>
@@ -286,7 +286,7 @@ export function AdminPage() {
 
   return <main className="admin-page">
     <aside className="admin-sidebar">
-      <a className="admin-brand" href="/"><span>ET</span><strong>EasyTran</strong></a>
+      <a className="admin-brand" href="/"><span>W</span><strong>WODS</strong></a>
       <p className="admin-nav-label">CONTROL PLANE</p>
       <nav>{navigation.map(([id, Icon, label]) => <button key={id} className={view === id ? 'active' : ''} type="button" onClick={() => setView(id)}><Icon size={17} />{label}</button>)}</nav>
       <div className="admin-sidebar-foot"><a href="/dashboard">Workspace dashboard</a><button type="button" onClick={logout}><LogOut size={15} />Sign out</button></div>

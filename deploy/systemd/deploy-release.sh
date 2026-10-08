@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Install a prepared EasyTran source archive as an atomic VPS release.
+# Install a prepared WODS source archive as an atomic VPS release.
 set -euo pipefail
 
 # PowerShell refuses to deploy through an installed helper with the old gates.
@@ -132,7 +132,7 @@ systemctl enable easytran-api
 systemctl restart easytran-api
 
 if ! wait_ready; then
-  echo "EasyTran did not become ready after deployment." >&2
+  echo "WODS did not become ready after deployment." >&2
   exit 1
 fi
 smoke "$RELEASE_DIR"

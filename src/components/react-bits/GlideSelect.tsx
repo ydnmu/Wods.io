@@ -2,7 +2,7 @@
 // Adapted from React Bits, David Haz. See REACT_BITS_LICENSE.md.
 
 import React, { useEffect, useId, useLayoutEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react';
-// React Bits source; EasyTran keeps its existing Lucide icon set.
+// React Bits source; WODS keeps its existing Lucide icon set.
 import { Check, ChevronDown } from 'lucide-react';
 
 import './GlideSelect.css';
