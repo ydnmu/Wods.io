@@ -1,9 +1,11 @@
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset=".github/assets/wods-readme-header-dark.svg" />
-  <img src=".github/assets/wods-readme-header.svg" alt="WODS" width="100%" />
+  <img src=".github/assets/wods-readme-header.svg" alt="WODS" width="540" />
 </picture>
 
-**Readable transcripts from supported video URLs.**
+# WODS Video Transcription
+
+Readable transcripts from supported video URLs.
 
 [wods.io](https://wods.io) · [Documentation](https://wods.io/docs)
 
