@@ -2,7 +2,7 @@
 
 The root README uses transparent, outlined SVG typography. Light and dark variants are selected with GitHub-supported `picture` elements.
 
-- `wods-readme-header*.svg`: a custom angular, forward-slanted WODS wordmark without a separate symbol. The letters have a light-blue, white and purple gradient and a subtle binary pattern clipped inside their outlines. The light variant adds a fine outline to keep the pale lettering visible on white.
+- `wods-readme-wordmark*.svg`: a custom angular, forward-slanted WODS wordmark without a separate symbol. The letters have a light-blue, white and purple gradient and a subtle binary pattern clipped inside their outlines. The light variant adds a fine outline to keep the pale lettering visible on white.
 - `wods-free*.svg` and `wods-planned*.svg`: section headings using outlined Barlow typography at a fixed reading size.
 - `wods-product.png`: an unmodified crop of the live WODS URL-entry interface, captured in English on 8 October 2026. It is a product screenshot, not a mockup. No transcription was submitted.
 
