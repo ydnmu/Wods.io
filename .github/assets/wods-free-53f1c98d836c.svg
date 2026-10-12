@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="205" height="33" viewBox="0 0 958 156" fill="none" role="img">
+  <title>Free web</title>
+  <desc>Angular, forward-slanted lettering in the WODS light-blue, white and purple palette.</desc>
+  <defs>
+    <linearGradient id="wods-section" x1="0" y1="70" x2="910" y2="70" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#92d5ff"/>
+      <stop offset=".42" stop-color="#f7faff"/>
+      <stop offset=".64" stop-color="#d2c6ff"/>
+      <stop offset="1" stop-color="#977ce8"/>
+    </linearGradient>
+    <clipPath id="wods-heading">
+    <path fill-rule="evenodd" clip-rule="evenodd" transform="translate(0 0)" d="M0 0H96V34H34V55H82V89H34V140H0Z"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" transform="translate(114 0)" d="M0 0H84L102 18V70L84 88L110 140H72L47 88H34V140H0ZM34 34V54H68V34Z"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" transform="translate(242 0)" d="M0 0H96V34H34V53H84V87H34V106H96V140H0Z"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" transform="translate(356 0)" d="M0 0H96V34H34V53H84V87H34V106H96V140H0Z"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" transform="translate(534 0)" d="M0 0H30L42 96L61 50H83L99 96L112 0H142L119 140H87L72 101L57 140H25Z"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" transform="translate(694 0)" d="M0 0H96V34H34V53H84V87H34V106H96V140H0Z"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" transform="translate(808 0)" d="M0 0H80L102 22V59L90 70L102 81V118L80 140H0ZM34 30V54H68V30ZM34 86V110H68V86Z"/>
+    </clipPath>
+  </defs>
+  <g transform="matrix(1 0 -.22 1 39 8)">
+    <path fill="url(#wods-section)" clip-path="url(#wods-heading)" d="M0 0H910V140H0Z"/>
+    <g fill="none" stroke="#7484a2" stroke-opacity=".75" stroke-width="2.5" stroke-linejoin="round">
+    <path transform="translate(0 0)" d="M0 0H96V34H34V55H82V89H34V140H0Z"/>
+    <path transform="translate(114 0)" d="M0 0H84L102 18V70L84 88L110 140H72L47 88H34V140H0ZM34 34V54H68V34Z"/>
+    <path transform="translate(242 0)" d="M0 0H96V34H34V53H84V87H34V106H96V140H0Z"/>
+    <path transform="translate(356 0)" d="M0 0H96V34H34V53H84V87H34V106H96V140H0Z"/>
+    <path transform="translate(534 0)" d="M0 0H30L42 96L61 50H83L99 96L112 0H142L119 140H87L72 101L57 140H25Z"/>
+    <path transform="translate(694 0)" d="M0 0H96V34H34V53H84V87H34V106H96V140H0Z"/>
+    <path transform="translate(808 0)" d="M0 0H80L102 22V59L90 70L102 81V118L80 140H0ZM34 30V54H68V30ZM34 86V110H68V86Z"/>
+    </g>
+  </g>
+</svg>

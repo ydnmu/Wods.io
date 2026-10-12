@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="273" height="33" viewBox="0 0 1276 156" fill="none" role="img">
+  <title>Coming soon</title>
+  <desc>Angular, forward-slanted lettering in the WODS light-blue, white and purple palette.</desc>
+  <defs>
+    <linearGradient id="wods-section" x1="0" y1="70" x2="1228" y2="70" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#92d5ff"/>
+      <stop offset=".42" stop-color="#f7faff"/>
+      <stop offset=".64" stop-color="#d2c6ff"/>
+      <stop offset="1" stop-color="#977ce8"/>
+    </linearGradient>
+    <clipPath id="wods-heading">
+    <path fill-rule="evenodd" clip-rule="evenodd" transform="translate(0 0)" d="M18 0H84L102 18V44H68V34H34V106H68V96H102V122L84 140H18L0 122V18Z"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" transform="translate(120 0)" d="M18 0H84L102 18V122L84 140H18L0 122V18ZM34 36V104H68V36Z"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" transform="translate(240 0)" d="M0 0H34L65 45L96 0H130V140H96V58L65 98L34 58V140H0Z"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" transform="translate(388 0)" d="M0 0H34V140H0Z"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" transform="translate(440 0)" d="M0 0H34L76 76V0H110V140H76L34 64V140H0Z"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" transform="translate(568 0)" d="M18 0H84L102 18V44H68V34H34V106H68V86H52V56H102V122L84 140H18L0 122V18Z"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" transform="translate(752 0)" d="M18 0H90L108 18V42H74V32H34V54H90L108 72V122L90 140H18L0 122V98H34V108H74V86H18L0 68V18Z"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" transform="translate(878 0)" d="M18 0H84L102 18V122L84 140H18L0 122V18ZM34 36V104H68V36Z"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" transform="translate(998 0)" d="M18 0H84L102 18V122L84 140H18L0 122V18ZM34 36V104H68V36Z"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" transform="translate(1118 0)" d="M0 0H34L76 76V0H110V140H76L34 64V140H0Z"/>
+    </clipPath>
+  </defs>
+  <g transform="matrix(1 0 -.22 1 39 8)">
+    <path fill="url(#wods-section)" clip-path="url(#wods-heading)" d="M0 0H1228V140H0Z"/>
+    
+  </g>
+</svg>

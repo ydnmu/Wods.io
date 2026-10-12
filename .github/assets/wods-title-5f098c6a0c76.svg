@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="31" viewBox="0 0 2098 156" fill="none" role="img">
+  <title>WODS Video Transcription</title>
+  <desc>Angular, forward-slanted lettering in the WODS light-blue, white and purple palette.</desc>
+  <defs>
+    <linearGradient id="wods-section" x1="0" y1="70" x2="2050" y2="70" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#92d5ff"/>
+      <stop offset=".42" stop-color="#f7faff"/>
+      <stop offset=".64" stop-color="#d2c6ff"/>
+      <stop offset="1" stop-color="#977ce8"/>
+    </linearGradient>
+    <clipPath id="wods-heading">
+    <path fill-rule="evenodd" clip-rule="evenodd" transform="translate(0 0)" d="M0 0H34L55 90L76 0H110L75 140H35Z"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" transform="translate(128 0)" d="M0 0H34V140H0Z"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" transform="translate(180 0)" d="M0 0H85L110 25V115L85 140H0ZM34 36V104H71L76 99V41L71 36Z"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" transform="translate(308 0)" d="M0 0H96V34H34V53H84V87H34V106H96V140H0Z"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" transform="translate(422 0)" d="M18 0H84L102 18V122L84 140H18L0 122V18ZM34 36V104H68V36Z"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" transform="translate(606 0)" d="M0 0H102V34H68V140H34V34H0Z"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" transform="translate(726 0)" d="M0 0H84L102 18V70L84 88L110 140H72L47 88H34V140H0ZM34 34V54H68V34Z"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" transform="translate(854 0)" d="M18 0H84L102 18V140H68V88H34V140H0V18ZM34 34V58H68V34Z"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" transform="translate(974 0)" d="M0 0H34L76 76V0H110V140H76L34 64V140H0Z"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" transform="translate(1102 0)" d="M18 0H90L108 18V42H74V32H34V54H90L108 72V122L90 140H18L0 122V98H34V108H74V86H18L0 68V18Z"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" transform="translate(1228 0)" d="M18 0H84L102 18V44H68V34H34V106H68V96H102V122L84 140H18L0 122V18Z"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" transform="translate(1348 0)" d="M0 0H84L102 18V70L84 88L110 140H72L47 88H34V140H0ZM34 34V54H68V34Z"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" transform="translate(1476 0)" d="M0 0H34V140H0Z"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" transform="translate(1528 0)" d="M0 0H84L102 18V70L84 88H34V140H0ZM34 34V54H68V34Z"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" transform="translate(1648 0)" d="M0 0H102V34H68V140H34V34H0Z"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" transform="translate(1768 0)" d="M0 0H34V140H0Z"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" transform="translate(1820 0)" d="M18 0H84L102 18V122L84 140H18L0 122V18ZM34 36V104H68V36Z"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" transform="translate(1940 0)" d="M0 0H34L76 76V0H110V140H76L34 64V140H0Z"/>
+    </clipPath>
+  </defs>
+  <g transform="matrix(1 0 -.22 1 39 8)">
+    <path fill="url(#wods-section)" clip-path="url(#wods-heading)" d="M0 0H2050V140H0Z"/>
+    <g fill="none" stroke="#7484a2" stroke-opacity=".75" stroke-width="2.5" stroke-linejoin="round">
+    <path transform="translate(0 0)" d="M0 0H34L55 90L76 0H110L75 140H35Z"/>
+    <path transform="translate(128 0)" d="M0 0H34V140H0Z"/>
+    <path transform="translate(180 0)" d="M0 0H85L110 25V115L85 140H0ZM34 36V104H71L76 99V41L71 36Z"/>
+    <path transform="translate(308 0)" d="M0 0H96V34H34V53H84V87H34V106H96V140H0Z"/>
+    <path transform="translate(422 0)" d="M18 0H84L102 18V122L84 140H18L0 122V18ZM34 36V104H68V36Z"/>
+    <path transform="translate(606 0)" d="M0 0H102V34H68V140H34V34H0Z"/>
+    <path transform="translate(726 0)" d="M0 0H84L102 18V70L84 88L110 140H72L47 88H34V140H0ZM34 34V54H68V34Z"/>
+    <path transform="translate(854 0)" d="M18 0H84L102 18V140H68V88H34V140H0V18ZM34 34V58H68V34Z"/>
+    <path transform="translate(974 0)" d="M0 0H34L76 76V0H110V140H76L34 64V140H0Z"/>
+    <path transform="translate(1102 0)" d="M18 0H90L108 18V42H74V32H34V54H90L108 72V122L90 140H18L0 122V98H34V108H74V86H18L0 68V18Z"/>
+    <path transform="translate(1228 0)" d="M18 0H84L102 18V44H68V34H34V106H68V96H102V122L84 140H18L0 122V18Z"/>
+    <path transform="translate(1348 0)" d="M0 0H84L102 18V70L84 88L110 140H72L47 88H34V140H0ZM34 34V54H68V34Z"/>
+    <path transform="translate(1476 0)" d="M0 0H34V140H0Z"/>
+    <path transform="translate(1528 0)" d="M0 0H84L102 18V70L84 88H34V140H0ZM34 34V54H68V34Z"/>
+    <path transform="translate(1648 0)" d="M0 0H102V34H68V140H34V34H0Z"/>
+    <path transform="translate(1768 0)" d="M0 0H34V140H0Z"/>
+    <path transform="translate(1820 0)" d="M18 0H84L102 18V122L84 140H18L0 122V18ZM34 36V104H68V36Z"/>
+    <path transform="translate(1940 0)" d="M0 0H34L76 76V0H110V140H76L34 64V140H0Z"/>
+    </g>
+  </g>
+</svg>
