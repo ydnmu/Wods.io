@@ -1,6 +1,6 @@
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset=".github/assets/wods-readme-header-dark.svg" />
-  <img src=".github/assets/wods-readme-header.svg" alt="WODS" width="540" />
+  <source media="(prefers-color-scheme: dark)" srcset=".github/assets/wods-readme-header-dark.svg?v=blue-white-purple" />
+  <img src=".github/assets/wods-readme-header.svg?v=blue-white-purple" alt="WODS" width="540" />
 </picture>
 
 # WODS Video Transcription
