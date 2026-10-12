@@ -1,6 +1,6 @@
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset=".github/assets/wods-readme-wordmark-dark.svg" />
-  <img src=".github/assets/wods-readme-wordmark.svg" alt="WODS" width="540" />
+  <source media="(prefers-color-scheme: dark)" srcset=".github/assets/wods-readme-wordmark-e8f773a0c216-dark.svg" />
+  <img src=".github/assets/wods-readme-wordmark-e8f773a0c216.svg" alt="WODS" width="540" />
 </picture>
 
 # WODS Video Transcription
